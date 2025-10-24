@@ -19,14 +19,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemKey
 import coil.compose.rememberAsyncImagePainter
 import juniar.nicolas.pokeappjetpackcompose.ui.viewmodel.PokemonViewModel
 
@@ -35,51 +34,60 @@ import juniar.nicolas.pokeappjetpackcompose.ui.viewmodel.PokemonViewModel
 fun PokemonListScreen(
     viewModel: PokemonViewModel = viewModel()
 ) {
-    val pokemons by viewModel.pokemonList.collectAsState()
-    val isLoading by viewModel.isLoading.collectAsState()
-    val errorMessage by viewModel.errorMessage.collectAsState()
-
-    LaunchedEffect(Unit) {
-        viewModel.fetchPokemons()
-    }
+    val pagingItems = viewModel.pokemons.collectAsLazyPagingItems()
 
     Scaffold(
-        topBar = {
-            TopAppBar(title = { Text("PokeApp") })
-        }
+        topBar = { TopAppBar(title = { Text("PokeApp Paging") }) }
     ) { padding ->
-        when {
-            isLoading -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(padding),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .padding(16.dp)
+        ) {
+            items(
+                pagingItems.itemCount,
+                key = pagingItems.itemKey { it.name }
+            ) { index ->
+                PokemonItem(pagingItems[index]?.name.orEmpty())
             }
 
-            errorMessage != null -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(padding),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(text = errorMessage ?: "Terjadi kesalahan")
-                }
-            }
+            pagingItems.apply {
+                when {
+                    loadState.refresh is androidx.paging.LoadState.Loading -> {
+                        item {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                CircularProgressIndicator()
+                            }
+                        }
+                    }
 
-            else -> {
-                LazyColumn(
-                    modifier = Modifier
-                        .padding(padding)
-                        .fillMaxSize()
-                        .padding(16.dp)
-                ) {
-                    items(pokemons) { name ->
-                        PokemonItem(name)
+                    loadState.append is androidx.paging.LoadState.Loading -> {
+                        item {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                CircularProgressIndicator()
+                            }
+                        }
+                    }
+
+                    loadState.append is androidx.paging.LoadState.Error -> {
+                        val error = pagingItems.loadState.append as androidx.paging.LoadState.Error
+                        item {
+                            Text(
+                                text = "Error: ${error.error.localizedMessage}",
+                                modifier = Modifier.padding(16.dp)
+                            )
+                        }
                     }
                 }
             }
