@@ -16,7 +16,7 @@ hiltVersion = "2.56.1"
 ksp = "2.0.21-1.0.27"
 chuckerVersion = "4.1.0"
 roomVersion = "2.7.1"
-pagingRuntime = "3.3.6"
+pagingVersion = "3.3.6"
 navigationVersion = "2.7.7"
 dataStoreVersion = "1.1.1"
 
@@ -49,7 +49,8 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 room-coroutine = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
 room-ksp = { group = "androidx.room", name = "room-compiler", version.ref = "roomVersion" }
 room-paging = { group = "androidx.room", name = "room-paging", version.ref = "roomVersion" }
-paging = { group = "androidx.paging", name = "paging-runtime", version.ref = "pagingRuntime" }
+paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "pagingVersion" }
+paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "pagingVersion" }
 navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationVersion" }
 navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationVersion" }
 datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "dataStoreVersion" }
