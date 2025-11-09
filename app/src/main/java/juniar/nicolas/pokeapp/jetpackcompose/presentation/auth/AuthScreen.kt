@@ -1,6 +1,5 @@
-package juniar.nicolas.pokeapp.jetpackcompose.presentation
+package juniar.nicolas.pokeapp.jetpackcompose.presentation.auth
 
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -38,61 +37,33 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun AuthScreen(
     modifier: Modifier = Modifier,
-    initialModeRegister: Boolean = false,
     onLogin: (username: String, password: String) -> Unit = { _, _ -> },
     onRegister: (username: String, password: String) -> Unit = { _, _ -> }
 ) {
-    var isRegister by remember { mutableStateOf(initialModeRegister) }
+    var isLogin by remember { mutableStateOf(true) }
 
-    // form states
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
 
-    // ui states
     var passwordVisible by remember { mutableStateOf(false) }
     var confirmPasswordVisible by remember { mutableStateOf(false) }
 
-    // validation messages
-    var usernameError by remember { mutableStateOf<String?>(null) }
-    var passwordError by remember { mutableStateOf<String?>(null) }
-    var confirmPasswordError by remember { mutableStateOf<String?>(null) }
-
     val focusManager = LocalFocusManager.current
 
-    fun validateLogin(): Boolean {
-        var ok = true
-        usernameError = if (username.isBlank()) {
-            ok = false
-            "Username can't be empty"
-        } else null
-
-        passwordError = if (password.length < 6) {
-            ok = false
-            "Password must be at least 6 characters"
-        } else null
-
-        return ok
-    }
-
-    fun validateRegister(): Boolean {
-        var ok = validateLogin()
-
-        confirmPasswordError = when {
-            confirmPassword.isBlank() -> {
-                ok = false
-                "Confirm your password"
-            }
-
-            confirmPassword != password -> {
-                ok = false
-                "Passwords do not match"
-            }
-
-            else -> null
+    fun isValid(): Boolean {
+        val usernameValid = username.isNotBlank()
+        val passwordValid = if (isLogin) {
+            password.isNotBlank()
+        } else {
+            password.length >= 6
         }
-
-        return ok
+        val confirmPasswordValid = if (isLogin) {
+            true
+        } else {
+            confirmPassword == password
+        }
+        return usernameValid && passwordValid && confirmPasswordValid
     }
 
     Surface(modifier = modifier.fillMaxSize()) {
@@ -104,7 +75,7 @@ fun AuthScreen(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = if (isRegister) "Create account" else "Welcome back",
+                text = if (isLogin) "Welcome back" else "Create account",
                 style = MaterialTheme.typography.titleLarge
             )
 
@@ -114,27 +85,15 @@ fun AuthScreen(
                 value = username,
                 onValueChange = {
                     username = it
-                    if (usernameError != null) usernameError = null
                 },
                 modifier = Modifier.fillMaxWidth(),
                 label = { Text("Username") },
-                isError = usernameError != null,
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Next
                 )
             )
-            if (usernameError != null) {
-                Text(
-                    text = usernameError!!,
-                    color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier
-                        .align(Alignment.Start)
-                        .padding(top = 4.dp)
-                )
-            }
 
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -142,11 +101,9 @@ fun AuthScreen(
                 value = password,
                 onValueChange = {
                     password = it
-                    if (passwordError != null) passwordError = null
                 },
                 modifier = Modifier.fillMaxWidth(),
                 label = { Text("Password") },
-                isError = passwordError != null,
                 singleLine = true,
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
@@ -159,32 +116,20 @@ fun AuthScreen(
                 },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
-                    imeAction = if (isRegister) ImeAction.Next else ImeAction.Done
+                    imeAction = if (isLogin) ImeAction.Done else ImeAction.Next
                 )
             )
-            if (passwordError != null) {
-                Text(
-                    text = passwordError!!,
-                    color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier
-                        .align(Alignment.Start)
-                        .padding(top = 4.dp)
-                )
-            }
 
-            if (isRegister) {
+            if (!isLogin) {
                 Spacer(modifier = Modifier.height(8.dp))
 
                 OutlinedTextField(
                     value = confirmPassword,
                     onValueChange = {
                         confirmPassword = it
-                        if (confirmPasswordError != null) confirmPasswordError = null
                     },
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text("Confirm password") },
-                    isError = confirmPasswordError != null,
                     singleLine = true,
                     visualTransformation = if (confirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                     trailingIcon = {
@@ -200,17 +145,6 @@ fun AuthScreen(
                         imeAction = ImeAction.Done
                     )
                 )
-
-                if (confirmPasswordError != null) {
-                    Text(
-                        text = confirmPasswordError!!,
-                        color = MaterialTheme.colorScheme.error,
-                        style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier
-                            .align(Alignment.Start)
-                            .padding(top = 4.dp)
-                    )
-                }
             }
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -218,34 +152,26 @@ fun AuthScreen(
             Button(
                 onClick = {
                     focusManager.clearFocus()
-                    if (isRegister) {
-                        if (validateRegister()) {
-                            onRegister(username.trim(), password)
-                        }
+                    if (isLogin) {
+                        onLogin(username.trim(), password)
                     } else {
-                        if (validateLogin()) {
-                            onLogin(username.trim(), password)
-                        }
+                        onRegister(username.trim(), password)
                     }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp),
-                enabled = username.isNotBlank() && password.isNotBlank()
+                enabled = isValid()
             ) {
-                Text(text = if (isRegister) "Register" else "Login")
+                Text(text = if (isLogin) "Login" else "Register")
             }
 
             Spacer(modifier = Modifier.height(8.dp))
 
             TextButton(onClick = {
-                // toggle mode and reset errors
-                isRegister = !isRegister
-                usernameError = null
-                passwordError = null
-                confirmPasswordError = null
+                isLogin = !isLogin
             }) {
-                Text(text = if (isRegister) "Already have an account? Login" else "Don't have an account? Register")
+                Text(text = if (isLogin) "Don't have an account? Register" else "Already have an account? Login")
             }
         }
     }
