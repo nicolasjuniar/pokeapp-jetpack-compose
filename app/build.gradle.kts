@@ -59,7 +59,7 @@ dependencies {
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.navigation)
     implementation(libs.retrofit)
-    implementation(libs.converter.moshi)
+    implementation(libs.gson.converter)
     implementation(libs.okhttp.logging)
     implementation(libs.room.runtime)
     ksp(libs.room.compiler)

@@ -3,7 +3,7 @@
     main screen(bottom nav with list and favorite screen),
     detail screen
 ✔️  Add Navigation Compose to navigate between screen
-🔹  Add Retrofit and Hilt for fetch pokeapi
+✔️  Add Retrofit and Hilt for fetch pokeapi
 🔹  Add Room+DataStore and Add Login, Register, and Logout feature with ViewModel
 🔹  Add Paging 3
 🔹  Combine RemoteMediator and Paging 3
