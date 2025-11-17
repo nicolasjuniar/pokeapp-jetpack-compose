@@ -18,12 +18,7 @@ fun NavGraph() {
     ) {
         composable(Screen.Auth.route) {
             AuthScreen(
-                onLogin = { _, _ ->
-                    navController.navigate(Screen.Main.route) {
-                        popUpTo(Screen.Auth.route) { inclusive = true }
-                    }
-                },
-                onRegister = { _, _ ->
+                openMainScreen = {
                     navController.navigate(Screen.Main.route) {
                         popUpTo(Screen.Auth.route) { inclusive = true }
                     }
