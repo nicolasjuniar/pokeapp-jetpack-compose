@@ -8,6 +8,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import juniar.nicolas.pokeapp.jetpackcompose.data.api.PokeApi
+import juniar.nicolas.pokeapp.jetpackcompose.data.datastore.SessionPreferences
 import juniar.nicolas.pokeapp.jetpackcompose.data.local.AppDatabase
 import juniar.nicolas.pokeapp.jetpackcompose.data.local.UserDao
 import juniar.nicolas.pokeapp.jetpackcompose.data.mapper.UserMapper
@@ -38,20 +39,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providePokemonRepository(api: PokeApi): PokemonRepository =
-        PokemonRepositoryImpl(api)
-
-    @Provides
-    @Singleton
     fun provideDatabase(
         @ApplicationContext context: Context
-    ): AppDatabase {
-        return Room.databaseBuilder(
-            context,
-            AppDatabase::class.java,
-            "pokeapp_db"
-        ).build()
-    }
+    ): AppDatabase = Room.databaseBuilder(
+        context,
+        AppDatabase::class.java,
+        "pokeapp_db"
+    ).build()
 
     @Provides
     @Singleton
@@ -63,20 +57,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(userDao: UserDao, userMapper: UserMapper): UserRepository =
-        UserRepositoryImpl(userDao, userMapper)
-
-    @Singleton
-    fun provideLoginUseCase(
-        userRepository: UserRepository
-    ): LoginUseCase {
-        return LoginUseCase(userRepository)
-    }
-
-    @Singleton
-    fun provideRegisterUseCase(
-        userRepository: UserRepository
-    ): RegisterUseCase {
-        return RegisterUseCase(userRepository)
-    }
+    fun provideSessionPreference(@ApplicationContext context: Context) =
+        SessionPreferences(context)
 }

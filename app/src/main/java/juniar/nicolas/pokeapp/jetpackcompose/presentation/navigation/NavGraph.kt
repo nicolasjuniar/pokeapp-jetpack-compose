@@ -7,6 +7,7 @@ import androidx.navigation.compose.rememberNavController
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.auth.AuthScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.detail.DetailScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.main.MainScreen
+import juniar.nicolas.pokeapp.jetpackcompose.presentation.splash.SplashScreen
 
 @Composable
 fun NavGraph() {
@@ -14,15 +15,14 @@ fun NavGraph() {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Auth.route
+        startDestination = Screen.Splash.route
     ) {
+        composable(Screen.Splash.route) {
+            SplashScreen(navController = navController)
+        }
+
         composable(Screen.Auth.route) {
-            AuthScreen(
-                openMainScreen = {
-                    navController.navigate(Screen.Main.route) {
-                        popUpTo(Screen.Auth.route) { inclusive = true }
-                    }
-                })
+            AuthScreen(navController = navController)
         }
 
         composable(Screen.Main.route) {

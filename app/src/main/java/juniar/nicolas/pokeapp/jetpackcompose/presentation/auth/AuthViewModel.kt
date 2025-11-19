@@ -10,6 +10,7 @@ import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.LoginResult
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.LoginUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.RegisterResult
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.RegisterUseCase
+import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.SaveLoggedUsernameUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -22,7 +23,8 @@ enum class AuthMode {
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val registerUseCase: RegisterUseCase,
-    private val loginUseCase: LoginUseCase
+    private val loginUseCase: LoginUseCase,
+    private val saveLoggedUsernameUseCase: SaveLoggedUsernameUseCase
 ) : ViewModel() {
     var authMode by mutableStateOf(AuthMode.LOGIN)
         private set
@@ -76,8 +78,10 @@ class AuthViewModel @Inject constructor(
             _authState.value = AuthState.Loading
 
             when (val result = registerUseCase.invoke(username, password)) {
-                is RegisterResult.Success ->
+                is RegisterResult.Success -> {
+                    saveLoggedUsernameUseCase.invoke(username)
                     _authState.value = AuthState.Success("Register Successful")
+                }
 
                 is RegisterResult.Error ->
                     _authState.value = AuthState.Error(result.message)
@@ -91,7 +95,10 @@ class AuthViewModel @Inject constructor(
 
             when (val result = loginUseCase.invoke(username, password)) {
                 is LoginResult.Success ->
+                {
+                    saveLoggedUsernameUseCase.invoke(username)
                     _authState.value = AuthState.Success("Login Successful")
+                }
 
                 is LoginResult.Error ->
                     _authState.value = AuthState.Error(result.message)

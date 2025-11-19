@@ -39,14 +39,17 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.components.LoadingOverlay
+import juniar.nicolas.pokeapp.jetpackcompose.presentation.navigation.Screen
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun AuthScreen(
     modifier: Modifier = Modifier,
+    navController: NavController,
     viewModel: AuthViewModel = hiltViewModel(),
-    openMainScreen: () -> Unit = {}
 ) {
     val authMode = viewModel.authMode
     val isLogin = authMode == AuthMode.LOGIN
@@ -69,7 +72,9 @@ fun AuthScreen(
             when (it) {
                 is AuthViewModel.AuthState.Success -> {
                     Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-                    openMainScreen.invoke()
+                    navController.navigate(Screen.Main.route) {
+                        popUpTo(Screen.Auth.route) { inclusive = true }
+                    }
                 }
 
                 is AuthViewModel.AuthState.Error -> {
@@ -212,6 +217,6 @@ fun AuthScreen(
 @Composable
 fun AuthScreenPreview() {
     MaterialTheme {
-        AuthScreen()
+        AuthScreen(navController = rememberNavController())
     }
 }

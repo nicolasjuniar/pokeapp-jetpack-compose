@@ -1,18 +1,23 @@
 package juniar.nicolas.pokeapp.jetpackcompose.presentation.main.list
 
+import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import juniar.nicolas.pokeapp.jetpackcompose.domain.model.Pokemon
+import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.GetLoggedUsernameUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.GetPokemonsUseCase
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ListViewModel @Inject constructor(
-    private val getPokemonsUseCase: GetPokemonsUseCase
+    private val getPokemonsUseCase: GetPokemonsUseCase,
 ) : ViewModel() {
 
     private val _pokemons = MutableStateFlow<List<Pokemon>>(listOf())
