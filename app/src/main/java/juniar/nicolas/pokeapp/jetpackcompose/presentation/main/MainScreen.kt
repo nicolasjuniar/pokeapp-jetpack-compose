@@ -28,6 +28,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import juniar.nicolas.pokeapp.jetpackcompose.presentation.components.SimpleDialog
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.main.favorite.FavoriteScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.main.list.ListScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.navigation.Screen
@@ -121,26 +122,14 @@ fun MainScreen(
     }
 
     if (showLogoutDialog) {
-        AlertDialog(
-            onDismissRequest = { showLogoutDialog = false },
-            title = { Text("Confirm Logout") },
-            text = { Text("Are you sure you want to logout?") },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        showLogoutDialog = false
-                        viewModel.logout()
-                    }
-                ) {
-                    Text("Yes")
-                }
+        SimpleDialog(
+            "Confirm Logout",
+            "Are you sure you want to logout",
+            showOnChange = {
+                showLogoutDialog = it
             },
-            dismissButton = {
-                TextButton(
-                    onClick = { showLogoutDialog = false }
-                ) {
-                    Text("No")
-                }
+            confirmOnClick = {
+                viewModel.logout()
             }
         )
     }
