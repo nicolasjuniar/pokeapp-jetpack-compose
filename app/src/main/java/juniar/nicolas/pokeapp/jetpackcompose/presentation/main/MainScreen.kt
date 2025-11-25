@@ -58,7 +58,8 @@ fun MainScreen(
             navController.navigateScreen(
                 Screen.Login.route,
                 Screen.Main.route,
-                true)
+                true
+            )
         }
     }
 
@@ -111,17 +112,13 @@ fun MainScreen(
             composable(Screen.List.route) {
                 ListScreen(
                     modifier = Modifier.fillMaxSize(),
-                    openDetail = {
-                        navController.navigate(Screen.Detail.route)
-                    }
+                    navController = navController
                 )
             }
             composable(Screen.Favorite.route) {
                 FavoriteScreen(
                     modifier = Modifier.fillMaxSize(),
-                    openDetail = {
-                        navController.navigate(Screen.Detail.route)
-                    }
+                    navController = navController
                 )
             }
         }

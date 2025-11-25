@@ -59,7 +59,7 @@ fun LoginScreen(
         }
     }
 
-    BaseScreen(viewModel) {
+    BaseScreen(viewModel = viewModel) {
         Surface(modifier = modifier.fillMaxSize()) {
             Column(
                 modifier = Modifier

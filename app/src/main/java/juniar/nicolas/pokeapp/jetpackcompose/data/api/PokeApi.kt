@@ -1,7 +1,9 @@
 package juniar.nicolas.pokeapp.jetpackcompose.data.api
 
+import juniar.nicolas.pokeapp.jetpackcompose.data.dto.DetailPokemonResponse
 import juniar.nicolas.pokeapp.jetpackcompose.data.dto.PokemonResponse
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface PokeApi {
@@ -10,4 +12,7 @@ interface PokeApi {
         @Query("offset") offset: Int = 0,
         @Query("limit") limit: Int = 10
     ): PokemonResponse
+
+    @GET("pokemon/{pokemonName}")
+    suspend fun getDetailPokemon(@Path("pokemonName") pokemonName: String): DetailPokemonResponse
 }

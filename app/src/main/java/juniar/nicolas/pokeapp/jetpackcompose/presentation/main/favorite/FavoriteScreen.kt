@@ -11,10 +11,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import juniar.nicolas.pokeapp.jetpackcompose.core.navigateScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.main.list.PokemonItem
+import juniar.nicolas.pokeapp.jetpackcompose.presentation.navigation.Screen
 
 @Composable
-fun FavoriteScreen(modifier: Modifier = Modifier, openDetail: () -> Unit = {}) {
+fun FavoriteScreen(
+    modifier: Modifier = Modifier,
+    navController: NavController = rememberNavController()
+) {
     val items = List(10) { "Favorite #${it + 1}" }
 
     LazyVerticalGrid(
@@ -27,7 +34,7 @@ fun FavoriteScreen(modifier: Modifier = Modifier, openDetail: () -> Unit = {}) {
     ) {
         itemsIndexed(items) { index, value ->
             PokemonItem(value, index + 1) {
-                openDetail.invoke()
+                navController.navigateScreen(Screen.Detail.createRoute("bulbasaur"))
             }
         }
     }

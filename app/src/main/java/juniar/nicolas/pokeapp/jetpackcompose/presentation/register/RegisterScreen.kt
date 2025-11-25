@@ -61,7 +61,7 @@ fun RegisterScreen(
         }
     }
 
-    BaseScreen(viewModel) {
+    BaseScreen(viewModel = viewModel) {
 
         Surface(modifier = modifier.fillMaxSize()) {
             Column(

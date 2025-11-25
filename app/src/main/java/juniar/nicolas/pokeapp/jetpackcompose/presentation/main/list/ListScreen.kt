@@ -25,15 +25,19 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.rememberAsyncImagePainter
 import juniar.nicolas.pokeapp.jetpackcompose.core.Constant.Companion.POKEMON_IMAGE_URL
+import juniar.nicolas.pokeapp.jetpackcompose.core.navigateScreen
+import juniar.nicolas.pokeapp.jetpackcompose.presentation.navigation.Screen
 
 @Composable
 fun ListScreen(
     modifier: Modifier = Modifier,
     viewModel: ListViewModel = hiltViewModel(),
-    openDetail: () -> Unit = {}
+    navController: NavController = rememberNavController()
 ) {
     val pagingItems = viewModel.pokemons.collectAsLazyPagingItems()
 
@@ -58,7 +62,9 @@ fun ListScreen(
                     val item = pagingItems[index]
                     if (item != null) {
                         PokemonItem(item.name, item.pokedexNumber) {
-                            openDetail.invoke()
+                            navController.navigateScreen(
+                                Screen.Detail.createRoute(item.name)
+                            )
                         }
                     }
                 }
