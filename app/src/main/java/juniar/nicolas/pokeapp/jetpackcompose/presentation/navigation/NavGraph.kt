@@ -4,9 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import juniar.nicolas.pokeapp.jetpackcompose.presentation.auth.AuthScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.detail.DetailScreen
+import juniar.nicolas.pokeapp.jetpackcompose.presentation.login.LoginScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.main.MainScreen
+import juniar.nicolas.pokeapp.jetpackcompose.presentation.register.RegisterScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.splash.SplashScreen
 
 @Composable
@@ -21,8 +22,12 @@ fun NavGraph() {
             SplashScreen(navController = navController)
         }
 
-        composable(Screen.Auth.route) {
-            AuthScreen(navController = navController)
+        composable(Screen.Login.route) {
+            LoginScreen(navController = navController)
+        }
+
+        composable(Screen.Register.route) {
+            RegisterScreen(navController = navController)
         }
 
         composable(Screen.Main.route) {

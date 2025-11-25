@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -22,12 +21,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import juniar.nicolas.pokeapp.jetpackcompose.core.showToast
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.components.SimpleDialog
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.main.favorite.FavoriteScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.main.list.ListScreen
@@ -48,9 +49,12 @@ fun MainScreen(
 
     var showLogoutDialog by remember { mutableStateOf(false) }
 
+    val context = LocalContext.current
+
     LaunchedEffect(Unit) {
         viewModel.logoutEvent.collect {
-            navController.navigate(Screen.Auth.route) {
+            context.showToast("Logout Successful")
+            navController.navigate(Screen.Login.route) {
                 popUpTo(Screen.Main.route) { inclusive = true }
             }
         }

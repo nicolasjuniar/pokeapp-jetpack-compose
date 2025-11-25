@@ -1,23 +1,19 @@
 package juniar.nicolas.pokeapp.jetpackcompose.domain.usecase
 
 import juniar.nicolas.pokeapp.jetpackcompose.domain.repository.UserRepository
+import juniar.nicolas.pokeapp.jetpackcompose.presentation.common.ResultWrapper
 import javax.inject.Inject
-
-sealed class LoginResult {
-    object Success : LoginResult()
-    data class Error(val message: String) : LoginResult()
-}
 
 class LoginUseCase @Inject constructor(
     private val userRepository: UserRepository
 ) {
 
-    suspend operator fun invoke(username:String,password:String): LoginResult {
+    suspend operator fun invoke(username:String,password:String): ResultWrapper<Unit> {
         val result = userRepository.getUsername(username, password)
         return if(result!=null) {
-            LoginResult.Success
+            ResultWrapper.Success(Unit)
         } else {
-            LoginResult.Error("Invalid Username or Password")
+            ResultWrapper.Error("Invalid Username or Password")
         }
     }
 }
