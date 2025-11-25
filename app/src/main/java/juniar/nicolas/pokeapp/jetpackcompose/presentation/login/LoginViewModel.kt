@@ -10,7 +10,7 @@ import juniar.nicolas.pokeapp.jetpackcompose.core.hash
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.LoginUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.SaveLoggedUsernameUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.common.BaseViewModel
-import juniar.nicolas.pokeapp.jetpackcompose.presentation.common.ResultWrapper
+import juniar.nicolas.pokeapp.jetpackcompose.core.ResultWrapper
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch

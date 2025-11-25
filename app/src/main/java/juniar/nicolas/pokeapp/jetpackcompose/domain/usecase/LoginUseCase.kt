@@ -1,7 +1,7 @@
 package juniar.nicolas.pokeapp.jetpackcompose.domain.usecase
 
 import juniar.nicolas.pokeapp.jetpackcompose.domain.repository.UserRepository
-import juniar.nicolas.pokeapp.jetpackcompose.presentation.common.ResultWrapper
+import juniar.nicolas.pokeapp.jetpackcompose.core.ResultWrapper
 import javax.inject.Inject
 
 class LoginUseCase @Inject constructor(

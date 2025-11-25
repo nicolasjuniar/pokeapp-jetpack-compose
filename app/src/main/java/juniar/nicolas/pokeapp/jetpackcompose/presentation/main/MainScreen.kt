@@ -28,6 +28,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import juniar.nicolas.pokeapp.jetpackcompose.core.navigateScreen
 import juniar.nicolas.pokeapp.jetpackcompose.core.showToast
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.components.SimpleDialog
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.main.favorite.FavoriteScreen
@@ -54,9 +55,10 @@ fun MainScreen(
     LaunchedEffect(Unit) {
         viewModel.logoutEvent.collect {
             context.showToast("Logout Successful")
-            navController.navigate(Screen.Login.route) {
-                popUpTo(Screen.Main.route) { inclusive = true }
-            }
+            navController.navigateScreen(
+                Screen.Login.route,
+                Screen.Main.route,
+                true)
         }
     }
 
