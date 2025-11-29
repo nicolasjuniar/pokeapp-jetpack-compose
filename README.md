@@ -1,6 +1,6 @@
 # 🧬 PokeApp Jetpack Compose
 
-**Personal project to practice Jetpack Compose + Clean Architecture using PokeAPI**
+**Personal project to learn Jetpack Compose + Clean Architecture using PokeAPI**
 
 A fully Jetpack Compose Android application built with modern Android development tools and Clean Architecture.
 This project showcases authentication, persistent sessions, modularization, profile features, and complete Pokémon listing powered by Paging 3 + Remote Mediator.
@@ -92,6 +92,7 @@ This project showcases authentication, persistent sessions, modularization, prof
 - [x] Fetch Pokémon detail + detail screen
 - [ ] Add favorite feature using Paging 3
 - [x] Create GitHub Action to build APK
+- [ ] Add ProGuard rules
 - [ ] Polish Project and Update All Depedencies
 
 ### v1.1 Enhancements
@@ -103,7 +104,6 @@ This project showcases authentication, persistent sessions, modularization, prof
 - [ ] Implement Profile feature
 - [ ] Add Unit Test + Jacoco report in GitHub Actions
 - [ ] Modularization
-- [ ] Add ProGuard rules
 
 ---
 
