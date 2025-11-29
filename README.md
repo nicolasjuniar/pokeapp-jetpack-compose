@@ -37,8 +37,8 @@ This project showcases authentication, persistent sessions, modularization, prof
 ### Tooling / DevOps
 
 - CI/CD with GitHub Actions
-- Detekt (v1.1)
-- Jacoco (v1.1)
+- Detekt Report (v1.1)
+- Jacoco Report (v1.1)
 - JUnit (v1.1)
 
 ### Debug Tools
@@ -96,13 +96,13 @@ This project showcases authentication, persistent sessions, modularization, prof
 
 ### v1.1 Enhancements
 
-- [x] Add LeakCanary & Chucker
-- [x] Add Detekt + report in GitHub Actions
-- [x] Separate signing config for local project and GitHub Actions
-- [x] Add CameraX + runtime permissions
-- [x] Implement Profile feature
-- [x] Add Unit Test + Jacoco report in GitHub Actions
-- [x] Modularization
+- [ ] Add LeakCanary & Chucker
+- [ ] Add Detekt + report in GitHub Actions
+- [ ] Separate signing config for local project and GitHub Actions
+- [ ] Add CameraX + runtime permissions
+- [ ] Implement Profile feature
+- [ ] Add Unit Test + Jacoco report in GitHub Actions
+- [ ] Modularization
 - [ ] Add ProGuard rules
 
 ---
