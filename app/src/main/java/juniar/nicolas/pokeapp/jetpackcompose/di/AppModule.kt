@@ -10,14 +10,7 @@ import dagger.hilt.components.SingletonComponent
 import juniar.nicolas.pokeapp.jetpackcompose.data.api.PokeApi
 import juniar.nicolas.pokeapp.jetpackcompose.data.datastore.SessionPreferences
 import juniar.nicolas.pokeapp.jetpackcompose.data.local.AppDatabase
-import juniar.nicolas.pokeapp.jetpackcompose.data.local.UserDao
 import juniar.nicolas.pokeapp.jetpackcompose.data.mapper.UserMapper
-import juniar.nicolas.pokeapp.jetpackcompose.data.repository.PokemonRepositoryImpl
-import juniar.nicolas.pokeapp.jetpackcompose.data.repository.UserRepositoryImpl
-import juniar.nicolas.pokeapp.jetpackcompose.domain.repository.PokemonRepository
-import juniar.nicolas.pokeapp.jetpackcompose.domain.repository.UserRepository
-import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.LoginUseCase
-import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.RegisterUseCase
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -45,7 +38,7 @@ object AppModule {
         context,
         AppDatabase::class.java,
         "pokeapp_db"
-    ).build()
+    ).fallbackToDestructiveMigration(false).build()
 
     @Provides
     @Singleton

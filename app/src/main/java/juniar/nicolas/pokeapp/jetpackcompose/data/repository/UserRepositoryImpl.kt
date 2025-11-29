@@ -1,6 +1,6 @@
 package juniar.nicolas.pokeapp.jetpackcompose.data.repository
 
-import juniar.nicolas.pokeapp.jetpackcompose.data.local.UserDao
+import juniar.nicolas.pokeapp.jetpackcompose.data.local.dao.UserDao
 import juniar.nicolas.pokeapp.jetpackcompose.data.mapper.UserMapper
 import juniar.nicolas.pokeapp.jetpackcompose.domain.model.User
 import juniar.nicolas.pokeapp.jetpackcompose.domain.repository.UserRepository

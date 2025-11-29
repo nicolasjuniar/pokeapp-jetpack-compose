@@ -6,7 +6,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import juniar.nicolas.pokeapp.jetpackcompose.data.api.PokeApi
 import juniar.nicolas.pokeapp.jetpackcompose.data.datastore.SessionPreferences
-import juniar.nicolas.pokeapp.jetpackcompose.data.local.UserDao
+import juniar.nicolas.pokeapp.jetpackcompose.data.local.AppDatabase
+import juniar.nicolas.pokeapp.jetpackcompose.data.local.dao.UserDao
 import juniar.nicolas.pokeapp.jetpackcompose.data.mapper.UserMapper
 import juniar.nicolas.pokeapp.jetpackcompose.data.repository.PokemonRepositoryImpl
 import juniar.nicolas.pokeapp.jetpackcompose.data.repository.SessionRepositoryImpl
@@ -22,8 +23,8 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun providePokemonRepository(api: PokeApi): PokemonRepository =
-        PokemonRepositoryImpl(api)
+    fun providePokemonRepository(api: PokeApi, database: AppDatabase): PokemonRepository =
+        PokemonRepositoryImpl(api, database)
 
     @Provides
     @Singleton

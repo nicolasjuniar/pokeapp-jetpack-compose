@@ -1,5 +1,7 @@
 package juniar.nicolas.pokeapp.jetpackcompose.domain.model
 
+import juniar.nicolas.pokeapp.jetpackcompose.data.dto.PokemonAbility
+
 data class DetailPokemon(
     val id: Int,
     val name: String,
@@ -9,7 +11,7 @@ data class DetailPokemon(
     val baseExperience: Int,
     val types: List<String>,
     val stats: List<Stat>,
-    val abilities: List<String>,
+    val abilities: List<PokemonAbility>,
 )
 
 data class Stat(val name: String, val value: Int)

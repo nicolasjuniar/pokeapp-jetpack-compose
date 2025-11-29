@@ -1,9 +1,10 @@
-package juniar.nicolas.pokeapp.jetpackcompose.data.local
+package juniar.nicolas.pokeapp.jetpackcompose.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import juniar.nicolas.pokeapp.jetpackcompose.data.local.entity.UserEntity
 
 @Dao
 interface UserDao {

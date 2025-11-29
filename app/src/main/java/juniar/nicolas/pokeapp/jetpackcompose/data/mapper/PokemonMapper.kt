@@ -15,6 +15,6 @@ fun DetailPokemonResponse.toDomain(): DetailPokemon {
         baseExperience = baseExperience,
         types = types.map { it.type.name },
         stats = stats.map { Stat(it.stat.name, it.baseStat) },
-        abilities = abilities.map { it.ability.name + if (it.isHidden) " (hidden)" else "" },
+        abilities = abilities,
     )
 }

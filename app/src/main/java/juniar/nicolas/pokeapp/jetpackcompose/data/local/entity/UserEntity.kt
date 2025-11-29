@@ -1,4 +1,4 @@
-package juniar.nicolas.pokeapp.jetpackcompose.data.local
+package juniar.nicolas.pokeapp.jetpackcompose.data.local.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

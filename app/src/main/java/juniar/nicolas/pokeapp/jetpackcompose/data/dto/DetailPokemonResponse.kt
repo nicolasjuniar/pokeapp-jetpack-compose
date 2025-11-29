@@ -14,28 +14,28 @@ data class DetailPokemonResponse(
     @SerializedName("base_experience")
     val baseExperience: Int,
     @SerializedName("types")
-    val types: List<TypeSlot>,
+    val types: List<PokemonType>,
     @SerializedName("stats")
-    val stats: List<StatSlot>,
+    val stats: List<PokemonStat>,
     @SerializedName("abilities")
-    val abilities: List<AbilitySlot>,
+    val abilities: List<PokemonAbility>,
 )
 
-data class TypeSlot(
+data class PokemonType(
     @SerializedName("slot")
     val slot: Int,
     @SerializedName("type")
     val type: NamedResource
 )
 
-data class StatSlot(
+data class PokemonStat(
     @SerializedName("base_stat")
     val baseStat: Int,
     @SerializedName("stat")
     val stat: NamedResource
 )
 
-data class AbilitySlot(
+data class PokemonAbility(
     @SerializedName("ability")
     val ability: NamedResource,
     @SerializedName("is_hidden")

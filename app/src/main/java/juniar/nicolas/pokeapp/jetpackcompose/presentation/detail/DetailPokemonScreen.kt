@@ -1,11 +1,13 @@
 package juniar.nicolas.pokeapp.jetpackcompose.presentation.detail
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -32,7 +34,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
+import juniar.nicolas.pokeapp.jetpackcompose.data.dto.NamedResource
+import juniar.nicolas.pokeapp.jetpackcompose.data.dto.PokemonAbility
 import juniar.nicolas.pokeapp.jetpackcompose.domain.model.DetailPokemon
+import juniar.nicolas.pokeapp.jetpackcompose.domain.model.Stat
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.common.BaseScreen
 
 @Composable
@@ -58,117 +63,168 @@ fun PokemonDetailScreen(
 
 @Composable
 fun PokemonDetailContent(pokemon: DetailPokemon, modifier: Modifier = Modifier) {
-    val bgColor = typeColor(pokemon.types.firstOrNull())
     Surface(modifier = modifier.fillMaxSize()) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            item { PokemonHeader(pokemon) }
+
             item {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    AsyncImage(
-                        model = pokemon.imageUrl,
-                        contentDescription = pokemon.name,
-                        modifier = Modifier.size(180.dp),
-                    )
-                }
-                Spacer(modifier = Modifier.height(12.dp))
-                Text(
-                    pokemon.name.replaceFirstChar { it.uppercase() },
-                    fontSize = 28.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    "#${pokemon.id}",
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                )
-                Spacer(modifier = Modifier.height(12.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    InfoChip(label = "Height", value = "${pokemon.heightCm} cm")
-                    InfoChip(label = "Weight", value = "${pokemon.weightKg} kg")
-                    InfoChip(label = "Base XP", value = "${pokemon.baseExperience}")
+                    InfoChip("Height", "${pokemon.heightCm} cm")
+                    InfoChip("Weight", "${pokemon.weightKg} kg")
+                    InfoChip("Base XP", "${pokemon.baseExperience}")
                 }
-                Spacer(modifier = Modifier.height(16.dp))
+            }
+
+            item {
                 Text("Types", style = MaterialTheme.typography.titleMedium)
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     pokemon.types.forEach { TypeChip(it) }
                 }
-                Spacer(modifier = Modifier.height(16.dp))
+            }
+
+            item {
+                Text("Abilities", style = MaterialTheme.typography.titleMedium)
+                AbilitySection(pokemon.abilities.splitAbility())
+            }
+
+            item {
                 Text("Stats", style = MaterialTheme.typography.titleMedium)
-            }
+                val total = pokemon.stats.sumOf { it.value }
 
-            item {
-                Spacer(modifier = Modifier.height(8.dp))
-                pokemon.stats.forEach { stat ->
-                    StatRow(name = stat.name, value = stat.value)
+                Text(
+                    text = "Base Stat Total: $total",
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 14.sp,
+                    color = Color(0xFF222222),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp)
+                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    pokemon.stats.take(3).forEach { stat ->
+                        InfoChip(
+                            label = stat.name,
+                            value = stat.value.toString(),
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
                 }
-            }
-
-            item {
-                Spacer(modifier = Modifier.height(16.dp))
-                Text("Ability", style = MaterialTheme.typography.titleMedium)
-                Text(pokemon.abilities[0] ?: "-")
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(Modifier.height(10.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    pokemon.stats.takeLast(3).forEach { stat ->
+                        InfoChip(
+                            label = stat.name,
+                            value = stat.value.toString(),
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
+                }
             }
         }
     }
 }
 
 @Composable
-fun InfoChip(label: String, value: String) {
+fun PokemonHeader(pokemon: DetailPokemon) {
     Column(
-        Modifier
-            .background(Color(0xFFEFEFEF), RoundedCornerShape(12.dp))
-            .padding(12.dp)
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxWidth()
     ) {
-        Text(label, fontSize = 12.sp, color = Color.Gray)
-        Text(value, fontWeight = FontWeight.Bold)
+        AsyncImage(
+            model = pokemon.imageUrl,
+            contentDescription = pokemon.name,
+            modifier = Modifier.size(180.dp)
+        )
+
+        Spacer(Modifier.height(16.dp))
+
+        Surface(
+            shape = RoundedCornerShape(16.dp),
+            tonalElevation = 2.dp,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column(
+                Modifier.padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "${formatPokedexId(pokemon.id)} ${pokemon.name.replaceFirstChar { it.uppercase() }}",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 22.sp
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun InfoChip(label: String, value: String, modifier: Modifier = Modifier) {
+    Surface(
+        modifier = modifier,
+        shape = RoundedCornerShape(12.dp),
+        color = MaterialTheme.colorScheme.surfaceVariant
+    ) {
+        Column(
+            modifier.padding(12.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(label, style = MaterialTheme.typography.labelSmall)
+            Text(value, style = MaterialTheme.typography.titleMedium)
+        }
     }
 }
 
 @Composable
 fun TypeChip(name: String) {
-    Box(
-        Modifier
-            .background(typeColor(name), RoundedCornerShape(12.dp))
-            .padding(horizontal = 12.dp, vertical = 6.dp)
+    Surface(
+        color = typeColor(name),
+        shape = RoundedCornerShape(8.dp)
     ) {
-        Text(name.uppercase(), fontWeight = FontWeight.Bold)
+        Text(
+            name.uppercase(),
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+            color = Color.White,
+            fontWeight = FontWeight.SemiBold
+        )
     }
 }
 
 @Composable
-fun StatRow(
-    name: String,
-    value: Int,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
+fun AbilitySection(text: String) {
+    Surface(
+        shape = RoundedCornerShape(12.dp),
+        tonalElevation = 1.dp,
+        modifier = Modifier.fillMaxWidth()
     ) {
         Text(
-            text = name,
-            style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.weight(1f)
-        )
-
-        Text(
-            text = value.toString(),
-            style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.weight(1f),
-            textAlign = TextAlign.End
+            text = text,
+            color = Color.Black.copy(alpha = 0.85f),
+            modifier = Modifier.padding(16.dp),
+            style = MaterialTheme.typography.bodyLarge
         )
     }
 }
 
+fun List<PokemonAbility>.splitAbility() = joinToString(" - ") {
+    it.ability.name + if (it.isHidden) " (Hidden Ability)" else ""
+}
+
+fun formatPokedexId(id: Int): String {
+    return "#${id.toString().padStart(3, '0')}"
+}
 
 fun typeColor(type: String?): Color {
     return when (type?.lowercase()) {
