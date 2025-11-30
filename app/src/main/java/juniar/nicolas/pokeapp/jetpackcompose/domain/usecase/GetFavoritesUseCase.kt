@@ -1,0 +1,14 @@
+package juniar.nicolas.pokeapp.jetpackcompose.domain.usecase
+
+import androidx.paging.PagingData
+import juniar.nicolas.pokeapp.jetpackcompose.domain.model.Pokemon
+import juniar.nicolas.pokeapp.jetpackcompose.domain.repository.FavoriteRepository
+import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
+
+class GetFavoritesUseCase @Inject constructor(
+    private val favoriteRepository: FavoriteRepository
+) {
+    operator fun invoke(username: String): Flow<PagingData<Pokemon>> =
+        favoriteRepository.getFavoritePokemons(username)
+}

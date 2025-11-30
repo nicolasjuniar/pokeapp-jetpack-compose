@@ -90,9 +90,9 @@ This project showcases authentication, persistent sessions, modularization, prof
 - [x] Implement Paging 3
 - [x] Combine RemoteMediator + Paging 3
 - [x] Fetch Pokémon detail + detail screen
-- [ ] Add favorite feature using Paging 3
+- [x] Add favorite feature using Paging 3
 - [x] Create GitHub Action to build APK
-- [ ] Add ProGuard rules
+- [x] Add ProGuard rules
 - [ ] Polish Project and Update All Depedencies
 
 ### v1.1 Enhancements

@@ -6,12 +6,17 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import juniar.nicolas.pokeapp.jetpackcompose.data.local.entity.FavoriteEntity
+import juniar.nicolas.pokeapp.jetpackcompose.data.local.entity.PokemonEntity
 
 @Dao
 interface FavoriteDao {
 
-    @Query("SELECT * FROM favorites WHERE username = :username")
-    fun getListFavoriteByUsername(username: String): PagingSource<Int, FavoriteEntity>
+    @Query("SELECT p.* FROM pokemons p " +
+            "INNER JOIN favorites f " +
+            "ON p.id = f.pokemonId " +
+            "WHERE f.username = :username " +
+            "ORDER BY p.id ASC")
+    fun getFavoritePokemons(username: String): PagingSource<Int, PokemonEntity>
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insert(favoriteEntity: FavoriteEntity)

@@ -29,9 +29,21 @@ android {
         }
     }
 
+    applicationVariants.all {
+        val variant = this
+        val version = variant.versionName
+        val appName = "pokeapp v$version.apk"
+        variant.outputs
+            .map { it as com.android.build.gradle.internal.api.BaseVariantOutputImpl }
+            .forEach { output ->
+                output.outputFileName = appName
+            }
+    }
+
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),

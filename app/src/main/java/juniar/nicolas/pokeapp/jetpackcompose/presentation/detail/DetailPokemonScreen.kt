@@ -1,6 +1,7 @@
 package juniar.nicolas.pokeapp.jetpackcompose.presentation.detail
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +12,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -24,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -40,88 +47,88 @@ fun PokemonDetailScreen(
     navController: NavController = rememberNavController(),
     viewModel: PokemonDetailViewModel = hiltViewModel()
 ) {
+    val isFavorite by viewModel.isFavorite.collectAsState()
+
+    LaunchedEffect(pokedexNumber) {
+        viewModel.setPokedexNumber(pokedexNumber)
+    }
+
     LaunchedEffect(pokedexNumber) { viewModel.getDetailPokemon(pokedexNumber) }
 
     val detailPokemon by viewModel.detailPokemon.collectAsState(initial = null)
+
     detailPokemon?.let {
         BaseScreen(
             viewModel = viewModel,
             navController = navController
         ) {
-            PokemonDetailContent(pokemon = it, modifier = modifier)
-        }
-    }
-}
+            LazyColumn(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                item { PokemonHeader(it, isFavorite, viewModel) }
 
-@Composable
-fun PokemonDetailContent(pokemon: DetailPokemon, modifier: Modifier = Modifier) {
-    Surface(modifier = modifier.fillMaxSize()) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            item { PokemonHeader(pokemon) }
-
-            item {
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    InfoChip("Height", "${pokemon.heightCm} cm")
-                    InfoChip("Weight", "${pokemon.weightKg} kg")
-                    InfoChip("Base XP", "${pokemon.baseExperience}")
-                }
-            }
-
-            item {
-                Text("Types", style = MaterialTheme.typography.titleMedium)
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    pokemon.types.forEach { TypeChip(it) }
-                }
-            }
-
-            item {
-                Text("Abilities", style = MaterialTheme.typography.titleMedium)
-                AbilitySection(pokemon.abilities.splitAbility())
-            }
-
-            item {
-                Text("Stats", style = MaterialTheme.typography.titleMedium)
-                val total = pokemon.stats.sumOf { it.value }
-
-                Text(
-                    text = "Base Stat Total: $total",
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 14.sp,
-                    color = Color(0xFF222222),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 8.dp)
-                )
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    pokemon.stats.take(3).forEach { stat ->
-                        InfoChip(
-                            label = stat.name,
-                            value = stat.value.toString(),
-                            modifier = Modifier.weight(1f)
-                        )
+                item {
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        InfoChip("Height", "${it.heightCm} cm")
+                        InfoChip("Weight", "${it.weightKg} kg")
+                        InfoChip("Base XP", "${it.baseExperience}")
                     }
                 }
-                Spacer(Modifier.height(10.dp))
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    pokemon.stats.takeLast(3).forEach { stat ->
-                        InfoChip(
-                            label = stat.name,
-                            value = stat.value.toString(),
-                            modifier = Modifier.weight(1f)
-                        )
+
+                item {
+                    Text("Types", style = MaterialTheme.typography.titleMedium)
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        it.types.forEach { TypeChip(it) }
+                    }
+                }
+
+                item {
+                    Text("Abilities", style = MaterialTheme.typography.titleMedium)
+                    AbilitySection(it.abilities.splitAbility())
+                }
+
+                item {
+                    Text("Stats", style = MaterialTheme.typography.titleMedium)
+                    val total = it.stats.sumOf { it.value }
+
+                    Text(
+                        text = "Base Stat Total: $total",
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 14.sp,
+                        color = Color(0xFF222222),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 8.dp)
+                    )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        it.stats.take(3).forEach { stat ->
+                            InfoChip(
+                                label = stat.name,
+                                value = stat.value.toString(),
+                                modifier = Modifier.weight(1f)
+                            )
+                        }
+                    }
+                    Spacer(Modifier.height(10.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        it.stats.takeLast(3).forEach { stat ->
+                            InfoChip(
+                                label = stat.name,
+                                value = stat.value.toString(),
+                                modifier = Modifier.weight(1f)
+                            )
+                        }
                     }
                 }
             }
@@ -130,16 +137,38 @@ fun PokemonDetailContent(pokemon: DetailPokemon, modifier: Modifier = Modifier) 
 }
 
 @Composable
-fun PokemonHeader(pokemon: DetailPokemon) {
+fun PokemonHeader(pokemon: DetailPokemon, isFavorite: Boolean, viewModel: PokemonDetailViewModel) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxWidth()
     ) {
-        AsyncImage(
-            model = pokemon.imageUrl,
-            contentDescription = pokemon.name,
-            modifier = Modifier.size(180.dp)
-        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            IconButton(
+                onClick = { viewModel.updateFavorite() },
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .zIndex(2f)
+                    .padding(end = 16.dp)
+            ) {
+                Icon(
+                    imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                    contentDescription = "Favorite",
+                    tint = if (isFavorite) Color.Red else MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.size(28.dp)
+                )
+            }
+            AsyncImage(
+                model = pokemon.imageUrl,
+                contentDescription = pokemon.name,
+                modifier = Modifier
+                    .size(180.dp)
+                    .align(Alignment.Center)
+                    .fillMaxWidth()
+            )
+        }
 
         Spacer(Modifier.height(16.dp))
 

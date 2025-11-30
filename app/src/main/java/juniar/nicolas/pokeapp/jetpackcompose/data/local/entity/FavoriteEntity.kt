@@ -3,6 +3,7 @@ package juniar.nicolas.pokeapp.jetpackcompose.data.local.entity
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
+import androidx.room.ForeignKey.Companion.NO_ACTION
 import androidx.room.Index
 
 @Entity(
@@ -13,13 +14,13 @@ import androidx.room.Index
             entity = UserEntity::class,
             parentColumns = ["username"],
             childColumns = ["username"],
-            onDelete = CASCADE
+            onDelete = NO_ACTION
         ),
         ForeignKey(
             entity = PokemonEntity::class,
             parentColumns = ["id"],
             childColumns = ["pokemonId"],
-            onDelete = CASCADE
+            onDelete = NO_ACTION
         )
     ],
     indices = [

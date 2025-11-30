@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.GetLoggedUsernameUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.LogoutUseCase
+import juniar.nicolas.pokeapp.jetpackcompose.presentation.common.BaseViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asSharedFlow
@@ -16,7 +17,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     getLoggedUsernameUseCase: GetLoggedUsernameUseCase,
     private val logoutUseCase: LogoutUseCase
-) : ViewModel() {
+) : BaseViewModel() {
 
     val username = getLoggedUsernameUseCase()
         .stateIn(viewModelScope, SharingStarted.Eagerly, "")

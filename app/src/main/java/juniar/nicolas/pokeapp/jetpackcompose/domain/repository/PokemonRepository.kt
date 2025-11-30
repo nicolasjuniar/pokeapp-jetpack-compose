@@ -8,6 +8,6 @@ import juniar.nicolas.pokeapp.jetpackcompose.domain.model.Pokemon
 import kotlinx.coroutines.flow.Flow
 
 interface PokemonRepository {
-    fun getPokemons(): Flow<PagingData<PokemonEntity>>
+    fun getPokemons(): Flow<PagingData<Pokemon>>
     suspend fun getDetailPokemon(pokedexNumber: Int): ResultWrapper<DetailPokemon>
 }

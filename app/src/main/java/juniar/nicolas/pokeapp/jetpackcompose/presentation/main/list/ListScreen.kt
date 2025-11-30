@@ -61,9 +61,9 @@ fun ListScreen(
                 items(count = pagingItems.itemCount) { index ->
                     val item = pagingItems[index]
                     if (item != null) {
-                        PokemonItem(item.name, item.id) {
+                        PokemonItem(item.name, item.pokedexNumber) {
                             navController.navigateScreen(
-                                Screen.Detail.createRoute(item.id)
+                                Screen.Detail.createRoute(item.pokedexNumber)
                             )
                         }
                     }

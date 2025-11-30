@@ -8,14 +8,15 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import juniar.nicolas.pokeapp.jetpackcompose.data.local.entity.PokemonEntity
 import juniar.nicolas.pokeapp.jetpackcompose.domain.model.Pokemon
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.GetPokemonsUseCase
+import juniar.nicolas.pokeapp.jetpackcompose.presentation.common.BaseViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
 class ListViewModel @Inject constructor(
     getPokemonsUseCase: GetPokemonsUseCase,
-) : ViewModel() {
+) : BaseViewModel() {
 
-    val pokemons: Flow<PagingData<PokemonEntity>> = getPokemonsUseCase()
+    val pokemons: Flow<PagingData<Pokemon>> = getPokemonsUseCase()
         .cachedIn(viewModelScope)
 }

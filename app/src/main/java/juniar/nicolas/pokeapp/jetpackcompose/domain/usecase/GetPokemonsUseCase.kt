@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetPokemonsUseCase @Inject constructor(
-    private val repository: PokemonRepository
+    private val pokemonRepository: PokemonRepository
 ) {
-    operator fun invoke(): Flow<PagingData<PokemonEntity>> = repository.getPokemons()
+    operator fun invoke(): Flow<PagingData<Pokemon>> = pokemonRepository.getPokemons()
 }

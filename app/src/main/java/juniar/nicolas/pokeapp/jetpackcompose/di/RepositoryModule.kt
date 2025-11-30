@@ -7,12 +7,16 @@ import dagger.hilt.components.SingletonComponent
 import juniar.nicolas.pokeapp.jetpackcompose.data.api.PokeApi
 import juniar.nicolas.pokeapp.jetpackcompose.data.datastore.SessionPreferences
 import juniar.nicolas.pokeapp.jetpackcompose.data.local.AppDatabase
+import juniar.nicolas.pokeapp.jetpackcompose.data.local.dao.FavoriteDao
 import juniar.nicolas.pokeapp.jetpackcompose.data.local.dao.UserDao
+import juniar.nicolas.pokeapp.jetpackcompose.data.mapper.FavoriteMapper
 import juniar.nicolas.pokeapp.jetpackcompose.data.mapper.PokemonMapper
 import juniar.nicolas.pokeapp.jetpackcompose.data.mapper.UserMapper
+import juniar.nicolas.pokeapp.jetpackcompose.data.repository.FavoriteRepositoryImpl
 import juniar.nicolas.pokeapp.jetpackcompose.data.repository.PokemonRepositoryImpl
 import juniar.nicolas.pokeapp.jetpackcompose.data.repository.SessionRepositoryImpl
 import juniar.nicolas.pokeapp.jetpackcompose.data.repository.UserRepositoryImpl
+import juniar.nicolas.pokeapp.jetpackcompose.domain.repository.FavoriteRepository
 import juniar.nicolas.pokeapp.jetpackcompose.domain.repository.PokemonRepository
 import juniar.nicolas.pokeapp.jetpackcompose.domain.repository.SessionRepository
 import juniar.nicolas.pokeapp.jetpackcompose.domain.repository.UserRepository
@@ -40,4 +44,12 @@ object RepositoryModule {
     @Singleton
     fun provideSessionRepository(sessionPreferences: SessionPreferences): SessionRepository =
         SessionRepositoryImpl(sessionPreferences)
+
+    @Provides
+    @Singleton
+    fun provideFavoriteRepository(
+        favoriteDao: FavoriteDao,
+        favoriteMapper: FavoriteMapper,
+        pokemonMapper: PokemonMapper
+    ): FavoriteRepository = FavoriteRepositoryImpl(favoriteDao, favoriteMapper, pokemonMapper)
 }
