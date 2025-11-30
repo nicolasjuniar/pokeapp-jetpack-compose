@@ -63,7 +63,7 @@ fun ListScreen(
                     if (item != null) {
                         PokemonItem(item.name, item.id) {
                             navController.navigateScreen(
-                                Screen.Detail.createRoute(item.name)
+                                Screen.Detail.createRoute(item.id)
                             )
                         }
                     }

@@ -19,10 +19,10 @@ class PokemonDetailViewModel @Inject constructor(
     private val _detailPokemon = MutableSharedFlow<DetailPokemon>()
     val detailPokemon = _detailPokemon.asSharedFlow()
 
-    fun getDetailPokemon(pokemonName: String) {
+    fun getDetailPokemon(pokedexNumber: Int) {
         showLoading()
         viewModelScope.launch {
-            when (val result = getDetailPokemonUseCase.invoke(pokemonName)) {
+            when (val result = getDetailPokemonUseCase.invoke(pokedexNumber)) {
                 is ResultWrapper.Success -> {
                     _detailPokemon.emit(result.data)
                     hideLoading()

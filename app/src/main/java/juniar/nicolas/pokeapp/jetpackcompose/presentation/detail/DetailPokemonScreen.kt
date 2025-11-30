@@ -1,13 +1,9 @@
 package juniar.nicolas.pokeapp.jetpackcompose.presentation.detail
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,37 +20,33 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
-import juniar.nicolas.pokeapp.jetpackcompose.data.dto.NamedResource
 import juniar.nicolas.pokeapp.jetpackcompose.data.dto.PokemonAbility
 import juniar.nicolas.pokeapp.jetpackcompose.domain.model.DetailPokemon
-import juniar.nicolas.pokeapp.jetpackcompose.domain.model.Stat
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.common.BaseScreen
+import juniar.nicolas.pokeapp.jetpackcompose.ui.theme.typeColor
 
 @Composable
 fun PokemonDetailScreen(
     modifier: Modifier = Modifier,
-    pokemonName: String,
+    pokedexNumber: Int,
     navController: NavController = rememberNavController(),
     viewModel: PokemonDetailViewModel = hiltViewModel()
 ) {
-    LaunchedEffect(pokemonName) { viewModel.getDetailPokemon(pokemonName) }
+    LaunchedEffect(pokedexNumber) { viewModel.getDetailPokemon(pokedexNumber) }
 
     val detailPokemon by viewModel.detailPokemon.collectAsState(initial = null)
     detailPokemon?.let {
         BaseScreen(
             viewModel = viewModel,
-            navController = navController,
-            title = pokemonName
+            navController = navController
         ) {
             PokemonDetailContent(pokemon = it, modifier = modifier)
         }
@@ -224,27 +216,4 @@ fun List<PokemonAbility>.splitAbility() = joinToString(" - ") {
 
 fun formatPokedexId(id: Int): String {
     return "#${id.toString().padStart(3, '0')}"
-}
-
-fun typeColor(type: String?): Color {
-    return when (type?.lowercase()) {
-        "fire" -> Color(0xFFFD7D24)
-        "water" -> Color(0xFF4592C4)
-        "grass" -> Color(0xFF9BCC50)
-        "electric" -> Color(0xFFF9CF30)
-        "psychic" -> Color(0xFFFA8581)
-        "ice" -> Color(0xFF51C4E7)
-        "dragon" -> Color(0xFF0B6DC3)
-        "dark" -> Color(0xFF707070)
-        "fairy" -> Color(0xFFF4BDC9)
-        "normal" -> Color(0xFFAAAA99)
-        "ground" -> Color(0xFFE0C068)
-        "rock" -> Color(0xFFB8A038)
-        "bug" -> Color(0xFFA8B820)
-        "fighting" -> Color(0xFFC03028)
-        "poison" -> Color(0xFFA040A0)
-        "ghost" -> Color(0xFF705898)
-        "steel" -> Color(0xFFB8B8D0)
-        else -> Color(0xFFEEEEEE)
-    }
 }

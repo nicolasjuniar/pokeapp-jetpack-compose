@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import juniar.nicolas.pokeapp.jetpackcompose.core.orEmpty
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.detail.PokemonDetailScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.login.LoginScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.main.MainScreen
@@ -38,11 +39,11 @@ fun NavGraph() {
 
         composable(
             Screen.Detail.route,
-            arguments = listOf(navArgument("pokemonName") { type = NavType.StringType })
+            arguments = listOf(navArgument("pokedexNumber") { type = NavType.IntType })
         ) { backStackEntry ->
-            val pokemonName = backStackEntry.arguments?.getString("pokemonName")
+            val pokedexNumber = backStackEntry.arguments?.getInt("pokedexNumber")
             PokemonDetailScreen(
-                pokemonName = pokemonName.orEmpty(),
+                pokedexNumber = pokedexNumber.orEmpty(1),
                 navController = navController
             )
         }

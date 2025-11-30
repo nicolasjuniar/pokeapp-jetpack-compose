@@ -31,3 +31,5 @@ fun NavController.navigateScreen(
         }
     }
 }
+
+fun Int?.orEmpty(defaultValue: Int = -1) = this ?: defaultValue

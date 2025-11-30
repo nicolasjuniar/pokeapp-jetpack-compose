@@ -10,12 +10,12 @@ import juniar.nicolas.pokeapp.jetpackcompose.data.local.entity.PokemonEntity
 @Dao
 interface PokemonDao {
 
-    @Query("SELECT * FROM pokemon ORDER BY id ASC")
+    @Query("SELECT * FROM pokemons ORDER BY id ASC")
     fun pagingSource(): PagingSource<Int, PokemonEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(pokemon: List<PokemonEntity>)
 
-    @Query("DELETE FROM pokemon")
+    @Query("DELETE FROM pokemons")
     suspend fun clearAll()
 }

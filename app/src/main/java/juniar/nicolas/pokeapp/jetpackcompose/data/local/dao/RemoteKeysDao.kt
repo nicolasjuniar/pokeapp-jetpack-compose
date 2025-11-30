@@ -9,12 +9,12 @@ import juniar.nicolas.pokeapp.jetpackcompose.data.local.entity.PokemonRemoteKeys
 @Dao
 interface RemoteKeysDao {
 
-    @Query("SELECT * FROM pokemon_remote_keys WHERE pokemonId = :id")
+    @Query("SELECT * FROM pokemons_remote_keys WHERE pokemonId = :id")
     suspend fun getRemoteKeys(id: Int): PokemonRemoteKeys?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(remoteKeys: List<PokemonRemoteKeys>)
 
-    @Query("DELETE FROM pokemon_remote_keys")
+    @Query("DELETE FROM pokemons_remote_keys")
     suspend fun clearRemoteKeys()
 }

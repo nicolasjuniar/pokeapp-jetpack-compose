@@ -12,7 +12,7 @@ interface UserDao {
     suspend fun getUsername(username: String, password: String): String?
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    suspend fun insert(user: UserEntity)
+    suspend fun insert(userEntity: UserEntity)
 
     @Query("SELECT * FROM users WHERE username = :username LIMIT 1")
     suspend fun getUserByUsername(username: String): UserEntity?

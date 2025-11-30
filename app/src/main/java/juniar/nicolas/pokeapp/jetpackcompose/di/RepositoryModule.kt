@@ -8,6 +8,7 @@ import juniar.nicolas.pokeapp.jetpackcompose.data.api.PokeApi
 import juniar.nicolas.pokeapp.jetpackcompose.data.datastore.SessionPreferences
 import juniar.nicolas.pokeapp.jetpackcompose.data.local.AppDatabase
 import juniar.nicolas.pokeapp.jetpackcompose.data.local.dao.UserDao
+import juniar.nicolas.pokeapp.jetpackcompose.data.mapper.PokemonMapper
 import juniar.nicolas.pokeapp.jetpackcompose.data.mapper.UserMapper
 import juniar.nicolas.pokeapp.jetpackcompose.data.repository.PokemonRepositoryImpl
 import juniar.nicolas.pokeapp.jetpackcompose.data.repository.SessionRepositoryImpl
@@ -23,8 +24,12 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun providePokemonRepository(api: PokeApi, database: AppDatabase): PokemonRepository =
-        PokemonRepositoryImpl(api, database)
+    fun providePokemonRepository(
+        api: PokeApi,
+        appDatabase: AppDatabase,
+        pokemonMapper: PokemonMapper
+    ): PokemonRepository =
+        PokemonRepositoryImpl(api, appDatabase, pokemonMapper)
 
     @Provides
     @Singleton

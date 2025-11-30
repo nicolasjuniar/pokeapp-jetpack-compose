@@ -13,8 +13,8 @@ interface PokeApi {
         @Query("limit") limit: Int = 10
     ): PokemonResponse
 
-    @GET("pokemon/{pokemonName}")
+    @GET("pokemon/{pokedexNumber}")
     suspend fun getDetailPokemon(
-        @Path("pokemonName") pokemonName: String
+        @Path("pokedexNumber") pokedexNumber: Int
     ): DetailPokemonResponse
 }

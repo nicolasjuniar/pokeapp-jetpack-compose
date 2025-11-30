@@ -43,9 +43,13 @@ fun <T : BaseViewModel> BaseScreen(
     Scaffold(
         modifier = modifier,
         topBar = {
-            if (title != null) {
+            if (title != null || navController != null) {
                 TopAppBar(
-                    title = { Text(text = title) },
+                    title = {
+                        if (title != null) {
+                            Text(text = title)
+                        }
+                    },
                     navigationIcon = {
                         if (navController != null) {
                             IconButton(onClick = { navController.popBackStack() }) {

@@ -32,24 +32,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(
-        @ApplicationContext context: Context
-    ): AppDatabase = Room.databaseBuilder(
-        context,
-        AppDatabase::class.java,
-        "pokeapp_db"
-    ).fallbackToDestructiveMigration(false).build()
-
-    @Provides
-    @Singleton
-    fun provideUserDao(database: AppDatabase) = database.userDao()
-
-    @Provides
-    @Singleton
-    fun provideUserMapper() = UserMapper()
-
-    @Provides
-    @Singleton
     fun provideSessionPreference(@ApplicationContext context: Context) =
         SessionPreferences(context)
 }

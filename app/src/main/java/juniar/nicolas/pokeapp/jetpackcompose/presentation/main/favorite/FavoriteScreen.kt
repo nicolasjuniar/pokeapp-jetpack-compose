@@ -34,7 +34,7 @@ fun FavoriteScreen(
     ) {
         itemsIndexed(items) { index, value ->
             PokemonItem(value, index + 1) {
-                navController.navigateScreen(Screen.Detail.createRoute("bulbasaur"))
+                navController.navigateScreen(Screen.Detail.createRoute(1))
             }
         }
     }
