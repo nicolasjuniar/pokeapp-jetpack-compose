@@ -68,7 +68,7 @@ This project showcases authentication, persistent sessions, modularization, prof
 - Pokémon detail screen
 - Favorite Pokémon system (Datastore + Room)
 
-### Profile
+### Profile(v1.0)
 
 - Favorite type
 - Change password
@@ -104,6 +104,7 @@ This project showcases authentication, persistent sessions, modularization, prof
 - [ ] Implement Profile feature
 - [ ] Add Unit Test + Jacoco report in GitHub Actions
 - [ ] Modularization
+- [ ] Add KDoc(?)
 
 ---
 
