@@ -28,7 +28,7 @@ class PokemonRepositoryImpl @Inject constructor(
     override fun getPokemons(): Flow<PagingData<Pokemon>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 20, prefetchDistance = 2, enablePlaceholders = false
+                pageSize = 10, prefetchDistance = 2, enablePlaceholders = false
             ), remoteMediator = PokemonRemoteMediator(api, appDatabase), pagingSourceFactory = {
                 appDatabase.pokemonDao().pagingSource()
             }).flow.map { pagingData ->

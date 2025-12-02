@@ -32,7 +32,7 @@ android {
     applicationVariants.all {
         val variant = this
         val version = variant.versionName
-        val appName = "pokeapp v$version.apk"
+        val appName = "pokeapp-v$version.apk"
         variant.outputs
             .map { it as com.android.build.gradle.internal.api.BaseVariantOutputImpl }
             .forEach { output ->
