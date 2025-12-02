@@ -18,6 +18,12 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField(
+            type = "String",
+            name = "BASE_URL",
+            value = "\"https://pokeapi.co/api/v2/\""
+        )
     }
 
     signingConfigs {
@@ -60,6 +66,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -94,6 +101,8 @@ dependencies {
     implementation(libs.datastore.core)
     implementation(libs.datastore.preferences)
     implementation(libs.coil.compose)
+    implementation(libs.chucker)
+    implementation(libs.leakcanary)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
