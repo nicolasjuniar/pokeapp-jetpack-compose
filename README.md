@@ -68,7 +68,7 @@ This project showcases authentication, persistent sessions, modularization, prof
 - Pokémon detail screen
 - Favorite Pokémon system (Datastore + Room)
 
-### Profile(v1.0)
+### Profile(v1.1)
 
 - Favorite type
 - Change password
@@ -97,7 +97,7 @@ This project showcases authentication, persistent sessions, modularization, prof
 
 ### v1.1 Enhancements
 
-- [ ] Add LeakCanary & Chucker
+- [x] Add LeakCanary & Chucker
 - [ ] Add Detekt + report in GitHub Actions
 - [ ] Separate signing config for local project and GitHub Actions
 - [ ] Add CameraX + runtime permissions

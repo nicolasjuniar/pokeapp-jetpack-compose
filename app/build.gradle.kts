@@ -1,9 +1,34 @@
+import io.gitlab.arturbosch.detekt.Detekt
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp.android)
     alias(libs.plugins.dagger.hilt)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.jacoco)
+}
+
+apply(from = "$rootDir/jacoco.gradle.kts")
+
+detekt {
+    buildUponDefaultConfig = true
+    allRules = false
+    autoCorrect = true
+    ignoreFailures = true
+    config.setFrom("$rootDir/detekt.yml")
+}
+
+tasks.withType<Detekt>().configureEach {
+    reports {
+        html.required.set(true)
+        sarif.required.set(true)
+    }
+}
+
+jacoco {
+    toolVersion = libs.versions.jacoco.get()
 }
 
 android {
@@ -102,7 +127,8 @@ dependencies {
     implementation(libs.datastore.preferences)
     implementation(libs.coil.compose)
     implementation(libs.chucker)
-    implementation(libs.leakcanary)
+    debugImplementation(libs.leakcanary)
+    implementation(libs.detekt.formatting)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

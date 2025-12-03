@@ -23,6 +23,8 @@ coil = "2.3.0"
 pagingVersion = "3.3.6"
 chuckerVersion = "4.0.0"
 leakcanaryVersion = "2.14"
+detekt = "1.23.6"
+jacoco = "0.8.11"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -62,6 +64,7 @@ datastore-core = { group = "androidx.datastore", name = "datastore-core", versio
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 chucker = { group = "com.github.chuckerteam.chucker", name = "library", version.ref = "chuckerVersion" }
 leakcanary = { group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leakcanaryVersion" }
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -69,4 +72,6 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ksp-android = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+jacoco = { id = "jacoco" }
 

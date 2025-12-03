@@ -109,3 +109,12 @@
 ## General AndroidX
 ##############################################
 -dontwarn androidx.**
+
+# Keep Chucker main classes
+-keep class com.chuckerteam.chucker.** { *; }
+
+# Keep OkHttp interceptor
+-keep class com.chuckerteam.chucker.api.** { *; }
+
+# Avoid warnings
+-dontwarn com.chuckerteam.chucker.**
