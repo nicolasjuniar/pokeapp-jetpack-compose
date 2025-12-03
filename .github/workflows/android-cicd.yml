@@ -23,6 +23,37 @@ jobs:
       - name: Grant execute permission
         run: chmod +x ./gradlew
 
+      # -------------------------------
+      # 1️⃣ RUN DETEKT
+      # -------------------------------
+      - name: Run Detekt
+        run: ./gradlew detekt
+
+      - name: Upload Detekt Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: detekt-report
+          path: |
+            **/build/reports/detekt/*.html
+            **/build/reports/detekt/*.xml
+
+      # -------------------------------
+      # 2️⃣ RUN JACOCO
+      # -------------------------------
+      - name: Run Unit Tests + Jacoco
+        run: ./gradlew test jacocoTestReport
+
+      - name: Upload Jacoco Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-report
+          path: |
+            **/build/reports/jacoco/**/*.xml
+            **/build/reports/jacoco/**/*.html
+
+      # -------------------------------
+      # 3️⃣ BUILD RELEASE APK
+      # -------------------------------
       - name: Build release APK
         run: ./gradlew :app:assembleRelease
 
