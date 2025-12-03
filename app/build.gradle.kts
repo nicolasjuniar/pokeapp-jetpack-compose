@@ -128,7 +128,6 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.chucker)
     debugImplementation(libs.leakcanary)
-    implementation(libs.detekt.formatting)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
