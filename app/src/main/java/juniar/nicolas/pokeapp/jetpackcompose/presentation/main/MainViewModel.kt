@@ -17,7 +17,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     getLoggedUsernameUseCase: GetLoggedUsernameUseCase,
     private val logoutUseCase: LogoutUseCase
-) : BaseViewModel() {
+) : ViewModel() {
 
     val username = getLoggedUsernameUseCase()
         .stateIn(viewModelScope, SharingStarted.Eagerly, "")

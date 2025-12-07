@@ -1,18 +1,11 @@
 package juniar.nicolas.pokeapp.jetpackcompose.presentation.register
 
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import juniar.nicolas.pokeapp.jetpackcompose.core.hash
+import juniar.nicolas.pokeapp.jetpackcompose.core.ResultWrapper
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.RegisterUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.SaveLoggedUsernameUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.common.BaseViewModel
-import juniar.nicolas.pokeapp.jetpackcompose.core.ResultWrapper
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,53 +13,81 @@ import javax.inject.Inject
 class RegisterViewModel @Inject constructor(
     private val registerUseCase: RegisterUseCase,
     private val saveLoggedUsernameUseCase: SaveLoggedUsernameUseCase
-) : BaseViewModel() {
+) : BaseViewModel<RegisterState, RegisterEvent, RegisterSignal>(RegisterState()) {
 
-    private val _isRegisterSuccess = MutableSharedFlow<Boolean>()
-    val isRegisterSuccess = _isRegisterSuccess.asSharedFlow()
-
-    var username by mutableStateOf("")
-        private set
-
-    var password by mutableStateOf("")
-        private set
-
-    var confirmPassword by mutableStateOf("")
-        private set
-
-    fun onChangeUsername(value: String) {
-        username = value
-    }
-
-    fun onChangePassword(value: String) {
-        password = value
-    }
-
-    fun onChangeConfirmPassword(value: String) {
-        confirmPassword = value
-    }
-
-    val isButtonEnabled = derivedStateOf {
-        username.isNotBlank()
-                && password.length >= 6
-                && confirmPassword == password
-    }
-
-    fun register(username: String, password: String) {
+    fun register() {
         viewModelScope.launch {
-            showLoading()
 
-            when (val result = registerUseCase.invoke(username, password.hash())) {
+            setState { copy(isLoading = true) }
+
+            val username = state.value.username
+            val password = state.value.password
+            val result = registerUseCase.invoke(username, password)
+
+            setState { copy(isLoading = false) }
+
+            when (result) {
                 is ResultWrapper.Success -> {
                     saveLoggedUsernameUseCase.invoke(username)
-                    _isRegisterSuccess.emit(true)
-                    showMessage("Register Successful")
-                    hideLoading()
+                    sendSignal(
+                        listOf(
+                            RegisterSignal.ShowToast("RegisterSuccessful"),
+                            RegisterSignal.NavigateToMain
+                        )
+                    )
                 }
 
                 is ResultWrapper.Error -> {
-                    showMessage(result.message)
-                    hideLoading()
+                    sendSignal(RegisterSignal.ShowToast(result.message))
+                }
+            }
+        }
+    }
+
+    private fun updateIsButtonEnabled(state: RegisterState): Boolean {
+        return state.username.isNotBlank() &&
+                state.password.length >= 6 &&
+                state.confirmPassword == state.password
+    }
+
+    private fun updateRegisterState(reducer: RegisterState.() -> RegisterState) {
+        setState {
+            val newState = reducer()
+            newState.copy(isButtonEnabled = updateIsButtonEnabled(newState))
+        }
+    }
+
+    override fun handleEvent(event: RegisterEvent) {
+        when (event) {
+            is RegisterEvent.UsernameChanged -> {
+                updateRegisterState {
+                    copy(
+                        username = event.value
+                    )
+                }
+            }
+
+            is RegisterEvent.PasswordChanged -> {
+                updateRegisterState {
+                    copy(
+                        password = event.value
+                    )
+                }
+            }
+
+            is RegisterEvent.ConfirmPasswordChanged -> {
+                updateRegisterState {
+                    copy(
+                        confirmPassword = event.value
+                    )
+                }
+            }
+
+            RegisterEvent.RegisterButtonClicked -> register()
+
+            RegisterEvent.LoginTextClicked -> {
+                viewModelScope.launch {
+                    sendSignal(RegisterSignal.NavigateToLogin)
                 }
             }
         }

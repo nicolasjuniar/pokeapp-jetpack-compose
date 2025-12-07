@@ -1,50 +1,56 @@
 package juniar.nicolas.pokeapp.jetpackcompose.data.dto
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class DetailPokemonResponse(
-    @SerializedName("id")
+    @SerialName("id")
     val id: Int,
-    @SerializedName("name")
+    @SerialName("name")
     val name: String,
-    @SerializedName("height")
+    @SerialName("height")
     val height: Int,
-    @SerializedName("weight")
+    @SerialName("weight")
     val weight: Int,
-    @SerializedName("base_experience")
+    @SerialName("base_experience")
     val baseExperience: Int,
-    @SerializedName("types")
+    @SerialName("types")
     val types: List<PokemonType>,
-    @SerializedName("stats")
+    @SerialName("stats")
     val stats: List<PokemonStat>,
-    @SerializedName("abilities")
+    @SerialName("abilities")
     val abilities: List<PokemonAbility>,
 )
 
+@Serializable
 data class PokemonType(
-    @SerializedName("slot")
+    @SerialName("slot")
     val slot: Int,
-    @SerializedName("type")
+    @SerialName("type")
     val type: NamedResource
 )
 
+@Serializable
 data class PokemonStat(
-    @SerializedName("base_stat")
+    @SerialName("base_stat")
     val baseStat: Int,
-    @SerializedName("stat")
+    @SerialName("stat")
     val stat: NamedResource
 )
 
+@Serializable
 data class PokemonAbility(
-    @SerializedName("ability")
+    @SerialName("ability")
     val ability: NamedResource,
-    @SerializedName("is_hidden")
+    @SerialName("is_hidden")
     val isHidden: Boolean
 )
 
+@Serializable
 data class NamedResource(
-    @SerializedName("name")
+    @SerialName("name")
     val name: String,
-    @SerializedName("url")
+    @SerialName("url")
     val url: String
 )

@@ -1,14 +1,16 @@
 package juniar.nicolas.pokeapp.jetpackcompose.data.dto
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class PokemonResponse(
-    @SerializedName("count")
+    @SerialName("count")
     val count: Int,
-    @SerializedName("next")
+    @SerialName("next")
     val next: String?,
-    @SerializedName("previous")
+    @SerialName("previous")
     val previous: String?,
-    @SerializedName("results")
+    @SerialName("results")
     val results: List<PokemonResult>
 )

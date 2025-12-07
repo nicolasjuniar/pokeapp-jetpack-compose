@@ -1,17 +1,9 @@
 package juniar.nicolas.pokeapp.jetpackcompose.di
 
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import juniar.nicolas.pokeapp.jetpackcompose.data.api.PokeApi
-import juniar.nicolas.pokeapp.jetpackcompose.data.datastore.SessionPreferences
-import juniar.nicolas.pokeapp.jetpackcompose.data.local.AppDatabase
-import juniar.nicolas.pokeapp.jetpackcompose.data.local.dao.FavoriteDao
-import juniar.nicolas.pokeapp.jetpackcompose.data.local.dao.UserDao
-import juniar.nicolas.pokeapp.jetpackcompose.data.mapper.FavoriteMapper
-import juniar.nicolas.pokeapp.jetpackcompose.data.mapper.PokemonMapper
-import juniar.nicolas.pokeapp.jetpackcompose.data.mapper.UserMapper
 import juniar.nicolas.pokeapp.jetpackcompose.data.repository.FavoriteRepositoryImpl
 import juniar.nicolas.pokeapp.jetpackcompose.data.repository.PokemonRepositoryImpl
 import juniar.nicolas.pokeapp.jetpackcompose.data.repository.SessionRepositoryImpl
@@ -20,36 +12,28 @@ import juniar.nicolas.pokeapp.jetpackcompose.domain.repository.FavoriteRepositor
 import juniar.nicolas.pokeapp.jetpackcompose.domain.repository.PokemonRepository
 import juniar.nicolas.pokeapp.jetpackcompose.domain.repository.SessionRepository
 import juniar.nicolas.pokeapp.jetpackcompose.domain.repository.UserRepository
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RepositoryModule {
+abstract class RepositoryModule {
 
-    @Provides
-    @Singleton
-    fun providePokemonRepository(
-        api: PokeApi,
-        appDatabase: AppDatabase,
-        pokemonMapper: PokemonMapper
-    ): PokemonRepository =
-        PokemonRepositoryImpl(api, appDatabase, pokemonMapper)
+    @Binds
+    abstract fun bindPokemonRepository(
+        pokemonRepositoryImpl: PokemonRepositoryImpl
+    ): PokemonRepository
 
-    @Provides
-    @Singleton
-    fun provideUserRepository(userDao: UserDao, userMapper: UserMapper): UserRepository =
-        UserRepositoryImpl(userDao, userMapper)
+    @Binds
+    abstract fun bindUserRepository(
+        userRepositoryImpl: UserRepositoryImpl
+    ): UserRepository
 
-    @Provides
-    @Singleton
-    fun provideSessionRepository(sessionPreferences: SessionPreferences): SessionRepository =
-        SessionRepositoryImpl(sessionPreferences)
+    @Binds
+    abstract fun bindSessionRepository(
+        sessionRepositoryImpl: SessionRepositoryImpl
+    ): SessionRepository
 
-    @Provides
-    @Singleton
-    fun provideFavoriteRepository(
-        favoriteDao: FavoriteDao,
-        favoriteMapper: FavoriteMapper,
-        pokemonMapper: PokemonMapper
-    ): FavoriteRepository = FavoriteRepositoryImpl(favoriteDao, favoriteMapper, pokemonMapper)
+    @Binds
+    abstract fun bindFavoriteRepository(
+        favoriteRepositoryImpl: FavoriteRepositoryImpl
+    ): FavoriteRepository
 }

@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.detekt)
     alias(libs.plugins.jacoco)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 apply(from = "$rootDir/jacoco.gradle.kts")
@@ -113,6 +114,8 @@ dependencies {
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.navigation)
     implementation(libs.retrofit)
+    implementation(libs.kotlinx.serialization.converter)
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.gson.converter)
     implementation(libs.okhttp.logging)
     implementation(libs.room.runtime)

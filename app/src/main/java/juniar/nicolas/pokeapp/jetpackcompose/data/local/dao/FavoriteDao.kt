@@ -16,7 +16,7 @@ interface FavoriteDao {
             "ON p.id = f.pokemonId " +
             "WHERE f.username = :username " +
             "ORDER BY p.id ASC")
-    fun getFavoritePokemons(username: String): PagingSource<Int, PokemonEntity>
+    fun getListFavoritePokemon(username: String): PagingSource<Int, PokemonEntity>
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insert(favoriteEntity: FavoriteEntity)

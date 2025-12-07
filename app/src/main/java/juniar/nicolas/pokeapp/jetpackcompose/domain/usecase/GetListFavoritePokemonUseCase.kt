@@ -6,9 +6,9 @@ import juniar.nicolas.pokeapp.jetpackcompose.domain.repository.FavoriteRepositor
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetFavoritesUseCase @Inject constructor(
+class GetListFavoritePokemonUseCase @Inject constructor(
     private val favoriteRepository: FavoriteRepository
 ) {
     operator fun invoke(username: String): Flow<PagingData<Pokemon>> =
-        favoriteRepository.getFavoritePokemons(username)
+        favoriteRepository.getListFavoritePokemon(username)
 }

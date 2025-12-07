@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -17,11 +18,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import juniar.nicolas.pokeapp.jetpackcompose.R
+import juniar.nicolas.pokeapp.jetpackcompose.core.navigateScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.navigation.Screen
 
 @Composable
@@ -30,18 +34,27 @@ fun SplashScreen(
     viewModel: SplashViewModel = hiltViewModel()
 ) {
 
-    val username = viewModel.username
+    fun openMainScreen() {
+        navController.navigateScreen(
+            Screen.Main.route,
+            Screen.Splash.route,
+            true
+        )
+    }
 
-    LaunchedEffect(username) {
-        if (username == null) return@LaunchedEffect
+    fun openLoginScreen() {
+        navController.navigateScreen(
+            Screen.Login.route,
+            Screen.Splash.route,
+            true
+        )
+    }
 
-        if (username.isNotEmpty()) {
-            navController.navigate(Screen.Main.route) {
-                popUpTo(Screen.Splash.route) { inclusive = true }
-            }
-        } else {
-            navController.navigate(Screen.Login.route) {
-                popUpTo(Screen.Splash.route) { inclusive = true }
+    LaunchedEffect(Unit) {
+        viewModel.signal.collect {
+            when (it) {
+                is SplashSignal.NavigateToMain -> openMainScreen()
+                is SplashSignal.NavigateToLogin -> openLoginScreen()
             }
         }
     }
@@ -69,5 +82,13 @@ fun SplashScreen(
 
             CircularProgressIndicator(strokeWidth = 3.dp)
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SplashScreenPreview() {
+    MaterialTheme {
+        SplashScreen(navController = rememberNavController())
     }
 }

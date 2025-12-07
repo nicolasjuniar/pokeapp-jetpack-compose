@@ -37,7 +37,7 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import juniar.nicolas.pokeapp.jetpackcompose.data.dto.PokemonAbility
 import juniar.nicolas.pokeapp.jetpackcompose.domain.model.DetailPokemon
-import juniar.nicolas.pokeapp.jetpackcompose.presentation.common.BaseScreen
+import juniar.nicolas.pokeapp.jetpackcompose.presentation.components.BaseScaffold
 import juniar.nicolas.pokeapp.jetpackcompose.ui.theme.typeColor
 
 @Composable
@@ -45,7 +45,7 @@ fun PokemonDetailScreen(
     modifier: Modifier = Modifier,
     pokedexNumber: Int,
     navController: NavController = rememberNavController(),
-    viewModel: PokemonDetailViewModel = hiltViewModel()
+    viewModel: DetailPokemonViewModel = hiltViewModel()
 ) {
     val isFavorite by viewModel.isFavorite.collectAsState()
 
@@ -57,10 +57,13 @@ fun PokemonDetailScreen(
 
     val detailPokemon by viewModel.detailPokemon.collectAsState(initial = null)
 
-    detailPokemon?.let {
-        BaseScreen(
-            viewModel = viewModel,
-            navController = navController
+    detailPokemon?.let { pokemon ->
+        BaseScaffold(
+            modifier = modifier,
+            onBackClick = {
+                navController.popBackStack()
+            },
+            isLoading = false
         ) {
             LazyColumn(
                 modifier = modifier
@@ -68,31 +71,31 @@ fun PokemonDetailScreen(
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                item { PokemonHeader(it, isFavorite, viewModel) }
+                item { PokemonHeader(pokemon, isFavorite, viewModel) }
 
                 item {
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        InfoChip("Height", "${it.heightCm} cm")
-                        InfoChip("Weight", "${it.weightKg} kg")
-                        InfoChip("Base XP", "${it.baseExperience}")
+                        InfoChip("Height", "${pokemon.heightCm} cm")
+                        InfoChip("Weight", "${pokemon.weightKg} kg")
+                        InfoChip("Base XP", "${pokemon.baseExperience}")
                     }
                 }
 
                 item {
                     Text("Types", style = MaterialTheme.typography.titleMedium)
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        it.types.forEach { TypeChip(it) }
+                        pokemon.types.forEach { TypeChip(it) }
                     }
                 }
 
                 item {
                     Text("Abilities", style = MaterialTheme.typography.titleMedium)
-                    AbilitySection(it.abilities.splitAbility())
+                    AbilitySection(pokemon.abilities.splitAbility())
                 }
 
                 item {
                     Text("Stats", style = MaterialTheme.typography.titleMedium)
-                    val total = it.stats.sumOf { it.value }
+                    val total = pokemon.stats.sumOf { it.value }
 
                     Text(
                         text = "Base Stat Total: $total",
@@ -108,7 +111,7 @@ fun PokemonDetailScreen(
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        it.stats.take(3).forEach { stat ->
+                        pokemon.stats.take(3).forEach { stat ->
                             InfoChip(
                                 label = stat.name,
                                 value = stat.value.toString(),
@@ -122,7 +125,7 @@ fun PokemonDetailScreen(
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        it.stats.takeLast(3).forEach { stat ->
+                        pokemon.stats.takeLast(3).forEach { stat ->
                             InfoChip(
                                 label = stat.name,
                                 value = stat.value.toString(),
@@ -137,7 +140,7 @@ fun PokemonDetailScreen(
 }
 
 @Composable
-fun PokemonHeader(pokemon: DetailPokemon, isFavorite: Boolean, viewModel: PokemonDetailViewModel) {
+fun PokemonHeader(pokemon: DetailPokemon, isFavorite: Boolean, viewModel: DetailPokemonViewModel) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxWidth()

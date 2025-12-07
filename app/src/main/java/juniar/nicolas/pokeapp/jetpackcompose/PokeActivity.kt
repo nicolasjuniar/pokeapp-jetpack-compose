@@ -1,11 +1,15 @@
 package juniar.nicolas.pokeapp.jetpackcompose
 
-import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.ui.Modifier
+import androidx.core.view.WindowCompat
 import dagger.hilt.android.AndroidEntryPoint
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.components.SimpleNotificationPermission
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.navigation.NavGraph
@@ -14,20 +18,18 @@ import juniar.nicolas.pokeapp.jetpackcompose.presentation.navigation.NavGraph
 class PokeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
 
-        enableEdgeToEdge(
-            statusBarStyle = SystemBarStyle.dark(
-                scrim = Color.TRANSPARENT
-            ),
-            navigationBarStyle = SystemBarStyle.dark(
-                scrim = Color.TRANSPARENT
-            )
-        )
+        WindowCompat.setDecorFitsSystemWindows(window, true)
 
         setContent {
-            NavGraph()
-            SimpleNotificationPermission()
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .windowInsetsPadding(WindowInsets.safeDrawing)
+            ) {
+                NavGraph()
+                SimpleNotificationPermission()
+            }
         }
     }
 }

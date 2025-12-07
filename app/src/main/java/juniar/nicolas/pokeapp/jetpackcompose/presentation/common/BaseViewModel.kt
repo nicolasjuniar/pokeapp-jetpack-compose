@@ -3,24 +3,35 @@ package juniar.nicolas.pokeapp.jetpackcompose.presentation.common
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 
-open class BaseViewModel : ViewModel() {
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading = _isLoading.asStateFlow()
+abstract class BaseViewModel<State, Event, Signal>(initialState: State) :
+    ViewModel() {
 
-    private val _message = MutableSharedFlow<String?>()
-    val message = _message
+    private val _state = MutableStateFlow(initialState)
+    val state: StateFlow<State> = _state
 
-    protected fun showLoading() {
-        _isLoading.value = true
+    private val _signal = MutableSharedFlow<Signal>()
+    val signal: SharedFlow<Signal> = _signal
+
+    protected fun setState(reducer: State.() -> State) {
+        _state.value = _state.value.reducer()
     }
 
-    protected fun hideLoading() {
-        _isLoading.value = false
+    protected suspend fun sendSignal(signal: Signal) {
+        _signal.emit(signal)
     }
 
-    protected suspend fun showMessage(message: String) {
-        _message.emit(message)
+    protected suspend fun sendSignal(listSignal: List<Signal>) {
+        listSignal.forEach {
+            _signal.emit(it)
+        }
     }
+
+    fun onEvent(event: Event) {
+        handleEvent(event)
+    }
+
+    protected open fun handleEvent(event: Event) {}
 }

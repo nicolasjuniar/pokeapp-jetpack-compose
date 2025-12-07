@@ -1,13 +1,13 @@
 package juniar.nicolas.pokeapp.jetpackcompose.presentation.main.favorite
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import juniar.nicolas.pokeapp.jetpackcompose.domain.model.Pokemon
-import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.GetFavoritesUseCase
+import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.GetListFavoritePokemonUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.GetLoggedUsernameUseCase
-import juniar.nicolas.pokeapp.jetpackcompose.presentation.common.BaseViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -18,9 +18,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FavoriteViewModel @Inject constructor(
-    getFavoritesUseCase: GetFavoritesUseCase,
+    getListFavoritePokemonUseCase: GetListFavoritePokemonUseCase,
     getLoggedUsernameUseCase: GetLoggedUsernameUseCase,
-) : BaseViewModel() {
+) : ViewModel() {
 
     val username = getLoggedUsernameUseCase()
         .stateIn(viewModelScope, SharingStarted.Eagerly, "")
@@ -29,7 +29,7 @@ class FavoriteViewModel @Inject constructor(
     val pokemons: Flow<PagingData<Pokemon>> = username
         .filter { it.isNotEmpty() }
         .flatMapLatest { user ->
-            getFavoritesUseCase(user)
+            getListFavoritePokemonUseCase(user)
         }
         .cachedIn(viewModelScope)
 }

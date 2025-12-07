@@ -41,7 +41,7 @@ class PokemonRemoteMediator(
                 }
             }
 
-            val response = pokeApi.getPokemons(limit = PAGE_SIZE, offset = page * PAGE_SIZE)
+            val response = pokeApi.getListPokemon(limit = PAGE_SIZE, offset = page * PAGE_SIZE)
             val results = response.results
 
             val endOfPagination = results.isEmpty()
