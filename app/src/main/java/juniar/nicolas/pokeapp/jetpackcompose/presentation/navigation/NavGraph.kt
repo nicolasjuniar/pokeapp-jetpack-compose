@@ -7,9 +7,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import juniar.nicolas.pokeapp.jetpackcompose.core.orEmpty
+import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.DashboardScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.detail.PokemonDetailScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.login.LoginScreen
-import juniar.nicolas.pokeapp.jetpackcompose.presentation.main.MainScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.register.RegisterScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.splash.SplashScreen
 
@@ -33,8 +33,8 @@ fun NavGraph() {
             RegisterScreen(navController = navController)
         }
 
-        composable(Screen.Main.route) {
-            MainScreen(navController = navController)
+        composable(Screen.Dashboard.route) {
+            DashboardScreen(navController = navController)
         }
 
         composable(

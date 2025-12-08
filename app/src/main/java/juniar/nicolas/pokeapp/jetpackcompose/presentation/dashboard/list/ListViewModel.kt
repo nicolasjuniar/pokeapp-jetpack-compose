@@ -1,4 +1,4 @@
-package juniar.nicolas.pokeapp.jetpackcompose.presentation.main.list
+package juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

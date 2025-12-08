@@ -1,4 +1,4 @@
-package juniar.nicolas.pokeapp.jetpackcompose.presentation.main
+package juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -15,14 +15,14 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -31,42 +31,54 @@ import androidx.navigation.compose.rememberNavController
 import juniar.nicolas.pokeapp.jetpackcompose.core.navigateScreen
 import juniar.nicolas.pokeapp.jetpackcompose.core.showToast
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.components.SimpleDialog
-import juniar.nicolas.pokeapp.jetpackcompose.presentation.main.favorite.FavoriteScreen
-import juniar.nicolas.pokeapp.jetpackcompose.presentation.main.list.ListScreen
+import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.favorite.FavoriteScreen
+import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.list.ListScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(
-    navController: NavController, viewModel: MainViewModel = hiltViewModel()
+fun DashboardScreen(
+    navController: NavController, viewModel: DashboardViewModel = hiltViewModel()
 ) {
     val bottomNavController = rememberNavController()
     val navItems = listOf(
         Screen.List.route to Icons.AutoMirrored.Filled.List,
         Screen.Favorite.route to Icons.Filled.Favorite
     )
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
-    val username by viewModel.username.collectAsState()
+    fun openLoginScreen() {
+        navController.navigateScreen(
+            Screen.Login.route,
+            Screen.Register.route,
+            true
+        )
+    }
+
 
     var showLogoutDialog by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
 
     LaunchedEffect(Unit) {
-        viewModel.logoutEvent.collect {
-            context.showToast("Logout Successful")
-            navController.navigateScreen(
-                Screen.Login.route,
-                Screen.Main.route,
-                true
-            )
+        viewModel.signal.collect {
+            when (it) {
+                is DashboardSignal.NavigateToLogin -> {
+                    context.showToast("Logout Successful")
+                    openLoginScreen()
+                }
+
+                is DashboardSignal.ShowLogoutDialog -> {
+                    showLogoutDialog = true
+                }
+            }
         }
     }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Hello $username") },
+                title = { Text("Hello ${state.username}") },
                 actions = {
                     TextButton(onClick = { showLogoutDialog = true }) {
                         Text("Logout")
@@ -132,7 +144,7 @@ fun MainScreen(
                 showLogoutDialog = it
             },
             confirmOnClick = {
-                viewModel.logout()
+                viewModel.onEvent(DashboardEvent.ConfirmLogoutClick)
             }
         )
     }

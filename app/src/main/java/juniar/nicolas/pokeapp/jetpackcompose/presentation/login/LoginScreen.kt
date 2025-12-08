@@ -55,7 +55,7 @@ fun LoginScreen(
 
     fun openMainScreen() {
         navController.navigateScreen(
-            Screen.Main.route,
+            Screen.Dashboard.route,
             Screen.Login.route,
             true
         )

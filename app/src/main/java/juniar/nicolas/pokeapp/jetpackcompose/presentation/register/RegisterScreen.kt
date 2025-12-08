@@ -47,7 +47,7 @@ fun RegisterScreen(
 
     fun openMainScreen() {
         navController.navigateScreen(
-            Screen.Main.route,
+            Screen.Dashboard.route,
             Screen.Register.route,
             true
         )

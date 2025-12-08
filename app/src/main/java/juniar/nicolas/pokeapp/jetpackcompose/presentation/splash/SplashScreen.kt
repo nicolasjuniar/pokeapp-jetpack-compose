@@ -36,7 +36,7 @@ fun SplashScreen(
 
     fun openMainScreen() {
         navController.navigateScreen(
-            Screen.Main.route,
+            Screen.Dashboard.route,
             Screen.Splash.route,
             true
         )

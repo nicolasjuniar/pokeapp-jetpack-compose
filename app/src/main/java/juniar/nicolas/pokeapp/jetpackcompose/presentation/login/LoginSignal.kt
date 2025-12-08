@@ -5,4 +5,3 @@ sealed interface LoginSignal {
     object NavigateToMain : LoginSignal
     object NavigateToRegister : LoginSignal
 }
-
