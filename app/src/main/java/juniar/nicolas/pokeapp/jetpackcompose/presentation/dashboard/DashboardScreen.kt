@@ -4,7 +4,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.automirrored.outlined.List
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.List
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -30,6 +34,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import juniar.nicolas.pokeapp.jetpackcompose.core.navigateScreen
 import juniar.nicolas.pokeapp.jetpackcompose.core.showToast
+import juniar.nicolas.pokeapp.jetpackcompose.presentation.common.NavItem
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.components.SimpleDialog
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.favorite.FavoriteScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.list.ListScreen
@@ -42,9 +47,20 @@ fun DashboardScreen(
 ) {
     val bottomNavController = rememberNavController()
     val navItems = listOf(
-        Screen.List.route to Icons.AutoMirrored.Filled.List,
-        Screen.Favorite.route to Icons.Filled.Favorite
+        NavItem(
+            route = Screen.List.route,
+            selectedIcon = Icons.AutoMirrored.Filled.List,
+            unselectedIcon = Icons.AutoMirrored.Outlined.List,
+            label = "List"
+        ),
+        NavItem(
+            route = Screen.Favorite.route,
+            selectedIcon = Icons.Filled.Favorite,
+            unselectedIcon = Icons.Outlined.FavoriteBorder,
+            label = "Favorite"
+        )
     )
+
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     fun openLoginScreen() {
@@ -91,26 +107,25 @@ fun DashboardScreen(
             NavigationBar {
                 val currentDestination =
                     bottomNavController.currentBackStackEntryAsState().value?.destination?.route
-                navItems.forEach { (screen, icon) ->
+                navItems.forEach { item ->
                     NavigationBarItem(
-                        selected = currentDestination == screen,
+                        selected = currentDestination == item.route,
                         onClick = {
-                            bottomNavController.navigate(screen) {
-                                popUpTo(navController.graph.startDestinationId)
+                            bottomNavController.navigate(item.route) {
+                                popUpTo(bottomNavController.graph.startDestinationId)
                                 launchSingleTop = true
                             }
                         },
                         icon = {
                             Icon(
-                                icon,
-                                contentDescription = screen
+                                imageVector = if (currentDestination == item.route)
+                                    item.selectedIcon
+                                else
+                                    item.unselectedIcon,
+                                contentDescription = item.label
                             )
                         },
-                        label = {
-                            Text(screen.replaceFirstChar {
-                                it.uppercase()
-                            })
-                        }
+                        label = { Text(item.label) }
                     )
                 }
             }

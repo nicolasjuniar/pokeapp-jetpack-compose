@@ -14,13 +14,14 @@ This project showcases authentication, persistent sessions, modularization, prof
 - MVVM
 - Repository Pattern
 - Single-Activity Architecture
+- UDF (Unidirectional Data Flow)
+- State / Event / Signal pattern
 - Modularization (v1.1)
 
 ### UI
 
 - Jetpack Compose
 - Navigation Compose
-- Material3
 
 ### Core Libraries
 
@@ -37,14 +38,13 @@ This project showcases authentication, persistent sessions, modularization, prof
 ### Tooling / DevOps
 
 - CI/CD with GitHub Actions
-- Detekt Report (v1.1)
-- Jacoco Report (v1.1)
+- Detekt Report
+- Jacoco Report
 - JUnit (v1.1)
 
 ### Debug Tools
 
-- Chucker (v1.1)
-- LeakCanary (v1.1)
+- Chucker
 
 ### Other
 
@@ -61,18 +61,16 @@ This project showcases authentication, persistent sessions, modularization, prof
 - Session using Datastore
 - Splash screen determines login or main screen
 
-### Pokémon List & Detail
+### Dashboard
 
-- Pokémon listing with Paging 3
-- Remote Mediator integration
-- Pokémon detail screen
+- Pokémon listing with:
+  - Paging 3 + Remote Mediator Integration
+  - Detail Screen and Add/Remove Favorite
 - Favorite Pokémon system (Datastore + Room)
-
-### Profile(v1.1)
-
-- Favorite type
-- Change password
-- Profile picture update (Camera + Storage permissions)
+- Profile with: (v1.1)
+  - Favorite type
+  - Change Password
+  - Profile picture update (Camera + Storage permissions)
 
 ---
 
