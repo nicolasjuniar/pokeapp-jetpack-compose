@@ -1,25 +1,22 @@
 package juniar.nicolas.pokeapp.jetpackcompose.presentation.detail
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import juniar.nicolas.pokeapp.jetpackcompose.core.ResultWrapper
-import juniar.nicolas.pokeapp.jetpackcompose.domain.model.DetailPokemon
+import juniar.nicolas.pokeapp.jetpackcompose.core.orEmpty
 import juniar.nicolas.pokeapp.jetpackcompose.domain.model.Favorite
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.CheckFavoriteUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.GetDetailPokemonUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.GetLoggedUsernameUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.UpdateFavoriteUseCase
-import kotlinx.coroutines.flow.MutableSharedFlow
+import juniar.nicolas.pokeapp.jetpackcompose.presentation.common.BaseViewModel
+import juniar.nicolas.pokeapp.jetpackcompose.presentation.common.DefaultSignal
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
 
 @HiltViewModel
 class DetailPokemonViewModel @Inject constructor(
@@ -27,58 +24,76 @@ class DetailPokemonViewModel @Inject constructor(
     getLoggedUsernameUseCase: GetLoggedUsernameUseCase,
     private val checkFavoriteUseCase: CheckFavoriteUseCase,
     private val updateFavoriteUseCase: UpdateFavoriteUseCase
-) : ViewModel() {
-    private val _detailPokemon = MutableSharedFlow<DetailPokemon>()
-    val detailPokemon = _detailPokemon.asSharedFlow()
+) : BaseViewModel<DetailPokemonState, DetailPokemonEvent, DefaultSignal>(DetailPokemonState()) {
 
     val username = getLoggedUsernameUseCase()
         .stateIn(viewModelScope, SharingStarted.Eagerly, "")
 
     private val _pokedexNumber = MutableStateFlow<Int?>(null)
 
-    private val _isFavorite = MutableStateFlow(false)
-    val isFavorite = _isFavorite.asStateFlow()
+    private fun setPokedexNumber(id: Int) {
+        _pokedexNumber.value = id
+        getDetailPokemon()
+        checkUserFavorite()
+    }
 
-    init {
+    private suspend fun checkFavorite(user: String, id: Int) = checkFavoriteUseCase(
+        Favorite(username = user, pokemonId = id)
+    )
+
+    private fun checkUserFavorite() {
         viewModelScope.launch {
             combine(username, _pokedexNumber) { user, id ->
                 Pair(user, id)
             }.collect { (user, id) ->
                 if (user.isNotEmpty() && id != null) {
-                    _isFavorite.value = checkFavoriteUseCase(
-                        Favorite(username = user, pokemonId = id)
-                    )
+                    val isFavorite = checkFavorite(user, id)
+                    setState { copy(isFavorite = isFavorite) }
                 }
             }
         }
     }
 
-    fun setPokedexNumber(pokedexNumber: Int) {
-        _pokedexNumber.value = pokedexNumber
-    }
-
-    fun getDetailPokemon(pokedexNumber: Int) {
+    private fun getDetailPokemon() {
         viewModelScope.launch {
-            when (val result = getDetailPokemonUseCase.invoke(pokedexNumber)) {
+            setState { copy(isLoading = true) }
+            val result = getDetailPokemonUseCase.invoke(_pokedexNumber.value.orEmpty())
+            setState { copy(isLoading = false) }
+
+            when (result) {
                 is ResultWrapper.Success -> {
-                    _detailPokemon.emit(result.data)
+                    setState { copy(detailPokemon = result.data) }
                 }
 
                 is ResultWrapper.Error -> {
+                    sendSignal(DefaultSignal.ShowToast(result.message))
                 }
             }
         }
     }
 
-    fun updateFavorite() {
-        val user = username.value
-        val id = _pokedexNumber.value ?: return
-
+    private fun updateFavorite() {
         viewModelScope.launch {
-            val favorite = Favorite(user, id)
+            val favorite = Favorite(username.value, _pokedexNumber.value.orEmpty())
             updateFavoriteUseCase(favorite)
+            val isFavorite = checkFavoriteUseCase(favorite)
+            setState { copy(isFavorite = isFavorite) }
+            sendSignal(
+                DefaultSignal.ShowToast(
+                    if (isFavorite) {
+                        "Success Add to Favorite"
+                    } else {
+                        "Success Remove from Favorite"
+                    }
+                )
+            )
+        }
+    }
 
-            _isFavorite.value = checkFavoriteUseCase(favorite)
+    override fun handleEvent(event: DetailPokemonEvent) {
+        when (event) {
+            is DetailPokemonEvent.SetPokedexNumber -> setPokedexNumber(event.id)
+            is DetailPokemonEvent.ClickFavoriteIcon -> updateFavorite()
         }
     }
 }

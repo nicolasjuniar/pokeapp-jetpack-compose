@@ -3,19 +3,23 @@ package juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.favorite
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import juniar.nicolas.pokeapp.jetpackcompose.core.navigateScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.list.PokemonItem
@@ -33,12 +37,21 @@ fun FavoriteScreen(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        val isRefreshing = pagingItems.loadState.refresh is androidx.paging.LoadState.Loading
+        val isRefreshing = pagingItems.loadState.refresh is LoadState.Loading
 
-        if (isRefreshing) {
-            CircularProgressIndicator()
-        } else {
-            LazyVerticalGrid(
+        when {
+            isRefreshing -> CircularProgressIndicator()
+            pagingItems.itemCount == 0 -> Text(
+                text = "Your favorites list is empty",
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
+                modifier = Modifier
+                    .padding(24.dp)
+                    .fillMaxWidth()
+            )
+
+            else -> LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 modifier = modifier
                     .fillMaxSize()

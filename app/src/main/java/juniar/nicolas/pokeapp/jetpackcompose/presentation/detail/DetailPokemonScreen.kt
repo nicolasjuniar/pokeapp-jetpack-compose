@@ -22,21 +22,24 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
+import juniar.nicolas.pokeapp.jetpackcompose.core.showToast
 import juniar.nicolas.pokeapp.jetpackcompose.data.dto.PokemonAbility
 import juniar.nicolas.pokeapp.jetpackcompose.domain.model.DetailPokemon
+import juniar.nicolas.pokeapp.jetpackcompose.presentation.common.DefaultSignal
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.components.BaseScaffold
 import juniar.nicolas.pokeapp.jetpackcompose.ui.theme.typeColor
 
@@ -47,17 +50,23 @@ fun PokemonDetailScreen(
     navController: NavController = rememberNavController(),
     viewModel: DetailPokemonViewModel = hiltViewModel()
 ) {
-    val isFavorite by viewModel.isFavorite.collectAsState()
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
+    val context = LocalContext.current
 
     LaunchedEffect(pokedexNumber) {
-        viewModel.setPokedexNumber(pokedexNumber)
+        viewModel.onEvent(DetailPokemonEvent.SetPokedexNumber(pokedexNumber))
     }
 
-    LaunchedEffect(pokedexNumber) { viewModel.getDetailPokemon(pokedexNumber) }
+    LaunchedEffect(Unit) {
+        viewModel.signal.collect {
+            if (it is DefaultSignal.ShowToast) {
+                context.showToast(it.message)
+            }
+        }
+    }
 
-    val detailPokemon by viewModel.detailPokemon.collectAsState(initial = null)
-
-    detailPokemon?.let { pokemon ->
+    state.detailPokemon?.let { pokemon ->
         BaseScaffold(
             modifier = modifier,
             onBackClick = {
@@ -71,7 +80,7 @@ fun PokemonDetailScreen(
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                item { PokemonHeader(pokemon, isFavorite, viewModel) }
+                item { PokemonHeader(pokemon, state.isFavorite, viewModel) }
 
                 item {
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -150,7 +159,7 @@ fun PokemonHeader(pokemon: DetailPokemon, isFavorite: Boolean, viewModel: Detail
                 .fillMaxWidth()
         ) {
             IconButton(
-                onClick = { viewModel.updateFavorite() },
+                onClick = { viewModel.onEvent(DetailPokemonEvent.ClickFavoriteIcon) },
                 modifier = Modifier
                     .align(Alignment.TopEnd)
                     .zIndex(2f)
