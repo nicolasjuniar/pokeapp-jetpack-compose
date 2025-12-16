@@ -33,4 +33,16 @@ class UserRepositoryImpl @Inject constructor(
             userDao.getUserByUsername(username) == null
         }
     }
+
+    override suspend fun getUserProfilePicture(username: String): String {
+        return withContext(dispatcher.io) {
+            userDao.getProfilePictureByUsername(username)
+        }
+    }
+
+    override suspend fun updateUserProfilePicture(uri: String, username: String) {
+        withContext(dispatcher.io) {
+            userDao.updateProfilePicture(uri, username)
+        }
+    }
 }

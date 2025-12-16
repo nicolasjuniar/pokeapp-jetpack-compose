@@ -16,4 +16,10 @@ interface UserDao {
 
     @Query("SELECT * FROM users WHERE username = :username LIMIT 1")
     suspend fun getUserByUsername(username: String): UserEntity?
+
+    @Query("SELECT profilePictureUri FROM users WHERE username = :username LIMIT 1")
+    suspend fun getProfilePictureByUsername(username: String): String
+
+    @Query("UPDATE users SET profilePictureUri = :uri WHERE username = :username")
+    suspend fun updateProfilePicture(uri: String, username: String)
 }

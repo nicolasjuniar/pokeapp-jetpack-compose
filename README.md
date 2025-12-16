@@ -68,7 +68,6 @@ This project showcases authentication, persistent sessions, modularization, prof
   - Detail Screen and Add/Remove Favorite
 - Favorite Pokémon system (Datastore + Room)
 - Profile with: (v1.1)
-  - Favorite type
   - Change Password
   - Profile picture update (Camera + Storage permissions)
 
@@ -110,8 +109,8 @@ This project showcases authentication, persistent sessions, modularization, prof
 
 ## 📦 Downloads
 
-- **Latest Release:** [Download here](#)
-- **GitHub Artifact:** [View artifact](#)
+- **Latest Release:** [Download here](https://github.com/nicolasjuniar/pokeapp-jetpack-compose/releases)
+- **GitHub Artifact:** [View artifact](https://github.com/nicolasjuniar/pokeapp-jetpack-compose/actions/runs/20007859465)
 
 ## 📝 Summary
 

@@ -10,14 +10,16 @@ import juniar.nicolas.pokeapp.jetpackcompose.domain.repository.PokemonRepository
 import juniar.nicolas.pokeapp.jetpackcompose.domain.repository.SessionRepository
 import juniar.nicolas.pokeapp.jetpackcompose.domain.repository.UserRepository
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.CheckFavoriteUseCase
-import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.GetLoggedUsernameUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.GetDetailPokemonUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.GetListFavoritePokemonUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.GetListPokemonUseCase
+import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.GetLoggedUsernameUseCase
+import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.GetUserProfilePictureUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.LoginUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.RegisterUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.SaveLoggedUsernameUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.UpdateFavoriteUseCase
+import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.UpdateUserProfilePictureUseCase
 import javax.inject.Singleton
 
 @Module
@@ -79,4 +81,16 @@ object UseCaseModule {
     fun provideGetListFavoritePokemonUseCase(
         favoriteRepository: FavoriteRepository
     ) = GetListFavoritePokemonUseCase(favoriteRepository)
+
+    @Provides
+    @Singleton
+    fun provideGetUserProfilePictureUseCase(
+        userRepository: UserRepository
+    ) = GetUserProfilePictureUseCase(userRepository)
+
+    @Provides
+    @Singleton
+    fun provideUpdateUserProfilePictureUseCase(
+        userRepository: UserRepository
+    ) = UpdateUserProfilePictureUseCase(userRepository)
 }

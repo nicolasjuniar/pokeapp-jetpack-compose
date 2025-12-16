@@ -118,3 +118,19 @@
 
 # Avoid warnings
 -dontwarn com.chuckerteam.chucker.**
+
+# CameraX keep rules
+-keep class androidx.camera.core.** { *; }
+-keep class androidx.camera.camera2.** { *; }
+-keep class androidx.camera.lifecycle.** { *; }
+-keep class androidx.camera.view.** { *; }
+-keep class androidx.camera.extensions.** { *; }
+
+# Keep enums karena CameraX banyak menggunakan Enum via reflection
+-keepclassmembers enum * { *; }
+
+# Keep untuk ImageCapture / Preview configs
+-keepclassmembers class * {
+    @androidx.camera.core.impl.Config$Option <fields>;
+}
+

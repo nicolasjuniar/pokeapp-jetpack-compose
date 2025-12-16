@@ -7,8 +7,10 @@ import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.automirrored.outlined.List
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.List
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -38,6 +40,7 @@ import juniar.nicolas.pokeapp.jetpackcompose.presentation.common.NavItem
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.components.SimpleDialog
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.favorite.FavoriteScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.list.ListScreen
+import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.profile.ProfileScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -58,6 +61,12 @@ fun DashboardScreen(
             selectedIcon = Icons.Filled.Favorite,
             unselectedIcon = Icons.Outlined.FavoriteBorder,
             label = "Favorite"
+        ),
+        NavItem(
+            route = Screen.Profile.route,
+            selectedIcon = Icons.Filled.Person,
+            unselectedIcon = Icons.Outlined.Person,
+            label = "Profile"
         )
     )
 
@@ -146,6 +155,11 @@ fun DashboardScreen(
                 FavoriteScreen(
                     modifier = Modifier.fillMaxSize(),
                     navController = navController
+                )
+            }
+            composable(Screen.Profile.route) {
+                ProfileScreen(
+                    modifier = Modifier.fillMaxSize()
                 )
             }
         }
