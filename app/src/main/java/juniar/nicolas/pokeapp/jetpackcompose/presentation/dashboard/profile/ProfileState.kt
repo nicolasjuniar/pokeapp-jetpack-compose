@@ -4,4 +4,5 @@ data class ProfileState(
     val loggedUsername: String = "",
     val imageUri: String = "",
     val showChangeProfilePictureBottomSheet: Boolean = false,
+    val showChangePasswordBottomSheet: Boolean = false
 )

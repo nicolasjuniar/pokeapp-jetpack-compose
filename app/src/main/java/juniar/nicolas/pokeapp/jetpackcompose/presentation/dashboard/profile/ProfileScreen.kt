@@ -63,14 +63,8 @@ fun ProfileScreen(
 
     LaunchedEffect(Unit) {
         viewModel.signal.collect {
-            when (it) {
-                is ProfileSignal.showChangePasswordBottomSheet -> {
-                    context.showToast("Show Change Password Bottom Sheet")
-                }
-
-                is ProfileSignal.successUpdateProfilePicture -> {
-                    context.showToast("Success Update Profile Picture")
-                }
+            if (it is ProfileSignal.SuccessUpdateProfilePicture) {
+                context.showToast("Success Update Profile Picture")
             }
         }
     }
@@ -100,6 +94,12 @@ fun ProfileScreen(
                 requestCameraPermission.launch(Manifest.permission.CAMERA)
             }
         )
+    }
+
+    if (state.showChangePasswordBottomSheet) {
+        ChangePasswordBottomSheet {
+            viewModel.onEvent(ProfileEvent.DismissChangePasswordBottomSheet)
+        }
     }
 
     Column(

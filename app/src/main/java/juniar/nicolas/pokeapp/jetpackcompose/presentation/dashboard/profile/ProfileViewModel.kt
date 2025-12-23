@@ -36,12 +36,16 @@ class ProfileViewModel @Inject constructor(
 
             is ProfileEvent.ChangePasswordClicked -> {
                 viewModelScope.launch {
-                    sendSignal(ProfileSignal.showChangePasswordBottomSheet)
+                    setState { copy(showChangePasswordBottomSheet = true) }
                 }
             }
 
             is ProfileEvent.DismissChangeProfilePictureBottomSheet -> {
                 setState { copy(showChangeProfilePictureBottomSheet = false) }
+            }
+
+            is ProfileEvent.DismissChangePasswordBottomSheet -> {
+                setState { copy(showChangePasswordBottomSheet = false) }
             }
 
             is ProfileEvent.UpdateImageUri -> {
@@ -52,7 +56,7 @@ class ProfileViewModel @Inject constructor(
                     }
                     if (state.value.loggedUsername.isEmpty()) return@launch
                     updateUserProfilePictureUseCase.invoke(uri, state.value.loggedUsername)
-                    sendSignal(ProfileSignal.successUpdateProfilePicture)
+                    sendSignal(ProfileSignal.SuccessUpdateProfilePicture)
                 }
             }
         }
