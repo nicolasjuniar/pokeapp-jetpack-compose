@@ -27,7 +27,15 @@ import juniar.nicolas.pokeapp.jetpackcompose.ui.theme.Purple40
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChangePasswordBottomSheet(
-    onDismiss: () -> Unit
+    oldPassword: String,
+    oldPasswordOnChange: (String) -> Unit,
+    newPassword: String,
+    newPasswordOnChange: (String) -> Unit,
+    confirmPassword: String,
+    confirmPasswordOnChange: (String) -> Unit,
+    onDismiss: () -> Unit,
+    changePasswordEnabled: Boolean,
+    changePasswordOnClick: () -> Unit
 ) {
     ModalBottomSheet(
         onDismissRequest = onDismiss
@@ -46,27 +54,35 @@ fun ChangePasswordBottomSheet(
             Spacer(modifier = Modifier.height(12.dp))
 
             PasswordTextField(
-                value = "", onValueChange = {
-
-                }, label = "Old Password", imeAction = ImeAction.Next
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            PasswordTextField(
-                value = "", onValueChange = {
-
-                }, label = "New Password", imeAction = ImeAction.Next
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            PasswordTextField(
-                value = "",
+                value = oldPassword,
                 onValueChange = {
-
+                    oldPasswordOnChange(it)
                 },
-                isError = false,
+                label = "Old Password",
+                imeAction = ImeAction.Next
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            PasswordTextField(
+                value = newPassword,
+                onValueChange = {
+                    newPasswordOnChange(it)
+                },
+                isError = newPassword.length in 1..6,
+                errorText = "Password minimum 6 character",
+                label = "New Password",
+                imeAction = ImeAction.Next
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            PasswordTextField(
+                value = confirmPassword,
+                onValueChange = {
+                    confirmPasswordOnChange(it)
+                },
+                isError = newPassword != confirmPassword,
                 errorText = "Confirm Password and New Password must be same",
                 label = "Confirm Password"
             )
@@ -91,7 +107,9 @@ fun ChangePasswordBottomSheet(
                 Spacer(modifier = Modifier.width(4.dp))
 
                 Button(
-                    onClick = { onDismiss() }, modifier = Modifier.weight(1f)
+                    onClick = { changePasswordOnClick() },
+                    enabled = changePasswordEnabled,
+                    modifier = Modifier.weight(1f)
                 ) {
                     Text("Confirm")
                 }

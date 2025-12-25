@@ -39,6 +39,8 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import juniar.nicolas.pokeapp.jetpackcompose.core.showToast
+import juniar.nicolas.pokeapp.jetpackcompose.presentation.common.DefaultSignal
+import juniar.nicolas.pokeapp.jetpackcompose.presentation.components.LoadingOverlay
 
 @Composable
 fun ProfileScreen(
@@ -63,8 +65,8 @@ fun ProfileScreen(
 
     LaunchedEffect(Unit) {
         viewModel.signal.collect {
-            if (it is ProfileSignal.SuccessUpdateProfilePicture) {
-                context.showToast("Success Update Profile Picture")
+            if (it is DefaultSignal.ShowToast) {
+                context.showToast(it.message)
             }
         }
     }
@@ -97,9 +99,27 @@ fun ProfileScreen(
     }
 
     if (state.showChangePasswordBottomSheet) {
-        ChangePasswordBottomSheet {
-            viewModel.onEvent(ProfileEvent.DismissChangePasswordBottomSheet)
-        }
+        ChangePasswordBottomSheet(
+            oldPassword = state.oldPassword,
+            oldPasswordOnChange = {
+                viewModel.onEvent(ProfileEvent.OldPasswordChanged(it))
+            },
+            newPassword = state.newPassword,
+            newPasswordOnChange = {
+                viewModel.onEvent(ProfileEvent.NewPasswordChanged(it))
+            },
+            confirmPassword = state.confirmPassword,
+            confirmPasswordOnChange = {
+                viewModel.onEvent(ProfileEvent.ConfirmPasswordChanged(it))
+            },
+            onDismiss = {
+                viewModel.onEvent(ProfileEvent.DismissChangePasswordBottomSheet)
+            },
+            changePasswordEnabled = state.changePasswordButtonEnabled,
+            changePasswordOnClick = {
+                viewModel.onEvent(ProfileEvent.ChangePasswordButtonClicked)
+            }
+        )
     }
 
     Column(
@@ -171,5 +191,8 @@ fun ProfileScreen(
         ) {
             Text("Change Password")
         }
+    }
+    if (state.isLoading) {
+        LoadingOverlay()
     }
 }

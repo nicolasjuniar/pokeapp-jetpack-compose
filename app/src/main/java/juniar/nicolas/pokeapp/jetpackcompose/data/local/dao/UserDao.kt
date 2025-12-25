@@ -4,7 +4,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import juniar.nicolas.pokeapp.jetpackcompose.data.local.entity.UserEntity
+import juniar.nicolas.pokeapp.jetpackcompose.domain.model.User
 
 @Dao
 interface UserDao {
@@ -22,4 +24,7 @@ interface UserDao {
 
     @Query("UPDATE users SET profilePictureUri = :uri WHERE username = :username")
     suspend fun updateProfilePicture(uri: String, username: String)
+
+    @Update
+    suspend fun updateUser(user: UserEntity)
 }

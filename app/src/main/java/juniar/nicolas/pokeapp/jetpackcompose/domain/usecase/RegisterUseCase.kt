@@ -15,7 +15,8 @@ class RegisterUseCase @Inject constructor(
 
     suspend operator fun invoke(username: String, password: String): ResultWrapper<Unit> {
         return withContext(dispatcher.default) {
-            if (!userRepository.isUsernameUnique(username)) {
+            val isUsernameUnique = userRepository.getUserByUsername(username) == null
+            if (!isUsernameUnique) {
                 return@withContext ResultWrapper.Error("Username already registered")
             }
 

@@ -9,6 +9,7 @@ import juniar.nicolas.pokeapp.jetpackcompose.domain.repository.FavoriteRepositor
 import juniar.nicolas.pokeapp.jetpackcompose.domain.repository.PokemonRepository
 import juniar.nicolas.pokeapp.jetpackcompose.domain.repository.SessionRepository
 import juniar.nicolas.pokeapp.jetpackcompose.domain.repository.UserRepository
+import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.ChangePasswordUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.CheckFavoriteUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.GetDetailPokemonUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.GetListFavoritePokemonUseCase
@@ -93,4 +94,11 @@ object UseCaseModule {
     fun provideUpdateUserProfilePictureUseCase(
         userRepository: UserRepository
     ) = UpdateUserProfilePictureUseCase(userRepository)
+
+    @Provides
+    @Singleton
+    fun provideChangePasswordUseCase(
+        userRepository: UserRepository,
+        dispatcher: AppDispatcher
+    ) = ChangePasswordUseCase(userRepository, dispatcher)
 }

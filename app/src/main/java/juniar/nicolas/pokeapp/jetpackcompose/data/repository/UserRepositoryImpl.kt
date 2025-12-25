@@ -2,6 +2,7 @@ package juniar.nicolas.pokeapp.jetpackcompose.data.repository
 
 import juniar.nicolas.pokeapp.jetpackcompose.core.AppDispatcher
 import juniar.nicolas.pokeapp.jetpackcompose.data.local.dao.UserDao
+import juniar.nicolas.pokeapp.jetpackcompose.data.local.entity.UserEntity
 import juniar.nicolas.pokeapp.jetpackcompose.data.mapper.UserMapper
 import juniar.nicolas.pokeapp.jetpackcompose.domain.model.User
 import juniar.nicolas.pokeapp.jetpackcompose.domain.repository.UserRepository
@@ -28,9 +29,9 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun isUsernameUnique(username: String): Boolean {
+    override suspend fun getUserByUsername(username: String): UserEntity? {
         return withContext(dispatcher.io) {
-            userDao.getUserByUsername(username) == null
+            userDao.getUserByUsername(username)
         }
     }
 
@@ -43,6 +44,12 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun updateUserProfilePicture(uri: String, username: String) {
         withContext(dispatcher.io) {
             userDao.updateProfilePicture(uri, username)
+        }
+    }
+
+    override suspend fun updateUser(user: UserEntity) {
+        withContext(dispatcher.io) {
+            userDao.updateUser(user)
         }
     }
 }
