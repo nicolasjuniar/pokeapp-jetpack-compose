@@ -41,15 +41,21 @@ import coil.compose.AsyncImage
 import juniar.nicolas.pokeapp.jetpackcompose.core.showToast
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.common.DefaultSignal
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.components.LoadingOverlay
+import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.profile.changepassword.ChangePasswordBottomSheet
+import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.profile.changepassword.ChangePasswordEvent
+import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.profile.changepassword.ChangePasswordViewmodel
 
 @Composable
 fun ProfileScreen(
     modifier: Modifier = Modifier,
-    viewModel: ProfileViewModel = hiltViewModel()
+    profileViewModel: ProfileViewModel = hiltViewModel(),
+    changePasswordViewmodel: ChangePasswordViewmodel = hiltViewModel()
 ) {
     val context = LocalContext.current
 
-    val state by viewModel.state.collectAsStateWithLifecycle()
+    val profileState by profileViewModel.state.collectAsStateWithLifecycle()
+
+    val changePasswordState by changePasswordViewmodel.state.collectAsStateWithLifecycle()
 
     val galleryLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.PickVisualMedia()
@@ -59,18 +65,25 @@ fun ProfileScreen(
                 it,
                 Intent.FLAG_GRANT_READ_URI_PERMISSION
             )
-            viewModel.onEvent(ProfileEvent.UpdateImageUri(it.toString()))
+            profileViewModel.onEvent(ProfileEvent.UpdateImageUri(it.toString()))
         }
     }
 
     LaunchedEffect(Unit) {
-        viewModel.signal.collect {
+        profileViewModel.signal.collect {
             if (it is DefaultSignal.ShowToast) {
                 context.showToast(it.message)
             }
         }
     }
 
+    LaunchedEffect(Unit) {
+        changePasswordViewmodel.signal.collect {
+            if (it is DefaultSignal.ShowToast) {
+                context.showToast(it.message)
+            }
+        }
+    }
 
     val requestCameraPermission = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -82,10 +95,10 @@ fun ProfileScreen(
         }
     }
 
-    if (state.showChangeProfilePictureBottomSheet) {
+    if (profileState.showChangeProfilePictureBottomSheet) {
         ChangeProfilePictureBottomSheet(
             dismissBottomSheet = {
-                viewModel.onEvent(ProfileEvent.DismissChangeProfilePictureBottomSheet)
+                profileViewModel.onEvent(ProfileEvent.DismissChangeProfilePictureBottomSheet)
             },
             chooseGallery = {
                 galleryLauncher.launch(
@@ -98,26 +111,26 @@ fun ProfileScreen(
         )
     }
 
-    if (state.showChangePasswordBottomSheet) {
+    if (changePasswordState.showChangePasswordBottomSheet) {
         ChangePasswordBottomSheet(
-            oldPassword = state.oldPassword,
+            oldPassword = changePasswordState.oldPassword,
             oldPasswordOnChange = {
-                viewModel.onEvent(ProfileEvent.OldPasswordChanged(it))
+                changePasswordViewmodel.onEvent(ChangePasswordEvent.OldPasswordChanged(it))
             },
-            newPassword = state.newPassword,
+            newPassword = changePasswordState.newPassword,
             newPasswordOnChange = {
-                viewModel.onEvent(ProfileEvent.NewPasswordChanged(it))
+                changePasswordViewmodel.onEvent(ChangePasswordEvent.NewPasswordChanged(it))
             },
-            confirmPassword = state.confirmPassword,
+            confirmPassword = changePasswordState.confirmPassword,
             confirmPasswordOnChange = {
-                viewModel.onEvent(ProfileEvent.ConfirmPasswordChanged(it))
+                changePasswordViewmodel.onEvent(ChangePasswordEvent.ConfirmPasswordChanged(it))
             },
             onDismiss = {
-                viewModel.onEvent(ProfileEvent.DismissChangePasswordBottomSheet)
+                changePasswordViewmodel.onEvent(ChangePasswordEvent.DismissChangePasswordBottomSheet)
             },
-            changePasswordEnabled = state.changePasswordButtonEnabled,
+            changePasswordEnabled = changePasswordState.changePasswordButtonEnabled,
             changePasswordOnClick = {
-                viewModel.onEvent(ProfileEvent.ChangePasswordButtonClicked)
+                changePasswordViewmodel.onEvent(ChangePasswordEvent.ChangePasswordButtonClicked)
             }
         )
     }
@@ -137,12 +150,12 @@ fun ProfileScreen(
                 .clickable(
                     indication = null,
                     interactionSource = remember { MutableInteractionSource() }
-                ) { viewModel.onEvent(ProfileEvent.ChangePictureClicked) },
+                ) { profileViewModel.onEvent(ProfileEvent.ChangePictureClicked) },
             contentAlignment = Alignment.Center
         ) {
-            if (state.imageUri.isNotEmpty()) {
+            if (profileState.imageUri.isNotEmpty()) {
                 AsyncImage(
-                    model = state.imageUri,
+                    model = profileState.imageUri,
                     contentDescription = "Profile Image",
                     modifier = Modifier
                         .size(150.dp)
@@ -186,13 +199,13 @@ fun ProfileScreen(
         Spacer(Modifier.height(40.dp))
 
         Button(
-            onClick = { viewModel.onEvent(ProfileEvent.ChangePasswordClicked) },
+            onClick = { changePasswordViewmodel.onEvent(ChangePasswordEvent.ChangePasswordClicked) },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Change Password")
         }
     }
-    if (state.isLoading) {
+    if (profileState.isLoading) {
         LoadingOverlay()
     }
 }

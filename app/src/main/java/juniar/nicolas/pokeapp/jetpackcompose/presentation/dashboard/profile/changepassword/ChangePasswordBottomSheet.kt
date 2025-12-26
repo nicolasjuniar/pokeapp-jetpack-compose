@@ -1,4 +1,4 @@
-package juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.profile
+package juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.profile.changepassword
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
