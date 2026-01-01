@@ -6,6 +6,5 @@ data class ChangePasswordState(
     val newPassword: String = "",
     val confirmPassword: String = "",
     val changePasswordButtonEnabled: Boolean = false,
-    val showChangePasswordBottomSheet:Boolean = false,
     val isLoading: Boolean = false
 )

@@ -18,7 +18,7 @@ import juniar.nicolas.pokeapp.jetpackcompose.data.local.entity.UserEntity
         PokemonRemoteKeys::class,
         FavoriteEntity::class
     ],
-    version = 2,
+    version = 1,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

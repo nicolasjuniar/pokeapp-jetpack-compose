@@ -159,7 +159,8 @@ fun DashboardScreen(
             }
             composable(Screen.Profile.route) {
                 ProfileScreen(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize(),
+                    navController
                 )
             }
         }

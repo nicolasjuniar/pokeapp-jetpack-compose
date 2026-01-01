@@ -1,5 +1,6 @@
 package juniar.nicolas.pokeapp.jetpackcompose.presentation.navigation
 
+import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -8,6 +9,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import juniar.nicolas.pokeapp.jetpackcompose.core.orEmpty
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.DashboardScreen
+import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.profile.camera.CameraScreen
+import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.profile.camera.PreviewScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.detail.PokemonDetailScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.login.LoginScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.register.RegisterScreen
@@ -44,6 +47,22 @@ fun NavGraph() {
             val pokedexNumber = backStackEntry.arguments?.getInt("pokedexNumber")
             PokemonDetailScreen(
                 pokedexNumber = pokedexNumber.orEmpty(1),
+                navController = navController
+            )
+        }
+
+        composable(Screen.Camera.route) {
+            CameraScreen(navController = navController)
+        }
+
+        composable(
+            Screen.Preview.route,
+            arguments = listOf(navArgument("uri") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val uri = backStackEntry.arguments?.getString("uri")
+            val decodedUri = Uri.decode(uri)
+            PreviewScreen(
+                imageUri = decodedUri,
                 navController = navController
             )
         }

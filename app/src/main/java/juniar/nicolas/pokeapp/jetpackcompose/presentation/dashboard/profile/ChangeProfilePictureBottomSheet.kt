@@ -11,6 +11,7 @@ import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,11 +20,13 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChangeProfilePictureBottomSheet(
+    sheetState: SheetState,
     dismissBottomSheet: () -> Unit,
     chooseGallery: () -> Unit,
     takePicture: () -> Unit
 ) {
     ModalBottomSheet(
+        sheetState = sheetState,
         onDismissRequest = { dismissBottomSheet() }) {
         Column(
             Modifier

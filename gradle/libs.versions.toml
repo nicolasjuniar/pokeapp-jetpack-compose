@@ -28,6 +28,7 @@ jacoco = "0.8.11"
 kotlinxSerialization = "1.7.1"
 kotlinxSerializationConverter = "1.0.0"
 cameraX = "1.5.2"
+accompanist = "0.36.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -72,6 +73,7 @@ camerax-core = { group = "androidx.camera", name = "camera-core", version.ref = 
 camerax-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "cameraX" }
 camerax-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "cameraX" }
 camerax-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraX" }
+accompanist-permission = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanist" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

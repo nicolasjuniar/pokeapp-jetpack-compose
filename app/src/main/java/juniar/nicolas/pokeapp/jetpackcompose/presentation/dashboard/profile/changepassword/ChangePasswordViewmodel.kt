@@ -16,7 +16,9 @@ import javax.inject.Inject
 class ChangePasswordViewmodel @Inject constructor(
     getLoggedUsernameUseCase: GetLoggedUsernameUseCase,
     private val changePasswordUseCase: ChangePasswordUseCase
-) : BaseViewModel<ChangePasswordState, ChangePasswordEvent, DefaultSignal>(ChangePasswordState()) {
+) : BaseViewModel<ChangePasswordState, ChangePasswordEvent, ChangePasswordSignal>(
+    ChangePasswordState()
+) {
 
     init {
         viewModelScope.launch {
@@ -37,12 +39,17 @@ class ChangePasswordViewmodel @Inject constructor(
 
             when (result) {
                 is ResultWrapper.Success -> {
-                    sendSignal(DefaultSignal.ShowToast("Change Password Successful"))
-                    onDismissChangePasswordBottomSheet()
+                    resetField()
+                    sendSignal(
+                        listOf(
+                            ChangePasswordSignal.ShowToast("Change Password Successful"),
+                            ChangePasswordSignal.DismissChangePasswordBottomSheet
+                        )
+                    )
                 }
 
                 is ResultWrapper.Error -> {
-                    sendSignal(DefaultSignal.ShowToast(result.message))
+                    sendSignal(ChangePasswordSignal.ShowToast(result.message))
                 }
             }
         }
@@ -61,24 +68,18 @@ class ChangePasswordViewmodel @Inject constructor(
         }
     }
 
-    private fun onDismissChangePasswordBottomSheet() {
+    fun resetField() {
         setState {
             copy(
                 oldPassword = "",
                 newPassword = "",
                 confirmPassword = "",
-                showChangePasswordBottomSheet = false
             )
         }
     }
 
     override fun handleEvent(event: ChangePasswordEvent) {
         when (event) {
-            is ChangePasswordEvent.ChangePasswordClicked -> {
-                viewModelScope.launch {
-                    setState { copy(showChangePasswordBottomSheet = true) }
-                }
-            }
 
             is ChangePasswordEvent.OldPasswordChanged -> {
                 updateChangePasswordState { copy(oldPassword = event.value) }
@@ -96,8 +97,8 @@ class ChangePasswordViewmodel @Inject constructor(
                 changePassword()
             }
 
-            is ChangePasswordEvent.DismissChangePasswordBottomSheet -> {
-                onDismissChangePasswordBottomSheet()
+            is ChangePasswordEvent.ResetChangePasswordField -> {
+                resetField()
             }
         }
     }

@@ -36,11 +36,15 @@ class ProfileViewModel @Inject constructor(
     override fun handleEvent(event: ProfileEvent) {
         when (event) {
             is ProfileEvent.ChangePictureClicked -> {
-                setState { copy(showChangeProfilePictureBottomSheet = true) }
+                setState { copy(activeSheet = ProfileSheet.ChangeProfilePicture) }
             }
 
-            is ProfileEvent.DismissChangeProfilePictureBottomSheet -> {
-                setState { copy(showChangeProfilePictureBottomSheet = false) }
+            is ProfileEvent.ChangePasswordClicked -> {
+                setState { copy(activeSheet = ProfileSheet.ChangePassword) }
+            }
+
+            is ProfileEvent.DismissBottomSheet -> {
+                setState { copy(activeSheet = null) }
             }
 
             is ProfileEvent.UpdateImageUri -> {

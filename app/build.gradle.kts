@@ -74,6 +74,7 @@ android {
 
     buildTypes {
         release {
+            isDebuggable = true
             isMinifyEnabled = true
             isShrinkResources = true
             signingConfig = signingConfigs.getByName("release")
@@ -133,6 +134,7 @@ dependencies {
     implementation(libs.camerax.camera2)
     implementation(libs.camerax.view)
     implementation(libs.camerax.lifecycle)
+    implementation(libs.accompanist.permission)
     debugImplementation(libs.leakcanary)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -22,7 +22,7 @@ object DatabaseModule {
         context,
         AppDatabase::class.java,
         "pokeapp_db"
-    ).fallbackToDestructiveMigration(false).build()
+    ).fallbackToDestructiveMigration(true).build()
 
     @Provides
     @Singleton
