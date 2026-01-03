@@ -7,7 +7,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import juniar.nicolas.pokeapp.jetpackcompose.core.navigateScreen
 import juniar.nicolas.pokeapp.jetpackcompose.core.orEmpty
+import juniar.nicolas.pokeapp.jetpackcompose.feature.login.LoginRoute
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.DashboardScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.profile.camera.CameraScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.profile.camera.PreviewScreen
@@ -29,7 +31,22 @@ fun NavGraph() {
         }
 
         composable(Screen.Login.route) {
-            LoginScreen(navController = navController)
+            LoginRoute(
+                openRegisterScreen = {
+                    navController.navigateScreen(
+                        Screen.Register.route,
+                        Screen.Login.route,
+                        true
+                    )
+                },
+                openMainScreen = {
+                    navController.navigateScreen(
+                        Screen.Dashboard.route,
+                        Screen.Login.route,
+                        true
+                    )
+                }
+            )
         }
 
         composable(Screen.Register.route) {
