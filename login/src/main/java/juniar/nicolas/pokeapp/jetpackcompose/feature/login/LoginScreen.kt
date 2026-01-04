@@ -35,7 +35,7 @@ fun LoginScreen(
     modifier: Modifier = Modifier,
     viewModel: LoginViewModel = viewModel(),
     openRegisterScreen: () -> Unit,
-    openMainScreen: () -> Unit
+    openDashboardScreen: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val focusManager = LocalFocusManager.current
@@ -47,7 +47,7 @@ fun LoginScreen(
                 is LoginSignal.ShowToast ->
                     context.showToast(it.message)
 
-                LoginSignal.NavigateToMain -> openMainScreen()
+                LoginSignal.NavigateToMain -> openDashboardScreen()
 
                 LoginSignal.NavigateToRegister -> openRegisterScreen()
             }

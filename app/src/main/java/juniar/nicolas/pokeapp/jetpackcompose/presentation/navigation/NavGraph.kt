@@ -39,7 +39,7 @@ fun NavGraph() {
                         true
                     )
                 },
-                openMainScreen = {
+                openDashboardScreen = {
                     navController.navigateScreen(
                         Screen.Dashboard.route,
                         Screen.Login.route,

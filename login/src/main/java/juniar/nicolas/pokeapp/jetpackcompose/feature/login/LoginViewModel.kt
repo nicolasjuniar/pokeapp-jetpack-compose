@@ -7,7 +7,9 @@ import kotlinx.coroutines.launch
 class LoginViewModel() : BaseViewModel<LoginState, LoginEvent, LoginSignal>(LoginState()) {
 
     private fun login() {
-
+        viewModelScope.launch {
+            sendSignal(LoginSignal.NavigateToMain)
+        }
     }
 
     override fun handleEvent(event: LoginEvent) {

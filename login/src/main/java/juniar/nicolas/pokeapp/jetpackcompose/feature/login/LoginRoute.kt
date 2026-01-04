@@ -5,10 +5,10 @@ import androidx.compose.runtime.Composable
 @Composable
 fun LoginRoute(
     openRegisterScreen: () -> Unit,
-    openMainScreen: () -> Unit
+    openDashboardScreen: () -> Unit
 ) {
     LoginScreen(
-        openMainScreen = openRegisterScreen,
-        openRegisterScreen = openMainScreen
+        openDashboardScreen = openDashboardScreen,
+        openRegisterScreen = openRegisterScreen
     )
 }
