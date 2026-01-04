@@ -69,7 +69,7 @@ This project showcases authentication, persistent sessions, modularization, prof
 - Favorite Pokémon system (Datastore + Room)
 - Profile with: (v1.1)
   - Change Password
-  - Profile picture update (Camera + Storage permissions)
+  - Profile picture update (CameraX + Gallery)
 
 ---
 
@@ -97,8 +97,8 @@ This project showcases authentication, persistent sessions, modularization, prof
 - [x] Add LeakCanary & Chucker
 - [x] Add Detekt + report in GitHub Actions
 - [ ] Separate signing config for local project and GitHub Actions
-- [ ] Add CameraX + runtime permissions
-- [ ] Implement Profile feature
+- [x] Add CameraX + runtime permissions
+- [x] Implement Profile feature
 - [ ] Add Unit Test + Jacoco report in GitHub Actions
 - [ ] Add Report to github pages
 - [ ] Add link to report, screenshoot and gif to show demo
