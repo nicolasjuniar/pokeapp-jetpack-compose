@@ -1,6 +1,5 @@
 package juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.profile.camera
 
-import android.annotation.SuppressLint
 import android.net.Uri
 import android.widget.Toast
 import androidx.camera.core.CameraSelector
@@ -16,7 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Cameraswitch
 import androidx.compose.material3.Icon
@@ -73,7 +71,11 @@ fun CameraContent(
                 .align(Alignment.TopStart)
                 .background(Color.Black.copy(alpha = 0.4f), CircleShape)
         ) {
-            Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = null, tint = Color.White)
+            Icon(
+                Icons.AutoMirrored.Default.ArrowBack,
+                contentDescription = null,
+                tint = Color.White
+            )
         }
 
         // Switch Camera

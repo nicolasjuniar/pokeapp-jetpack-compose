@@ -6,10 +6,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.automirrored.outlined.List
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material.icons.outlined.List
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -34,10 +32,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import juniar.nicolas.pokeapp.jetpackcompose.core.common.showToast
 import juniar.nicolas.pokeapp.jetpackcompose.core.navigateScreen
-import juniar.nicolas.pokeapp.jetpackcompose.core.showToast
-import juniar.nicolas.pokeapp.jetpackcompose.presentation.common.NavItem
-import juniar.nicolas.pokeapp.jetpackcompose.presentation.components.SimpleDialog
+import juniar.nicolas.pokeapp.jetpackcompose.core.ui.NavItem
+import juniar.nicolas.pokeapp.jetpackcompose.core.ui.SimpleDialog
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.favorite.FavoriteScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.list.ListScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.profile.ProfileScreen

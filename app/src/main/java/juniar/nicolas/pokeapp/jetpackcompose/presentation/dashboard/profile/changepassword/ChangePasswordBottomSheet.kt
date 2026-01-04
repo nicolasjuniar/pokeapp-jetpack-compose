@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import juniar.nicolas.pokeapp.jetpackcompose.presentation.components.PasswordTextField
+import juniar.nicolas.pokeapp.jetpackcompose.core.ui.PasswordTextField
 import juniar.nicolas.pokeapp.jetpackcompose.ui.theme.Purple40
 
 @OptIn(ExperimentalMaterial3Api::class)

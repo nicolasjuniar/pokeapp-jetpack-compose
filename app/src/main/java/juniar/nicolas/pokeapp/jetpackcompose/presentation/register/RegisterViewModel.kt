@@ -2,10 +2,10 @@ package juniar.nicolas.pokeapp.jetpackcompose.presentation.register
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import juniar.nicolas.pokeapp.jetpackcompose.core.ResultWrapper
-import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.RegisterUseCase
-import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.SaveLoggedUsernameUseCase
-import juniar.nicolas.pokeapp.jetpackcompose.presentation.common.BaseViewModel
+import juniar.nicolas.pokeapp.jetpackcompose.core.common.BaseViewModel
+import juniar.nicolas.pokeapp.jetpackcompose.core.common.ResultWrapper
+import juniar.nicolas.pokeapp.jetpackcompose.core.domain.usecase.RegisterUseCase
+import juniar.nicolas.pokeapp.jetpackcompose.core.domain.usecase.SaveLoggedUsernameUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

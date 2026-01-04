@@ -14,7 +14,6 @@ import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.DashboardScr
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.profile.camera.CameraScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.profile.camera.PreviewScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.detail.PokemonDetailScreen
-import juniar.nicolas.pokeapp.jetpackcompose.presentation.login.LoginScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.register.RegisterScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.splash.SplashScreen
 

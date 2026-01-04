@@ -36,11 +36,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
-import juniar.nicolas.pokeapp.jetpackcompose.core.showToast
-import juniar.nicolas.pokeapp.jetpackcompose.data.dto.PokemonAbility
-import juniar.nicolas.pokeapp.jetpackcompose.domain.model.DetailPokemon
-import juniar.nicolas.pokeapp.jetpackcompose.presentation.common.DefaultSignal
-import juniar.nicolas.pokeapp.jetpackcompose.presentation.components.BaseScaffold
+import juniar.nicolas.pokeapp.jetpackcompose.core.common.DefaultSignal
+import juniar.nicolas.pokeapp.jetpackcompose.core.common.showToast
+import juniar.nicolas.pokeapp.jetpackcompose.core.domain.model.DetailPokemon
+import juniar.nicolas.pokeapp.jetpackcompose.core.domain.model.PokemonAbility
+import juniar.nicolas.pokeapp.jetpackcompose.core.ui.BaseScaffold
 import juniar.nicolas.pokeapp.jetpackcompose.ui.theme.typeColor
 
 @Composable
@@ -252,7 +252,7 @@ fun AbilitySection(text: String) {
 }
 
 fun List<PokemonAbility>.splitAbility() = joinToString(" - ") {
-    it.ability.name + if (it.isHidden) " (Hidden Ability)" else ""
+    it.abilityName + if (it.isHidden) " (Hidden Ability)" else ""
 }
 
 fun formatPokedexId(id: Int): String {

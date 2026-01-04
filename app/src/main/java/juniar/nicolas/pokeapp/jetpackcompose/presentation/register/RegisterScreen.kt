@@ -29,10 +29,10 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import juniar.nicolas.pokeapp.jetpackcompose.core.common.showToast
 import juniar.nicolas.pokeapp.jetpackcompose.core.navigateScreen
-import juniar.nicolas.pokeapp.jetpackcompose.core.showToast
-import juniar.nicolas.pokeapp.jetpackcompose.presentation.components.LoadingOverlay
-import juniar.nicolas.pokeapp.jetpackcompose.presentation.components.PasswordTextField
+import juniar.nicolas.pokeapp.jetpackcompose.core.ui.LoadingOverlay
+import juniar.nicolas.pokeapp.jetpackcompose.core.ui.PasswordTextField
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.navigation.Screen
 
 @Composable

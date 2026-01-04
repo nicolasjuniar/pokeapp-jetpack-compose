@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
-import juniar.nicolas.pokeapp.jetpackcompose.core.showToast
+import juniar.nicolas.pokeapp.jetpackcompose.core.common.showToast
 
 @Composable
 fun SimpleNotificationPermission() {

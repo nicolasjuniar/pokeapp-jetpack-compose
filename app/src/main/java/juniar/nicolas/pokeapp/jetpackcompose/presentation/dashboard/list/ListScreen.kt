@@ -30,7 +30,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.rememberAsyncImagePainter
-import juniar.nicolas.pokeapp.jetpackcompose.core.Constant.Companion.POKEMON_IMAGE_URL
+import juniar.nicolas.pokeapp.jetpackcompose.core.common.Constant.Companion.POKEMON_IMAGE_URL
 import juniar.nicolas.pokeapp.jetpackcompose.core.navigateScreen
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.navigation.Screen
 

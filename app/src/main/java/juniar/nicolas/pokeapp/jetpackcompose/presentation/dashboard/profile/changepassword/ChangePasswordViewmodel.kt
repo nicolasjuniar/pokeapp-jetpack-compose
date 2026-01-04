@@ -2,12 +2,10 @@ package juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.profile.cha
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import juniar.nicolas.pokeapp.jetpackcompose.core.ResultWrapper
-import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.ChangePasswordUseCase
-import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.GetLoggedUsernameUseCase
-import juniar.nicolas.pokeapp.jetpackcompose.presentation.common.BaseViewModel
-import juniar.nicolas.pokeapp.jetpackcompose.presentation.common.DefaultSignal
-import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.profile.ProfileEvent
+import juniar.nicolas.pokeapp.jetpackcompose.core.common.BaseViewModel
+import juniar.nicolas.pokeapp.jetpackcompose.core.common.ResultWrapper
+import juniar.nicolas.pokeapp.jetpackcompose.core.domain.usecase.ChangePasswordUseCase
+import juniar.nicolas.pokeapp.jetpackcompose.core.domain.usecase.GetLoggedUsernameUseCase
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject

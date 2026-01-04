@@ -42,10 +42,10 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import juniar.nicolas.pokeapp.jetpackcompose.core.common.DefaultSignal
+import juniar.nicolas.pokeapp.jetpackcompose.core.common.showToast
 import juniar.nicolas.pokeapp.jetpackcompose.core.navigateScreen
-import juniar.nicolas.pokeapp.jetpackcompose.core.showToast
-import juniar.nicolas.pokeapp.jetpackcompose.presentation.common.DefaultSignal
-import juniar.nicolas.pokeapp.jetpackcompose.presentation.components.LoadingOverlay
+import juniar.nicolas.pokeapp.jetpackcompose.core.ui.LoadingOverlay
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.profile.changepassword.ChangePasswordBottomSheet
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.profile.changepassword.ChangePasswordEvent
 import juniar.nicolas.pokeapp.jetpackcompose.presentation.dashboard.profile.changepassword.ChangePasswordSignal
@@ -98,10 +98,11 @@ fun ProfileScreen(
 
     LaunchedEffect(Unit) {
         changePasswordViewmodel.signal.collect {
-            when(it) {
+            when (it) {
                 is ChangePasswordSignal.ShowToast -> {
                     context.showToast(it.message)
                 }
+
                 is ChangePasswordSignal.DismissChangePasswordBottomSheet -> {
                     profileViewModel.onEvent(ProfileEvent.DismissBottomSheet)
                 }

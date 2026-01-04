@@ -2,15 +2,15 @@ package juniar.nicolas.pokeapp.jetpackcompose.presentation.detail
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import juniar.nicolas.pokeapp.jetpackcompose.core.ResultWrapper
+import juniar.nicolas.pokeapp.jetpackcompose.core.common.BaseViewModel
+import juniar.nicolas.pokeapp.jetpackcompose.core.common.DefaultSignal
+import juniar.nicolas.pokeapp.jetpackcompose.core.common.ResultWrapper
+import juniar.nicolas.pokeapp.jetpackcompose.core.domain.model.Favorite
+import juniar.nicolas.pokeapp.jetpackcompose.core.domain.usecase.CheckFavoriteUseCase
+import juniar.nicolas.pokeapp.jetpackcompose.core.domain.usecase.GetDetailPokemonUseCase
+import juniar.nicolas.pokeapp.jetpackcompose.core.domain.usecase.GetLoggedUsernameUseCase
+import juniar.nicolas.pokeapp.jetpackcompose.core.domain.usecase.UpdateFavoriteUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.core.orEmpty
-import juniar.nicolas.pokeapp.jetpackcompose.domain.model.Favorite
-import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.CheckFavoriteUseCase
-import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.GetDetailPokemonUseCase
-import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.GetLoggedUsernameUseCase
-import juniar.nicolas.pokeapp.jetpackcompose.domain.usecase.UpdateFavoriteUseCase
-import juniar.nicolas.pokeapp.jetpackcompose.presentation.common.BaseViewModel
-import juniar.nicolas.pokeapp.jetpackcompose.presentation.common.DefaultSignal
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -37,9 +37,7 @@ class DetailPokemonViewModel @Inject constructor(
         checkUserFavorite()
     }
 
-    private suspend fun checkFavorite(user: String, id: Int) = checkFavoriteUseCase(
-        Favorite(username = user, pokemonId = id)
-    )
+    private suspend fun checkFavorite(user: String, id: Int) = checkFavoriteUseCase(user, id)
 
     private fun checkUserFavorite() {
         viewModelScope.launch {
@@ -74,9 +72,8 @@ class DetailPokemonViewModel @Inject constructor(
 
     private fun updateFavorite() {
         viewModelScope.launch {
-            val favorite = Favorite(username.value, _pokedexNumber.value.orEmpty())
-            updateFavoriteUseCase(favorite)
-            val isFavorite = checkFavoriteUseCase(favorite)
+            updateFavoriteUseCase(username.value, _pokedexNumber.value.orEmpty())
+            val isFavorite = checkFavoriteUseCase(username.value, _pokedexNumber.value.orEmpty())
             setState { copy(isFavorite = isFavorite) }
             sendSignal(
                 DefaultSignal.ShowToast(
