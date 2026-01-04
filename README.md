@@ -69,7 +69,7 @@ This project showcases authentication, persistent sessions, modularization, prof
 - Favorite Pokémon system (Datastore + Room)
 - Profile with: (v1.1)
   - Change Password
-  - Profile picture update (Camera + Storage permissions)
+  - Profile picture update (CameraX + Gallery)
 
 ---
 
