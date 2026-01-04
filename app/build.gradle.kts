@@ -40,8 +40,8 @@ android {
         applicationId = "juniar.nicolas.pokeapp.jetpackcompose"
         minSdk = 28
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -55,9 +55,9 @@ android {
     signingConfigs {
         create("release") {
             storeFile = file("pokeapp-jetpack-compose.jks")
-            storePassword = "4IiI1w9M5Xr6"
-            keyAlias = "key0"
-            keyPassword = "rJV61z7lZ1jc"
+            storePassword = System.getenv("STORE_PASSWORD")
+            keyAlias = System.getenv("KEY_ALIAS")
+            keyPassword = System.getenv("KEY_PASSWORD")
         }
     }
 
@@ -74,7 +74,6 @@ android {
 
     buildTypes {
         release {
-            isDebuggable = true
             isMinifyEnabled = true
             isShrinkResources = true
             signingConfig = signingConfigs.getByName("release")

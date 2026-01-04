@@ -52,13 +52,23 @@ jobs:
             **/build/reports/jacoco/**/*.html
 
       # -------------------------------
-      # 3️⃣ BUILD RELEASE APK
+      # 🔐 DECODE KEYSTORE
       # -------------------------------
+      - name: Decode Keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > release.keystore
+
       - name: Build release APK
+        env:
+          STORE_FILE: release.keystore
+          STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: ./gradlew :app:assembleRelease
+
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: pokeapp-v1.0
-          path: app/build/outputs/apk/release/pokeapp-v1.0.apk
+          path: app/build/outputs/apk/release/pokeapp-v1.1.apk
