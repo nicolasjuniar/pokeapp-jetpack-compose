@@ -27,8 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import juniar.nicolas.pokeapp.jetpackcompose.core.common.showToast
-import juniar.nicolas.pokeapp.jetpackcompose.core.ui.LoadingOverlay
-import juniar.nicolas.pokeapp.jetpackcompose.core.ui.PasswordTextField
+import juniar.nicolas.pokeapp.jetpackcompose.core.ui.component.LoadingOverlay
+import juniar.nicolas.pokeapp.jetpackcompose.core.ui.component.PasswordTextField
 
 @Composable
 fun LoginScreen(
