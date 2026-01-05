@@ -16,7 +16,7 @@ This project showcases authentication, persistent sessions, modularization, prof
 - Single-Activity Architecture
 - UDF (Unidirectional Data Flow)
 - State / Event / Signal pattern
-- Modularization (v1.1)
+- Modularization
 
 ### UI
 
@@ -48,8 +48,7 @@ This project showcases authentication, persistent sessions, modularization, prof
 
 ### Other
 
-- CameraX (v1.1)
-- Runtime Permissions
+- CameraX
 
 ---
 
@@ -96,13 +95,13 @@ This project showcases authentication, persistent sessions, modularization, prof
 
 - [x] Add LeakCanary & Chucker
 - [x] Add Detekt + report in GitHub Actions
-- [ ] Separate signing config for local project and GitHub Actions
+- [x] Separate signing config for local project and GitHub Actions
 - [x] Add CameraX + runtime permissions
 - [x] Implement Profile feature
 - [ ] Add Unit Test + Jacoco report in GitHub Actions
 - [ ] Add Report to github pages
 - [ ] Add link to report, screenshoot and gif to show demo
-- [ ] Modularization
+- [x] Modularization
 - [ ] Add KDoc(?)
 
 ---

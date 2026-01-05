@@ -8,7 +8,6 @@ plugins {
     alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.detekt)
     alias(libs.plugins.jacoco)
-    alias(libs.plugins.kotlin.serialization)
 }
 
 apply(from = "$rootDir/jacoco.gradle.kts")
@@ -44,12 +43,6 @@ android {
         versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        buildConfigField(
-            type = "String",
-            name = "BASE_URL",
-            value = "\"https://pokeapi.co/api/v2/\""
-        )
     }
 
     signingConfigs {
@@ -79,7 +72,7 @@ android {
             signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                rootDir.resolve("proguard-rules.pro")
             )
         }
     }
@@ -97,43 +90,26 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:common"))
+    implementation(project(":core:ui"))
+    implementation(project(":core:di"))
+    implementation(project(":core:data"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:shared"))
+    implementation(project(":feature:splash"))
+    implementation(project(":feature:login"))
+    implementation(project(":feature:registration"))
+    implementation(project(":feature:dashboard"))
+    implementation(project(":feature:detail"))
+    implementation(project(":feature:camera"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.navigation.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.material.icon.extended)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.navigation)
-    implementation(libs.retrofit)
-    implementation(libs.kotlinx.serialization.converter)
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.okhttp.logging)
-    implementation(libs.room.runtime)
-    ksp(libs.room.compiler)
-    implementation(libs.room.ktx)
-    implementation(libs.room.paging)
-    implementation(libs.paging.compose)
-    implementation(libs.paging.runtime)
-    implementation(libs.coroutines.core)
-    implementation(libs.coroutines.android)
-    implementation(libs.datastore.core)
-    implementation(libs.datastore.preferences)
-    implementation(libs.coil.compose)
-    implementation(libs.chucker)
-    implementation(libs.camerax.core)
-    implementation(libs.camerax.camera2)
-    implementation(libs.camerax.view)
-    implementation(libs.camerax.lifecycle)
-    implementation(libs.accompanist.permission)
     debugImplementation(libs.leakcanary)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

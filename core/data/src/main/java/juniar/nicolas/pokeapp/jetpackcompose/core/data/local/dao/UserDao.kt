@@ -1,0 +1,29 @@
+package juniar.nicolas.pokeapp.jetpackcompose.core.data.local.dao
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Update
+import juniar.nicolas.pokeapp.jetpackcompose.core.data.local.entity.UserEntity
+
+@Dao
+interface UserDao {
+    @Query("SELECT username FROM users WHERE username = :username AND password = :password")
+    suspend fun getUsername(username: String, password: String): String?
+
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    suspend fun insert(userEntity: UserEntity)
+
+    @Query("SELECT * FROM users WHERE username = :username LIMIT 1")
+    suspend fun getUserByUsername(username: String): UserEntity?
+
+    @Query("SELECT profilePictureUri FROM users WHERE username = :username LIMIT 1")
+    suspend fun getProfilePictureByUsername(username: String): String
+
+    @Query("UPDATE users SET profilePictureUri = :uri WHERE username = :username")
+    suspend fun updateProfilePicture(uri: String, username: String)
+
+    @Update
+    suspend fun updateUser(user: UserEntity)
+}

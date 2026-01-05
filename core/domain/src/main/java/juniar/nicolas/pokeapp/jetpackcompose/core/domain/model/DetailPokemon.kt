@@ -1,0 +1,20 @@
+package juniar.nicolas.pokeapp.jetpackcompose.core.domain.model
+
+data class DetailPokemon(
+    val id: Int,
+    val name: String,
+    val imageUrl: String?,
+    val heightCm: Int,
+    val weightKg: Float,
+    val baseExperience: Int,
+    val types: List<String>,
+    val stats: List<Stat>,
+    val abilities: List<PokemonAbility>,
+)
+
+data class Stat(val name: String, val value: Int)
+
+data class PokemonAbility(
+    val abilityName: String,
+    val isHidden: Boolean
+)

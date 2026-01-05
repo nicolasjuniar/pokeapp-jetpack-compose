@@ -11,8 +11,7 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import dagger.hilt.android.AndroidEntryPoint
-import juniar.nicolas.pokeapp.jetpackcompose.presentation.components.SimpleNotificationPermission
-import juniar.nicolas.pokeapp.jetpackcompose.presentation.navigation.NavGraph
+import juniar.nicolas.pokeapp.jetpackcompose.core.ui.component.SimpleNotificationPermission
 
 @AndroidEntryPoint
 class PokeActivity : ComponentActivity() {

@@ -21,3 +21,15 @@ dependencyResolutionManagement {
 
 rootProject.name = "PokeApp Jetpack Compose"
 include(":app")
+include(":feature:login")
+include(":core:common")
+include(":core:ui")
+include(":core:di")
+include(":core:domain")
+include(":core:data")
+include(":feature:splash")
+include(":feature:registration")
+include(":feature:detail")
+include(":feature:dashboard")
+include(":feature:camera")
+include(":core:shared")
