@@ -63,6 +63,7 @@ dependencies {
     implementation(libs.accompanist.permission)
     implementation(libs.hilt.navigation)
     implementation(libs.coil.compose)
+    testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
