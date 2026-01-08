@@ -95,9 +95,7 @@ fun CameraScreen(
 
     when {
         cameraPermission.status.isGranted || hasCameraPermission -> CameraContent(
-            onBack = {
-                onBackClick
-            },
+            onBack = onBackClick,
             onPhotoTaken = { uri ->
                 val encodedUri = Uri.encode(uri.toString())
                 openPreviewScreen(encodedUri)

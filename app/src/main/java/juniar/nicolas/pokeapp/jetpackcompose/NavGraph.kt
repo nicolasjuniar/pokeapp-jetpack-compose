@@ -15,10 +15,10 @@ import juniar.nicolas.pokeapp.jetpackcompose.core.common.orEmpty
 import juniar.nicolas.pokeapp.jetpackcompose.core.shared.PreviewCameraViewmodel
 import juniar.nicolas.pokeapp.jetpackcompose.feature.camera.CameraScreen
 import juniar.nicolas.pokeapp.jetpackcompose.feature.camera.PreviewScreen
-import juniar.nicolas.pokeapp.jetpackcompose.feature.dashboard.DashboardScreen
-import juniar.nicolas.pokeapp.jetpackcompose.feature.detail.PokemonDetailScreen
-import juniar.nicolas.pokeapp.jetpackcompose.feature.login.LoginScreen
-import juniar.nicolas.pokeapp.jetpackcompose.feature.registration.RegistrationScreen
+import juniar.nicolas.pokeapp.jetpackcompose.feature.dashboard.presentation.dashboard.DashboardScreen
+import juniar.nicolas.pokeapp.jetpackcompose.feature.detail.presentation.DetailPokemonScreen
+import juniar.nicolas.pokeapp.jetpackcompose.feature.login.presentation.LoginScreen
+import juniar.nicolas.pokeapp.jetpackcompose.feature.registration.presentation.RegistrationScreen
 import juniar.nicolas.pokeapp.jetpackcompose.feature.splash.SplashScreen
 
 private const val MAIN_GRAPH = "main_graph"
@@ -119,7 +119,7 @@ fun NavGraph() {
             arguments = listOf(navArgument("pokedexNumber") { type = NavType.IntType })
         ) { backStackEntry ->
             val pokedexNumber = backStackEntry.arguments?.getInt("pokedexNumber")
-            PokemonDetailScreen(
+            DetailPokemonScreen(
                 pokedexNumber = pokedexNumber.orEmpty(1),
                 onBackClick = {
                     navController.popBackStack()

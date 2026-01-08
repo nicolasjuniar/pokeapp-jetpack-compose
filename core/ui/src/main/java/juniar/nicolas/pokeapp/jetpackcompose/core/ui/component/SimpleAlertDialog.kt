@@ -11,17 +11,17 @@ fun SimpleDialog(
     description: String,
     confirmText: String = "Yes",
     dismissText: String = "No",
-    showOnChange: (Boolean) -> Unit,
-    confirmOnClick: () -> Unit
+    confirmOnClick: () -> Unit,
+    onDismiss: () -> Unit
 ) {
     AlertDialog(
-        onDismissRequest = { showOnChange(false) },
+        onDismissRequest = onDismiss,
         title = { Text(title) },
         text = { Text(description) },
         confirmButton = {
             TextButton(
                 onClick = {
-                    showOnChange(false)
+                    onDismiss()
                     confirmOnClick()
                 }
             ) {
@@ -30,7 +30,7 @@ fun SimpleDialog(
         },
         dismissButton = {
             TextButton(
-                onClick = { showOnChange(false) }
+                onClick = onDismiss
             ) {
                 Text(dismissText)
             }
