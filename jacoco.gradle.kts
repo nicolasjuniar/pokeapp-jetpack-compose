@@ -16,6 +16,12 @@ tasks.register<JacocoReport>("jacocoAggregateReport") {
         "**/BuildConfig.*",
         "**/*Test*.*",
         "**/*Preview*.*",
+        "**/*State*.*",
+        "**/*Event*.*",
+        "**/*Signal*.*",
+        "**/*Content*.*",
+        "**/*Screen*.*",
+        "**/*BottomSheet*.*"
     )
 
     val coreDiExclude = listOf(
