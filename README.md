@@ -40,7 +40,7 @@ This project showcases authentication, persistent sessions, modularization, prof
 - CI/CD with GitHub Actions
 - Detekt Report
 - Jacoco Report
-- JUnit (v1.1)
+- JUnit
 
 ### Debug Tools
 
@@ -66,7 +66,7 @@ This project showcases authentication, persistent sessions, modularization, prof
   - Paging 3 + Remote Mediator Integration
   - Detail Screen and Add/Remove Favorite
 - Favorite Pokémon system (Datastore + Room)
-- Profile with: (v1.1)
+- Profile with:
   - Change Password
   - Profile picture update (CameraX + Gallery)
   - Dark Mode Toggle

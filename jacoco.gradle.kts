@@ -35,11 +35,24 @@ tasks.register<JacocoReport>("jacocoAggregateReport") {
         "**/core/domain/repository/**"
     )
 
+    val coreDataExclude = listOf(
+        "**/core/data/api/**",
+        "**/core/data/dto/**",
+        "**/core/data/datastore/**",
+        "**/core/data/local/**",
+        "**/core/data/paging/**",
+        "**/*FavoriteMapper*.*",
+        "**/*UserMapper*.*",
+        "**/*ThemeRepositoryImpl*.*",
+        "**/*SessionRepositoryImpl*.*"
+    )
+
     val combineExclude = generalExclude +
             coreDiExclude +
             coreCommonExclude +
             coreUiExclude +
-            coreDomainExclude
+            coreDomainExclude +
+            coreDataExclude
 
     val classDirs = subprojects.filter { it.name != "app" }
         .map { project ->
