@@ -33,7 +33,11 @@ import coil.compose.AsyncImage
 import juniar.nicolas.pokeapp.jetpackcompose.core.domain.model.DetailPokemon
 import juniar.nicolas.pokeapp.jetpackcompose.core.domain.model.PokemonAbility
 import juniar.nicolas.pokeapp.jetpackcompose.core.ui.component.BaseScaffold
+import juniar.nicolas.pokeapp.jetpackcompose.core.ui.theme.Charcoal
 import juniar.nicolas.pokeapp.jetpackcompose.core.ui.theme.typeColor
+
+private const val STAT_ROW_COUNT = 3
+private const val POKEDEX_ID_DIGITS = 3
 
 @Composable
 fun DetailPokemonContent(
@@ -101,7 +105,7 @@ fun DetailPokemonContent(
                         text = "Base Stat Total: $total",
                         fontWeight = FontWeight.Medium,
                         fontSize = 14.sp,
-                        color = Color(0xFF222222),
+                        color = Charcoal,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(bottom = 8.dp)
@@ -111,7 +115,7 @@ fun DetailPokemonContent(
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        pokemon.stats.take(3).forEach { stat ->
+                        pokemon.stats.take(STAT_ROW_COUNT).forEach { stat ->
                             HorizontalValueContainer(
                                 label = stat.name,
                                 value = stat.value.toString(),
@@ -125,7 +129,7 @@ fun DetailPokemonContent(
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        pokemon.stats.takeLast(3).forEach { stat ->
+                        pokemon.stats.takeLast(STAT_ROW_COUNT).forEach { stat ->
                             HorizontalValueContainer(
                                 label = stat.name,
                                 value = stat.value.toString(),
@@ -235,7 +239,7 @@ fun List<PokemonAbility>.splitAbility() = joinToString(" - ") {
 }
 
 fun formatPokedexId(id: Int): String {
-    return "#${id.toString().padStart(3, '0')}"
+    return "#${id.toString().padStart(POKEDEX_ID_DIGITS, '0')}"
 }
 
 @Preview

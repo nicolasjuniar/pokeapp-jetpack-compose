@@ -21,7 +21,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import juniar.nicolas.pokeapp.jetpackcompose.core.common.Screen
 import juniar.nicolas.pokeapp.jetpackcompose.core.shared.PreviewCameraViewmodel
-import juniar.nicolas.pokeapp.jetpackcompose.core.ui.component.SimpleDialog
+import juniar.nicolas.pokeapp.jetpackcompose.core.ui.component.SimpleAlertDialog
 import juniar.nicolas.pokeapp.jetpackcompose.core.ui.model.NavItem
 import juniar.nicolas.pokeapp.jetpackcompose.feature.dashboard.presentation.favorite.FavoriteScreen
 import juniar.nicolas.pokeapp.jetpackcompose.feature.dashboard.presentation.list.ListScreen
@@ -95,7 +95,7 @@ fun DashboardContent(
     }
 
     if (state.showLogoutDialog) {
-        SimpleDialog(
+        SimpleAlertDialog(
             "Confirm Logout",
             "Are you sure you want to logout",
             onDismiss = {

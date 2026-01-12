@@ -18,6 +18,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import retrofit2.HttpException
+import java.io.IOException
 import javax.inject.Inject
 
 class PokemonRepositoryImpl @Inject constructor(
@@ -47,7 +49,9 @@ class PokemonRepositoryImpl @Inject constructor(
             try {
                 val result = api.getDetailPokemon(pokedexNumber)
                 ResultWrapper.Success(pokemonMapper.toDomain(result))
-            } catch (e: Exception) {
+            } catch (e: IOException) {
+                ResultWrapper.Error(e.message.orEmpty())
+            } catch (e: HttpException) {
                 ResultWrapper.Error(e.message.orEmpty())
             }
         }

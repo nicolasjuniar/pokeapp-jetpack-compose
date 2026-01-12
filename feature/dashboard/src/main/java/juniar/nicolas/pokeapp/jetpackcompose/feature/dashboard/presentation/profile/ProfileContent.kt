@@ -30,6 +30,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import juniar.nicolas.pokeapp.jetpackcompose.core.ui.component.LoadingOverlay
+import juniar.nicolas.pokeapp.jetpackcompose.core.ui.theme.LavenderGrey
+import juniar.nicolas.pokeapp.jetpackcompose.core.ui.theme.SlatePurple
 
 @Composable
 fun ProfileContent(
@@ -68,14 +70,14 @@ fun ProfileContent(
                     modifier = Modifier
                         .size(150.dp)
                         .clip(CircleShape)
-                        .background(Color(0xFFE0DCEB)),
+                        .background(LavenderGrey),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.Outlined.Person,
                         contentDescription = null,
                         modifier = Modifier.size(70.dp),
-                        tint = Color(0xFF4B4453)
+                        tint = SlatePurple
                     )
                 }
             }

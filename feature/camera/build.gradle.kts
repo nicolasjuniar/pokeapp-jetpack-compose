@@ -64,7 +64,6 @@ dependencies {
     implementation(libs.camerax.camera2)
     implementation(libs.camerax.view)
     implementation(libs.camerax.lifecycle)
-    implementation(libs.accompanist.permission)
     implementation(libs.hilt.navigation)
     implementation(libs.coil.compose)
     testImplementation(libs.junit)

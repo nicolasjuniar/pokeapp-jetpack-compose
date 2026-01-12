@@ -1,6 +1,6 @@
 package juniar.nicolas.pokeapp.jetpackcompose.core.data.mapper
 
-import juniar.nicolas.pokeapp.jetpackcompose.core.common.Constant.Companion.POKEMON_IMAGE_URL
+import juniar.nicolas.pokeapp.jetpackcompose.core.common.CommonConstant.POKEMON_IMAGE_URL
 import juniar.nicolas.pokeapp.jetpackcompose.core.data.dto.DetailPokemonResponse
 import juniar.nicolas.pokeapp.jetpackcompose.core.data.local.entity.PokemonEntity
 import juniar.nicolas.pokeapp.jetpackcompose.core.domain.model.DetailPokemon

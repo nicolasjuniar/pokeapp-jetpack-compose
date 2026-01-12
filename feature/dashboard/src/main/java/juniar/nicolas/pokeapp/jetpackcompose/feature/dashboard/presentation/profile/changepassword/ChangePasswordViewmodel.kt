@@ -3,6 +3,7 @@ package juniar.nicolas.pokeapp.jetpackcompose.feature.dashboard.presentation.pro
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import juniar.nicolas.pokeapp.jetpackcompose.core.common.BaseViewModel
+import juniar.nicolas.pokeapp.jetpackcompose.core.common.CommonConstant.PASSWORD_LENGTH
 import juniar.nicolas.pokeapp.jetpackcompose.core.common.ResultWrapper
 import juniar.nicolas.pokeapp.jetpackcompose.core.domain.usecase.GetLoggedUsernameUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.feature.dashboard.domain.ChangePasswordUseCase
@@ -55,7 +56,7 @@ class ChangePasswordViewmodel @Inject constructor(
 
     private fun updateIsButtonEnabled(state: ChangePasswordState): Boolean {
         return state.oldPassword.isNotBlank() &&
-                state.newPassword.length >= 6 &&
+                state.newPassword.length >= PASSWORD_LENGTH &&
                 state.confirmPassword == state.newPassword
     }
 

@@ -1,5 +1,6 @@
 package juniar.nicolas.pokeapp.jetpackcompose.feature.dashboard.presentation.profile
 
+import android.Manifest
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -16,6 +17,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import juniar.nicolas.pokeapp.jetpackcompose.core.common.DefaultSignal
 import juniar.nicolas.pokeapp.jetpackcompose.core.common.showToast
 import juniar.nicolas.pokeapp.jetpackcompose.core.shared.PreviewCameraViewmodel
+import juniar.nicolas.pokeapp.jetpackcompose.core.ui.component.SimpleRuntimePermission
 import juniar.nicolas.pokeapp.jetpackcompose.feature.dashboard.presentation.profile.changepassword.ChangePasswordBottomSheet
 import juniar.nicolas.pokeapp.jetpackcompose.feature.dashboard.presentation.profile.changepassword.ChangePasswordSignal
 import juniar.nicolas.pokeapp.jetpackcompose.feature.dashboard.presentation.profile.changepassword.ChangePasswordViewmodel
@@ -120,6 +122,7 @@ fun ProfileScreen(
 
         else -> Unit
     }
+
     ProfileContent(
         profileState = profileState,
         onEvent = profileViewModel::onEvent

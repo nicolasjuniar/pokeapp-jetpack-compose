@@ -6,7 +6,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 
 @Composable
-fun SimpleDialog(
+fun SimpleAlertDialog(
     title: String,
     description: String,
     confirmText: String = "Yes",

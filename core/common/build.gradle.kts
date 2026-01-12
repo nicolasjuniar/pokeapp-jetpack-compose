@@ -5,7 +5,10 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp.android)
     alias(libs.plugins.dagger.hilt)
+    alias(libs.plugins.jacoco)
 }
+
+apply(from = "$rootDir/jacoco.gradle.kts")
 
 android {
     namespace = "juniar.nicolas.pokeapp.jetpackcompose.core.common"

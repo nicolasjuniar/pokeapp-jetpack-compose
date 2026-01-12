@@ -12,6 +12,7 @@ import juniar.nicolas.pokeapp.jetpackcompose.core.common.AppDispatcher
 import juniar.nicolas.pokeapp.jetpackcompose.core.common.AppDispatcherImpl
 import juniar.nicolas.pokeapp.jetpackcompose.core.data.api.PokeApi
 import juniar.nicolas.pokeapp.jetpackcompose.core.data.datastore.SessionPreferences
+import juniar.nicolas.pokeapp.jetpackcompose.core.di.ModuleConstant.TIMEOUT
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -46,9 +47,9 @@ object AppModule {
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .addInterceptor(ChuckerInterceptor.Builder(context).build())
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
             .build()
     }
 

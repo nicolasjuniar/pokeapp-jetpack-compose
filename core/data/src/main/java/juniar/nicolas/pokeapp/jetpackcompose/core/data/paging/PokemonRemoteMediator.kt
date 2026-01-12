@@ -9,6 +9,7 @@ import juniar.nicolas.pokeapp.jetpackcompose.core.data.api.PokeApi
 import juniar.nicolas.pokeapp.jetpackcompose.core.data.local.AppDatabase
 import juniar.nicolas.pokeapp.jetpackcompose.core.data.local.entity.PokemonEntity
 import juniar.nicolas.pokeapp.jetpackcompose.core.data.local.entity.PokemonRemoteKeys
+import retrofit2.HttpException
 import java.io.IOException
 
 private const val PAGE_SIZE = 10
@@ -77,9 +78,9 @@ class PokemonRemoteMediator(
             }
 
             return MediatorResult.Success(endOfPaginationReached = endOfPagination)
-        } catch (ioe: IOException) {
-            return MediatorResult.Error(ioe)
-        } catch (e: Exception) {
+        } catch (e: IOException) {
+            return MediatorResult.Error(e)
+        } catch (e: HttpException) {
             return MediatorResult.Error(e)
         }
     }

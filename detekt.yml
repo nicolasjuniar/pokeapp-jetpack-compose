@@ -120,6 +120,8 @@ complexity:
       - 'run'
       - 'use'
       - 'with'
+    excludes:
+      '**/ui/theme/**'
   LabeledExpression:
     active: false
     ignoredLabels: []
@@ -137,6 +139,8 @@ complexity:
     ignoreDefaultParameters: false
     ignoreDataClasses: true
     ignoreAnnotatedParameter: []
+    ignoreAnnotated:
+      - Composable
   MethodOverloading:
     active: false
     threshold: 6
@@ -335,6 +339,8 @@ naming:
     excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/androidUnitTest/**', '**/androidInstrumentedTest/**', '**/jsTest/**', '**/iosTest/**']
     functionPattern: '[a-z][a-zA-Z0-9]*'
     excludeClassPattern: '$^'
+    ignoreAnnotated:
+      - Composable
   FunctionParameterNaming:
     active: true
     parameterPattern: '[a-z][A-Za-z0-9]*'
@@ -610,7 +616,18 @@ style:
     maxJumpCount: 1
   MagicNumber:
     active: true
-    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/androidUnitTest/**', '**/androidInstrumentedTest/**', '**/jsTest/**', '**/iosTest/**', '**/*.kts']
+    excludes: [
+      '**/test/**',
+      '**/androidTest/**',
+      '**/commonTest/**',
+      '**/jvmTest/**',
+      '**/androidUnitTest/**',
+      '**/androidInstrumentedTest/**',
+      '**/jsTest/**',
+      '**/iosTest/**',
+      '**/*.kts',
+      '**/ui/theme/**'
+    ]
     ignoreNumbers:
       - '-1'
       - '0'
@@ -678,7 +695,8 @@ style:
     active: true
     max: 2
     excludedFunctions:
-      - 'equals'
+      - equals
+      - load
     excludeLabeled: false
     excludeReturnFromLambda: true
     excludeGuardClauses: false

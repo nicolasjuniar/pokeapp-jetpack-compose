@@ -1,5 +1,7 @@
 package juniar.nicolas.pokeapp.jetpackcompose
 
+import android.Manifest
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,7 +13,8 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import dagger.hilt.android.AndroidEntryPoint
-import juniar.nicolas.pokeapp.jetpackcompose.core.ui.component.SimpleNotificationPermission
+import juniar.nicolas.pokeapp.jetpackcompose.core.common.showToast
+import juniar.nicolas.pokeapp.jetpackcompose.core.ui.component.SimpleRuntimePermission
 
 @AndroidEntryPoint
 class PokeActivity : ComponentActivity() {
@@ -27,7 +30,17 @@ class PokeActivity : ComponentActivity() {
                     .windowInsetsPadding(WindowInsets.safeDrawing)
             ) {
                 NavGraph()
-                SimpleNotificationPermission()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    SimpleRuntimePermission(
+                        permission = Manifest.permission.POST_NOTIFICATIONS,
+                        onGranted = {
+                            showToast("Notifications enabled. You can now view API logs via Chucker.")
+                        },
+                        onDenied = {
+                            showToast("Enable notifications if you want to view API logs via Chucker.")
+                        }
+                    )
+                }
             }
         }
     }

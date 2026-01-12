@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import coil.compose.rememberAsyncImagePainter
-import juniar.nicolas.pokeapp.jetpackcompose.core.common.Constant.Companion.POKEMON_IMAGE_URL
+import juniar.nicolas.pokeapp.jetpackcompose.core.common.CommonConstant.POKEMON_IMAGE_URL
 import juniar.nicolas.pokeapp.jetpackcompose.core.domain.model.Pokemon
 
 @Composable

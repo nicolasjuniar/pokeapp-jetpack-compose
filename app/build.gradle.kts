@@ -1,4 +1,3 @@
-import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -7,26 +6,10 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp.android)
     alias(libs.plugins.dagger.hilt)
-    alias(libs.plugins.detekt)
     alias(libs.plugins.jacoco)
 }
 
 apply(from = "$rootDir/jacoco.gradle.kts")
-
-detekt {
-    buildUponDefaultConfig = true
-    allRules = false
-    autoCorrect = true
-    ignoreFailures = true
-    config.setFrom("$rootDir/detekt.yml")
-}
-
-tasks.withType<Detekt>().configureEach {
-    reports {
-        html.required.set(true)
-        sarif.required.set(true)
-    }
-}
 
 jacoco {
     toolVersion = libs.versions.jacoco.get()

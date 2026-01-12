@@ -89,7 +89,7 @@ This project showcases authentication, persistent sessions, modularization, prof
 - [x] Add favorite feature using Paging 3
 - [x] Create GitHub Action to build APK
 - [x] Add ProGuard rules
-- [ ] Polish Project and Update All Depedencies
+- [x] Polish Project and Update All Depedencies
 
 ### v1.1 Enhancements
 
@@ -115,3 +115,9 @@ This project showcases authentication, persistent sessions, modularization, prof
 
 This project is a deep exploration of modern Android development using Jetpack Compose and Clean Architecture.
 It integrates real-world tools such as CI/CD, modularization, runtime permissions, local authentication, persistent sessions, and offline caching via Remote Mediator—making it both a learning journey and a solid portfolio piece.
+
+
+Handle Camera Screen -> permission
+Dark Mode
+i18n
+Unit Test

@@ -3,6 +3,7 @@ package juniar.nicolas.pokeapp.jetpackcompose.feature.registration.presentation
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import juniar.nicolas.pokeapp.jetpackcompose.core.common.BaseViewModel
+import juniar.nicolas.pokeapp.jetpackcompose.core.common.CommonConstant.PASSWORD_LENGTH
 import juniar.nicolas.pokeapp.jetpackcompose.core.common.ResultWrapper
 import juniar.nicolas.pokeapp.jetpackcompose.core.domain.usecase.SaveLoggedUsernameUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.feature.registration.domain.RegisterUseCase
@@ -46,7 +47,7 @@ class RegistrationViewModel @Inject constructor(
 
     private fun updateIsButtonEnabled(state: RegistrationState): Boolean {
         return state.username.isNotBlank() &&
-                state.password.length >= 6 &&
+                state.password.length >= PASSWORD_LENGTH &&
                 state.confirmPassword == state.password
     }
 
