@@ -69,27 +69,11 @@ This project showcases authentication, persistent sessions, modularization, prof
 - Profile with: (v1.1)
   - Change Password
   - Profile picture update (CameraX + Gallery)
+  - Dark Mode Toggle
 
 ---
 
 ## 📌 To-Do List
-
-### Main Development
-
-- [x] Add login, register, main, and detail dummy screen
-- [x] Implement simple login & register
-- [x] Add Pokémon list & favorite tabs using bottom navigation
-- [x] Connect all screens using Navigation Compose
-- [x] Add Dagger Hilt and Room for login/register
-- [x] Add Retrofit, OkHttp, Gson for Pokémon API
-- [x] Add Datastore for session
-- [x] Implement Paging 3
-- [x] Combine RemoteMediator + Paging 3
-- [x] Fetch Pokémon detail + detail screen
-- [x] Add favorite feature using Paging 3
-- [x] Create GitHub Action to build APK
-- [x] Add ProGuard rules
-- [x] Polish Project and Update All Depedencies
 
 ### v1.1 Enhancements
 
@@ -115,9 +99,3 @@ This project showcases authentication, persistent sessions, modularization, prof
 
 This project is a deep exploration of modern Android development using Jetpack Compose and Clean Architecture.
 It integrates real-world tools such as CI/CD, modularization, runtime permissions, local authentication, persistent sessions, and offline caching via Remote Mediator—making it both a learning journey and a solid portfolio piece.
-
-
-Handle Camera Screen -> permission
-Dark Mode
-i18n
-Unit Test

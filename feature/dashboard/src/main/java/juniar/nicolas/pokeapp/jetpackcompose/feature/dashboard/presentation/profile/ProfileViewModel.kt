@@ -4,7 +4,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import juniar.nicolas.pokeapp.jetpackcompose.core.common.BaseViewModel
 import juniar.nicolas.pokeapp.jetpackcompose.core.common.DefaultSignal
+import juniar.nicolas.pokeapp.jetpackcompose.core.domain.usecase.GetIsDarkThemeUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.core.domain.usecase.GetLoggedUsernameUseCase
+import juniar.nicolas.pokeapp.jetpackcompose.core.domain.usecase.UpdateDarkThemeUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.feature.dashboard.domain.GetUserProfilePictureUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.feature.dashboard.domain.UpdateUserProfilePictureUseCase
 import kotlinx.coroutines.flow.first
@@ -15,7 +17,9 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     getUserProfilePictureUseCase: GetUserProfilePictureUseCase,
     getLoggedUsernameUseCase: GetLoggedUsernameUseCase,
-    private val updateUserProfilePictureUseCase: UpdateUserProfilePictureUseCase
+    private val updateUserProfilePictureUseCase: UpdateUserProfilePictureUseCase,
+    getIsDarkThemeUseCase: GetIsDarkThemeUseCase,
+    private val updateDarkThemeUseCase: UpdateDarkThemeUseCase
 ) : BaseViewModel<ProfileState, ProfileEvent, DefaultSignal>(ProfileState()) {
 
 
@@ -26,6 +30,8 @@ class ProfileViewModel @Inject constructor(
                 val uri = getUserProfilePictureUseCase.invoke(username)
                 setState { copy(imageUri = uri, loggedUsername = username) }
             }
+            val isDarkTheme = getIsDarkThemeUseCase().first()
+            setState { copy(isDarkTheme = isDarkTheme) }
         }
     }
 
@@ -52,6 +58,13 @@ class ProfileViewModel @Inject constructor(
                     if (state.value.loggedUsername.isEmpty()) return@launch
                     updateUserProfilePictureUseCase.invoke(uri, state.value.loggedUsername)
                     sendSignal(DefaultSignal.ShowToast("Success Update Profile Picture"))
+                }
+            }
+
+            is ProfileEvent.UpdateIsDarkTheme -> {
+                viewModelScope.launch {
+                    setState { copy(isDarkTheme = event.isDarkTheme) }
+                    updateDarkThemeUseCase.invoke(event.isDarkTheme)
                 }
             }
         }

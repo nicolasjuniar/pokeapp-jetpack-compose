@@ -5,4 +5,5 @@ sealed interface ProfileEvent {
     data object ChangePasswordClicked : ProfileEvent
     data object DismissBottomSheet : ProfileEvent
     data class UpdateImageUri(val imageUri: String) : ProfileEvent
+    data class UpdateIsDarkTheme(val isDarkTheme: Boolean) : ProfileEvent
 }

@@ -7,10 +7,12 @@ import dagger.hilt.components.SingletonComponent
 import juniar.nicolas.pokeapp.jetpackcompose.core.data.repository.FavoriteRepositoryImpl
 import juniar.nicolas.pokeapp.jetpackcompose.core.data.repository.PokemonRepositoryImpl
 import juniar.nicolas.pokeapp.jetpackcompose.core.data.repository.SessionRepositoryImpl
+import juniar.nicolas.pokeapp.jetpackcompose.core.data.repository.ThemeRepositoryImpl
 import juniar.nicolas.pokeapp.jetpackcompose.core.data.repository.UserRepositoryImpl
 import juniar.nicolas.pokeapp.jetpackcompose.core.domain.repository.FavoriteRepository
 import juniar.nicolas.pokeapp.jetpackcompose.core.domain.repository.PokemonRepository
 import juniar.nicolas.pokeapp.jetpackcompose.core.domain.repository.SessionRepository
+import juniar.nicolas.pokeapp.jetpackcompose.core.domain.repository.ThemeRepository
 import juniar.nicolas.pokeapp.jetpackcompose.core.domain.repository.UserRepository
 
 @Module
@@ -36,4 +38,9 @@ abstract class RepositoryModule {
     abstract fun bindFavoriteRepository(
         favoriteRepositoryImpl: FavoriteRepositoryImpl
     ): FavoriteRepository
+
+    @Binds
+    abstract fun bindThemeRepository(
+        themeRepositoryImpl: ThemeRepositoryImpl
+    ): ThemeRepository
 }

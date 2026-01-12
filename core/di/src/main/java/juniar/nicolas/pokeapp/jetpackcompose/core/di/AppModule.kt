@@ -11,7 +11,7 @@ import dagger.hilt.components.SingletonComponent
 import juniar.nicolas.pokeapp.jetpackcompose.core.common.AppDispatcher
 import juniar.nicolas.pokeapp.jetpackcompose.core.common.AppDispatcherImpl
 import juniar.nicolas.pokeapp.jetpackcompose.core.data.api.PokeApi
-import juniar.nicolas.pokeapp.jetpackcompose.core.data.datastore.SessionPreferences
+import juniar.nicolas.pokeapp.jetpackcompose.core.data.datastore.DataStorePreference
 import juniar.nicolas.pokeapp.jetpackcompose.core.di.ModuleConstant.TIMEOUT
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -66,7 +66,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideSessionPreference(@ApplicationContext context: Context) =
-        SessionPreferences(context)
+        DataStorePreference(context)
 
     @Provides
     @Singleton

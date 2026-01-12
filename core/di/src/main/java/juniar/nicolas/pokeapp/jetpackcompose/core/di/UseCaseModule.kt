@@ -5,6 +5,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import juniar.nicolas.pokeapp.jetpackcompose.core.domain.repository.SessionRepository
+import juniar.nicolas.pokeapp.jetpackcompose.core.domain.repository.ThemeRepository
+import juniar.nicolas.pokeapp.jetpackcompose.core.domain.usecase.GetIsDarkThemeUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.core.domain.usecase.GetLoggedUsernameUseCase
 import juniar.nicolas.pokeapp.jetpackcompose.core.domain.usecase.SaveLoggedUsernameUseCase
 
@@ -21,4 +23,9 @@ object UseCaseModule {
     fun provideGetLoggedUsenameUseCase(
         sessionRepository: SessionRepository
     ) = GetLoggedUsernameUseCase(sessionRepository)
+
+    @Provides
+    fun provideGetIsDarkThemeUseCase(
+        themeRepository: ThemeRepository
+    ) = GetIsDarkThemeUseCase(themeRepository)
 }

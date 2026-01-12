@@ -9,5 +9,6 @@ data class ProfileState(
     val loggedUsername: String = "",
     val imageUri: String = "",
     val isLoading: Boolean = false,
-    val activeSheet: ProfileSheet? = null
+    val activeSheet: ProfileSheet? = null,
+    val isDarkTheme: Boolean = false
 )
