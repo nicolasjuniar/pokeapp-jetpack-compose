@@ -12,5 +12,4 @@ class ThemeRepositoryImpl @Inject constructor(
     override suspend fun updateIsDarkTheme(isDarkTheme: Boolean) {
         dataStorePreference.updateIsDarkTheme(isDarkTheme)
     }
-
 }

@@ -9,16 +9,18 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
+private const val GET_THEME_TIMEOUT = 5_000L
+
 @HiltViewModel
 class ThemeViewModel @Inject constructor(
-    private val getIsDarkThemeUseCase: GetIsDarkThemeUseCase
+    getIsDarkThemeUseCase: GetIsDarkThemeUseCase
 ) : ViewModel() {
 
     val isDarkTheme: StateFlow<Boolean> =
         getIsDarkThemeUseCase()
             .stateIn(
                 scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5_000),
+                started = SharingStarted.WhileSubscribed(GET_THEME_TIMEOUT),
                 initialValue = false
             )
 }
