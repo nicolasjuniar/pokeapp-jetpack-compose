@@ -6,13 +6,6 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp.android)
     alias(libs.plugins.dagger.hilt)
-    alias(libs.plugins.jacoco)
-}
-
-apply(from = "$rootDir/jacoco.gradle.kts")
-
-jacoco {
-    toolVersion = libs.versions.jacoco.get()
 }
 
 android {
@@ -50,6 +43,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            enableUnitTestCoverage = true
+        }
         release {
             isMinifyEnabled = true
             isShrinkResources = true

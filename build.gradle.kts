@@ -8,7 +8,14 @@ plugins {
     alias(libs.plugins.dagger.hilt) apply false
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.detekt) apply false
+    alias(libs.plugins.jacoco)
 }
+
+jacoco {
+    toolVersion = libs.versions.jacoco.get()
+}
+
+apply(from = "$rootDir/jacoco.gradle.kts")
 
 subprojects {
     apply(plugin = "io.gitlab.arturbosch.detekt")

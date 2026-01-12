@@ -29,6 +29,8 @@ kotlinxSerializationConverter = "1.0.0"
 cameraX = "1.5.2"
 appcompat = "1.7.1"
 material = "1.13.0"
+mockkVersion = "1.13.10"
+turbineVersion = "1.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -72,6 +74,9 @@ camerax-view = { group = "androidx.camera", name = "camera-view", version.ref = 
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockkVersion" }
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbineVersion" }
+kotlinx-coroutines-test = {group="org.jetbrains.kotlinx",name="kotlinx-coroutines-test"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
