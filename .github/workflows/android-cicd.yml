@@ -41,7 +41,7 @@ jobs:
       # 2️⃣ RUN JACOCO
       # -------------------------------
       - name: Run Unit Tests + Jacoco
-        run: ./gradlew test jacocoTestReport
+        run: ./gradlew test jacocoAggregateReport
 
       - name: Upload Jacoco Report
         uses: actions/upload-artifact@v4

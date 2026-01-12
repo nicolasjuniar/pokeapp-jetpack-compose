@@ -37,7 +37,7 @@ class LoginViewModel @Inject constructor(
                 }
 
                 is ResultWrapper.Error -> {
-                    LoginSignal.ShowToast(result.message)
+                    sendSignal(LoginSignal.ShowToast(result.message))
                 }
             }
         }
