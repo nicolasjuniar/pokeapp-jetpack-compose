@@ -18,10 +18,6 @@ tasks.register<JacocoReport>("jacocoAggregateReport") {
         "**/*Preview*.*",
     )
 
-    val appExclude = listOf(
-        "**/app/**"
-    )
-
     val coreDiExclude = listOf(
         "**/core/di/**"
     )
@@ -40,33 +36,39 @@ tasks.register<JacocoReport>("jacocoAggregateReport") {
     )
 
     val combineExclude = generalExclude +
-            appExclude +
             coreDiExclude +
             coreCommonExclude +
             coreUiExclude +
             coreDomainExclude
 
-    val classDirs = subprojects.map { project ->
-        fileTree("${project.buildDir}/tmp/kotlin-classes/debug") {
-            exclude(combineExclude)
+    val classDirs = subprojects.filter { it.name != "app" }
+        .map { project ->
+            project.layout.buildDirectory.dir("tmp/kotlin-classes/debug").map { dir ->
+                project.fileTree(dir) {
+                    exclude(combineExclude)
+                }
+            }
         }
-    }
 
-    val sourceDirs = subprojects.map { project ->
-        listOf(
-            "${project.projectDir}/src/main/java",
-            "${project.projectDir}/src/main/kotlin"
-        )
-    }
-
-    val execData = subprojects.map { project ->
-        fileTree(project.buildDir) {
-            include(
-                "jacoco/testDebugUnitTest.exec",
-                "outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec"
+    val sourceDirs = subprojects.filter { it.name != "app" }
+        .map { project ->
+            listOf(
+                "${project.projectDir}/src/main/java",
+                "${project.projectDir}/src/main/kotlin"
             )
         }
-    }
+
+    val execData = files(
+        subprojects.filter { it.name != "app" }
+            .map { project ->
+                project.layout.buildDirectory.asFileTree.matching {
+                    include(
+                        "jacoco/testDebugUnitTest.exec",
+                        "outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec"
+                    )
+                }
+            }
+    )
 
     classDirectories.setFrom(files(classDirs))
     sourceDirectories.setFrom(files(sourceDirs.flatten()))

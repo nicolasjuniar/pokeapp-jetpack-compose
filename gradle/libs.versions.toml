@@ -31,6 +31,9 @@ appcompat = "1.7.1"
 material = "1.13.0"
 mockkVersion = "1.13.10"
 turbineVersion = "1.1.0"
+coroutineVersion = "1.10.2"
+archCoreTesting = "2.2.0"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -76,7 +79,9 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockkVersion" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbineVersion" }
-kotlinx-coroutines-test = {group="org.jetbrains.kotlinx",name="kotlinx-coroutines-test"}
+kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutineVersion" }
+androidx-arch-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "archCoreTesting" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

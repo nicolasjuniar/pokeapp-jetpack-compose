@@ -7,8 +7,8 @@ import juniar.nicolas.pokeapp.jetpackcompose.core.domain.repository.SessionRepos
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
 import org.junit.Test
+import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class GetLoggedUsernameUseCaseTest {
