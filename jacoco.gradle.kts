@@ -65,6 +65,10 @@ tasks.register<JacocoReport>("jacocoAggregateReport") {
         "**/feature/detail/di/**"
     )
 
+    val featureDashboardExclude = listOf(
+        "**/feature/dashboard/di/**"
+    )
+
     val combineExclude = generalExclude +
             coreDiExclude +
             coreCommonExclude +
@@ -73,7 +77,8 @@ tasks.register<JacocoReport>("jacocoAggregateReport") {
             coreDataExclude +
             featureLoginExclude +
             featureRegistrationExclude +
-            featureDetailExclude
+            featureDetailExclude +
+            featureDashboardExclude
 
     val classDirs = subprojects.filter { it.name != "app" }
         .map { project ->

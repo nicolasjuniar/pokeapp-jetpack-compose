@@ -37,5 +37,4 @@ class ChangePasswordUseCase @Inject constructor(
             return@withContext ResultWrapper.Success(Unit)
         }
     }
-
 }
