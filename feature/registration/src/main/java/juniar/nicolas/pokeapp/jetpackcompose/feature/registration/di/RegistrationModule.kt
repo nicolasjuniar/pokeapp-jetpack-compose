@@ -10,7 +10,7 @@ import juniar.nicolas.pokeapp.jetpackcompose.feature.registration.domain.Registe
 
 @Module
 @InstallIn(ViewModelComponent::class)
-object RegisterModule {
+object RegistrationModule {
 
     @Provides
     fun provideRegisterUseCase(
