@@ -33,6 +33,7 @@ mockkVersion = "1.13.10"
 turbineVersion = "1.1.0"
 coroutineVersion = "1.10.2"
 archCoreTesting = "2.2.0"
+pagingRuntimeKtx = "3.3.6"
 
 
 [libraries]
@@ -82,6 +83,7 @@ turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine
 kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutineVersion" }
 androidx-arch-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "archCoreTesting" }
+androidx-paging-runtime-ktx = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "pagingRuntimeKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

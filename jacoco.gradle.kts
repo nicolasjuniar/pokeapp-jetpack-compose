@@ -66,7 +66,8 @@ tasks.register<JacocoReport>("jacocoAggregateReport") {
     )
 
     val featureDashboardExclude = listOf(
-        "**/feature/dashboard/di/**"
+        "**/feature/dashboard/di/**",
+        "**/*SheetOption*.*"
     )
 
     val combineExclude = generalExclude +
