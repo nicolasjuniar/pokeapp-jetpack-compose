@@ -75,17 +75,7 @@ This project showcases authentication, persistent sessions, modularization, prof
 
 ## 📌 To-Do List
 
-### v1.1 Enhancements
-
-- [x] Add LeakCanary & Chucker
-- [x] Add Detekt + report in GitHub Actions
-- [x] Separate signing config for local project and GitHub Actions
-- [x] Add CameraX + runtime permissions
-- [x] Implement Profile feature
-- [ ] Add Unit Test + Jacoco report in GitHub Actions
-- [ ] Add Report to github pages
 - [ ] Add link to report, screenshoot and gif to show demo
-- [x] Modularization
 - [ ] Add KDoc(?)
 
 ---
@@ -94,6 +84,8 @@ This project showcases authentication, persistent sessions, modularization, prof
 
 - **Latest Release:** [Download here](https://github.com/nicolasjuniar/pokeapp-jetpack-compose/releases)
 - **GitHub Artifact:** [View artifact](https://github.com/nicolasjuniar/pokeapp-jetpack-compose/actions/runs/20007859465)
+- **Detekt Report:** [View here](https://nicolasjuniar.github.io/pokeapp-jetpack-compose-report-detekt/detekt.html)
+- **Jacoco Report:** [View here](https://nicolasjuniar.github.io/pokeapp-jetpack-compose-report-jacoco/index.html)
 
 ## 📝 Summary
 
