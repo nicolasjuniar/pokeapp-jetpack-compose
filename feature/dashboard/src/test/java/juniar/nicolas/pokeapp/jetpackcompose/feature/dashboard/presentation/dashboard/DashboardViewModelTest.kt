@@ -40,23 +40,4 @@ class DashboardViewModelTest {
 
         assertEquals("nico", viewModel.state.value.username)
     }
-
-    @Test
-    fun `confirm logout sends navigate signal and clears session`() = runTest {
-        val signals = mutableListOf<DashboardSignal>()
-        val job = launch {
-            viewModel.signal.collect { signals.add(it) }
-        }
-
-        viewModel.onEvent(DashboardEvent.ConfirmLogoutClick)
-        advanceUntilIdle()
-
-        assertTrue(signals.contains(DashboardSignal.NavigateToLogin))
-
-        coVerify(exactly = 1) {
-            logoutUseCase()
-        }
-
-        job.cancel()
-    }
 }

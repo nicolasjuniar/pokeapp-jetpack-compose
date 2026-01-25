@@ -129,9 +129,6 @@ fun ProfileContent(
 
         Spacer(Modifier.height(24.dp))
 
-
-//        Spacer(Modifier.height(40.dp))
-
         Button(
             onClick = { onEvent(ProfileEvent.ChangePasswordClicked) },
             modifier = Modifier.fillMaxWidth()
